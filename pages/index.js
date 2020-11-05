@@ -14,12 +14,19 @@ import {
 
 import { fetchRandomCard } from '../app/actions/cardsActions';
 import Layout from '../app/components/Layout';
+import { withTranslation, i18n } from "../i18n";
 
 class Home extends React.Component {
-  static getInitialProps({ store }) {
+  static getInitialProps = async ({ req }) => {
     debugger;
-    this.store = store;
-    return {};
+    const currentLanguage = req ? req.language : i18n.language;
+
+    return { currentLanguage, namespacesRequired: ["common"] };
+  };
+
+  componentDidMount() {
+    debugger;
+    i18n.changeLanguage("zh");
   }
 
   constructor(props) {
@@ -85,6 +92,7 @@ class Home extends React.Component {
             <Header
               content="DevCollege Combo Card Search!"
             />
+            {this.props.t("description")}
             <Form>
               <Form.Group>
                 <Form.Input label="Search for cards" placeholder="Type search phrase" width={12} value={this.state.searchPhrase} onChange={this.handleSearchPhraseChange} />
@@ -106,4 +114,4 @@ class Home extends React.Component {
   }
 }
 
-export default connect(initsStore)(Home);
+export default connect(initsStore)(withTranslation("common")(Home));

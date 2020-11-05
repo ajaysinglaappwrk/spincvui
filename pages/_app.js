@@ -5,18 +5,11 @@ import { Provider } from 'react-redux';
 
 import withRedux from 'next-redux-wrapper';
 import initsStore from '../app/store';
+import { appWithTranslation } from "../i18n";
 
 class MyApp extends App {
-  static async getInitialProps({ Component, ctx, store }) {
-    let pageProps = {}
-
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-
-    return { pageProps, store }
-  }
-
+ 
+  
   render () {
     const { Component, pageProps, store } = this.props
 
@@ -31,6 +24,9 @@ class MyApp extends App {
             <Link href="/">
               <a>Homepage</a>
             </Link>
+            <Link href="/about">
+              <a>About</a>
+            </Link>
             <Component {...pageProps} />
           </div>
         </Provider>
@@ -39,4 +35,4 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(initsStore)(MyApp);
+export default withRedux(initsStore)(appWithTranslation(MyApp));
