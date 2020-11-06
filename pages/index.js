@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import initsStore from '../app/store';
 
 import Layout from '../app/components/Layout';
+import Dashboard from '../app/components/dashboard/dashboard'
 import { withTranslation, i18n } from "../i18n";
 
 class Home extends React.Component {
@@ -23,6 +24,7 @@ class Home extends React.Component {
   render() {
     return (
       <Layout>
+        <Dashboard></Dashboard>
       </Layout>
     );
   }

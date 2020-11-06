@@ -88,7 +88,6 @@ class Header extends React.Component {
   }
 
   render() {
-    const { i18n } = this.props;
     return (
       <div>
         <header id="careerfy-header" className="careerfy-header-one">
@@ -96,7 +95,6 @@ class Header extends React.Component {
             <div className="row o-mob" style={{ alignItems: 'center' }} >
               <aside className="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1">
                 <Link href="/" >
-                  {/* <img src="/assets/images/Spincv-logo2.png" alt="" /> */}
                   <img  className="careerfy-logo" style={{ width: '170px' }} src="https://opsoestorage.blob.core.windows.net/companybackground-stg/Spincv-logo-dark.png" alt="" />
                 </Link>
               </aside>
