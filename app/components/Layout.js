@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header'
+import Footer from '../components/footer/footer'
 
 const Layout = ({ children }) => (
   <div>
@@ -21,6 +22,7 @@ const Layout = ({ children }) => (
     <div>
       {children}
     </div>
+    <Footer></Footer>
   </div>
 );
 
