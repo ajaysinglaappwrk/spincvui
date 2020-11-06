@@ -16,10 +16,7 @@ class MyApp extends App {
     return (
       <Container>
         <Provider store={store}>
-          <div style={{
-            maxWidth: '960px',
-            margin: '50px auto',
-          }}
+          <div 
           >
             <Component {...pageProps} />
           </div>
