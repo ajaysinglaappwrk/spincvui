@@ -40,7 +40,6 @@ class Banner extends React.Component {
         }, [arr[0]]);
     }
     render() {
-        debugger;
         return (
             <div className="careerfy-banner">
                 <ReactPlayer url='/static/assets/video/video_1280.mp4' playing className="videobg" />
