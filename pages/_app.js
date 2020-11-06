@@ -21,12 +21,6 @@ class MyApp extends App {
             margin: '50px auto',
           }}
           >
-            <Link href="/">
-              <a>Homepage</a>
-            </Link>
-            <Link href="/about">
-              <a>About</a>
-            </Link>
             <Component {...pageProps} />
           </div>
         </Provider>

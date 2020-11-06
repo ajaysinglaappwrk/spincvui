@@ -12,7 +12,7 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
-    i18n.changeLanguage("zh");
+    i18n.changeLanguage("fr");
   }
 
   constructor(props) {

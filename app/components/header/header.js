@@ -3,12 +3,17 @@ import Login from '../login/login';
 import Register from '../register/register';
 import ChangePassword from '../profile-management/change-password';
 import {  authenticationService } from '../../services/authentication.service';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ToastContainer, toast } from "react-toastify";
 
 import { withTranslation, i18n } from "../../../i18n";
 
 class Header extends React.Component {
+  static getInitialProps = async ({ req }) => {
+    const currentLanguage = req ? req.language : i18n.language;
+
+    return { currentLanguage, namespacesRequired: ["common"] };
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -83,13 +88,19 @@ class Header extends React.Component {
   }
 
   render() {
+    debugger;
     const { i18n } = this.props;
     return (
       <div>
         <header id="careerfy-header" className="careerfy-header-one">
           <div className="container-fulid main-header">
             <div className="row o-mob" style={{ alignItems: 'center' }} >
-             
+              <aside className="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1">
+                <Link href="/" className="careerfy-logo" style={{ width: '170px' }}>
+                  {/* <img src="/assets/images/Spincv-logo2.png" alt="" /> */}
+                  <img src="https://opsoestorage.blob.core.windows.net/companybackground-stg/Spincv-logo-dark.png" alt="" />
+                </Link>
+              </aside>
               <aside className="col-lg-4 col-md-6 col-sm-6 p-3">
                 <div className="header-search">
                   <input

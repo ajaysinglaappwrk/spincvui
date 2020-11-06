@@ -18,13 +18,7 @@ const Layout = ({ children }) => (
     <link rel='stylesheet' href='/static/assets/css/slick-theme.min.css'></link>
     </Head>
     <Header></Header>
-    <div style={{
-      maxWidth: '960px',
-      margin: '50px auto',
-    }}
-    >
-      { children }
-    </div>
+    
   </div>
 );
 
