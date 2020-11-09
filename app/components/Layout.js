@@ -17,6 +17,8 @@ const Layout = ({ children }) => (
       <link rel='stylesheet' href='/static/assets/css/responsive.min.css'></link>
       <link rel='stylesheet' href='/static/assets/css/slick.min.css'></link>
       <link rel='stylesheet' href='/static/assets/css/slick-theme.min.css'></link>
+      <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-toastify@5.5.0/dist/ReactToastify.css'></link>
+      
     </Head>
     <Header></Header>
     <div>
