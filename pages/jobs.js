@@ -34,6 +34,10 @@ import Layout from '../app/components/Layout';
 import Link from 'next/link'
 
 class JobSearch extends React.Component {
+    static getInitialProps = async ({ req }) => {
+        const currentLanguage = req ? req.language : i18n.language;
+        return { currentLanguage, namespacesRequired: ["common"] };
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -284,6 +288,7 @@ class JobSearch extends React.Component {
         this.props.history.push(url);
     }
     renderJob(job) {
+        debugger;
         const { i18n } = this.props;
         const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
@@ -314,9 +319,9 @@ class JobSearch extends React.Component {
                                         <div className="figure_logo"><a href={companyProfileUrl}><img src={job.CompanyLogoUrl} alt="" /></a></div>
                                         <div className="careerfy-joblisting-text profile-job-desc">
                                             <div className="careerfy-list-option">
-                                                <h2> <Link href={jobDetailUrl}> {title} </Link> </h2>
+                                                <h2> <a href={jobDetailUrl}> {title} </a> </h2>
                                                 <ul>
-                                                    <li> <Link href={companyProfileUrl}> {job.CompanyName} </Link></li>
+                                                    <li> <a href={companyProfileUrl}> {job.CompanyName} </a></li>
                                                     <div className="inline_li">
                                                         <li><i className="careerfy-icon careerfy-maps-and-flags"></i>
 
@@ -380,9 +385,9 @@ class JobSearch extends React.Component {
                                         <div className="figure_logo"><a><img src={job.CompanyLogoUrl} alt="" /></a></div>
                                         <div className="careerfy-joblisting-text profile-job-desc">
                                             <div className="careerfy-list-option">
-                                                <h2> <Link href={jobDetailUrl}> {title} </Link> </h2>
+                                                <h2> <a href={jobDetailUrl}> {title} </a> </h2>
                                                 <ul>
-                                                    <li> <Link > {job.CompanyName} </Link></li>
+                                                    <li> <a > {job.CompanyName} </a></li>
                                                     <div className="inline_li">
                                                         <li><i className="careerfy-icon careerfy-maps-and-flags"></i>
 
@@ -1252,6 +1257,223 @@ class JobSearch extends React.Component {
 
                                                 </div>
                                             }
+                                            <div className="col-sm-8 job-list-sidebr">
+                                                <SelectedFilters showClearAll={false} />
+                                                <DataSearch showVoiceSearch={true} componentId="SearchSensor" dataField={i18n.language == "en" ?
+                                                    ['JobNumber', 'JobNumber.search', 'TitleEN', 'TitleEN.search', 'TitleEN.keyword',
+                                                        'CompanyName', 'CompanyName.search',
+                                                        'IndustryNameEN', 'IndustryNameEN.keyword', 'IndustryNameEN.search',
+                                                        'Locations', 'Locations.keyword', 'Locations.search',
+                                                        'JobDescriptionEN', 'JobDescriptionEN.search', 'JobDescriptionEN.keyword',
+                                                        'JobTypeEN', 'JobTypeEN.keyword', 'JobTypeEN.search', "GlobalQuery"
+                                                    ] :
+                                                    ['JobNumber', 'JobNumber.search', 'TitleFR', 'TitleFR.search', 'TitleFR.keyword',
+                                                        'CompanyName', 'CompanyName.search',
+                                                        'IndustryNameFR', 'IndustryNameFR.keyword', 'IndustryNameFR.search',
+                                                        'Locations', 'Locations.keyword', 'Locations.search',
+                                                        'JobDescriptionFR', 'JobDescriptionFR.search', 'JobDescriptionFR.keyword',
+                                                        'JobTypeFR', 'JobTypeFR.keyword', 'JobTypeFR.search', "GlobalQuery"
+                                                    ]}
+                                                    showClear={true}
+                                                    placeholder={i18n.t('General.SearchLabel')}
+                                                    showFilter={false}
+                                                    value={this.state.searchTerm}
+                                                    onChange={(value, triggerQuery, event, data) => {
+                                                        this.setState({ searchTerm: value });
+                                                        setTimeout(() => {
+                                                            triggerQuery();
+                                                        }, 3000);
+                                                    }}
+                                                    // // // debounce="100"
+                                                    // onKeyPress={(value, triggerQuery, event) => {
+                                                    //     debugger;
+                                                    //     var searchText = this.state.searchTerm;
+                                                    //     if (!event) {
+                                                    //         this.setState({ searchTerm: searchText + value.key });
+                                                    //     }
+                                                    //     if (value.which == 13) {
+                                                    //         triggerQuery();
+                                                    //     }
+                                                    // }}
+                                                    parseSuggestion={(suggestion) => ({
+
+                                                        label: (
+                                                            <Fragment>
+                                                                {
+                                                                    i18n.language == "en" && suggestion.source.TitleEN.includes(suggestion.value) && suggestion.source.TitleEN
+                                                                }
+                                                                {
+                                                                    i18n.language != "en" && suggestion.source.TitleFR.includes(suggestion.value) &&
+                                                                    suggestion.source.TitleFR
+                                                                }
+                                                                {
+                                                                    i18n.language == "en" && suggestion.source.IndustryNameEN.includes(suggestion.value) && suggestion.source.IndustryNameEN
+                                                                }
+                                                                {
+                                                                    i18n.language != "en" && suggestion.source.IndustryNameFR.includes(suggestion.value) &&
+                                                                    suggestion.source.IndustryNameFR
+                                                                }
+                                                                {
+                                                                    suggestion.source.Locations && suggestion.source.Locations.length > 0 && suggestion.source.Locations.indexOf(suggestion.value) > -1 &&
+                                                                    this.intersperse(suggestion.source.Locations, ", ")
+                                                                }
+                                                                {
+                                                                    i18n.language == "en" && suggestion.source.JobTypeEN && suggestion.source.JobTypeEN.length > 0 && suggestion.source.JobTypeEN.indexOf(suggestion.value) > -1 &&
+                                                                    this.intersperse(suggestion.source.JobTypeEN, ", ")
+                                                                }
+                                                                {
+                                                                    i18n.language != "en" && suggestion.source.JobTypeFR && suggestion.source.JobTypeFR.length > 0 && suggestion.source.JobTypeFR.indexOf(suggestion.value) > -1 &&
+                                                                    this.intersperse(suggestion.source.JobTypeFR, ", ")
+                                                                }
+
+                                                                {/* {i18n.language == "en" ? this.intersperse(suggestion.source.JobTypeEN, ", ") : this.intersperse(suggestion.source.JobTypeFR, ", ")} */}
+                                                            </Fragment>
+                                                        ),
+                                                        source: suggestion.source,
+                                                        value: (i18n.language == "en" ? suggestion.source.TitleEN : suggestion.source.TitleFR)
+                                                    })}
+
+
+                                                />
+                                                <div className="job-list-tabs">
+                                                    <Tabs transition={false} id="noanim-tab-example" onSelect={(k) => this.setKey(k)} activeKey={this.state.selectedTabKey}>
+                                                        <Tab eventKey="alljobs" title={i18n.t('General.PositionsTabLabel')}>
+                                                            <div className="container">
+                                                                <div className="row">
+                                                                    <div className="col-sm-12" style={{ marginTop: '50px' }} >
+                                                                        <ReactiveList
+                                                                            componentId="result"
+                                                                            dataField="_score"
+                                                                            scrollOnChange={false}
+                                                                            showResultStats={true}
+                                                                            renderResultStats={
+                                                                                function (stats) {
+                                                                                    return (
+                                                                                        `${stats.numberOfResults} ${i18n.t('General.ResultFoundInLabel')} ${stats.time}ms`
+                                                                                    )
+                                                                                }
+                                                                            }
+                                                                            react={{
+                                                                                "and": ["Locations", "SearchSensor", "FoodfacetSensor",
+                                                                                    "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
+                                                                                    "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery"]
+                                                                            }}
+                                                                            renderItem={(job) => {
+                                                                                return (this.renderJob(job))
+                                                                            }}
+                                                                            size={10}
+                                                                            pagination={true}
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </Tab>
+                                                        <Tab eventKey="jobstories" title="Job Stories" >
+                                                            <div className="Story-job-outer">
+                                                                <ReactiveList
+                                                                    className="Story-job-outer-in"
+                                                                    componentId="resultStories"
+                                                                    dataField="_score"
+                                                                    scrollOnChange={false}
+                                                                    react={{
+                                                                        "and": ["Locations", "SearchSensor", "FoodfacetSensor",
+                                                                            "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
+                                                                            "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery", "JobStoriesQuery"]
+                                                                    }}
+
+                                                                    onData={(data) => this.setData(data)
+                                                                    }
+                                                                    renderItem={(job) => {
+                                                                        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
+                                                                        const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
+                                                                        const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
+                                                                        const description = i18n.language == "en" ? job.JobDescriptionEN.substr(0, 250) : job.JobDescriptionFR.substr(0, 250);
+                                                                        const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
+                                                                        // Change to update the UI
+                                                                        return (
+                                                                            <Fragment key={job.JobPostingId}>
+                                                                                {
+                                                                                    <div className="inner-story-item"  >
+                                                                                        <div className="thumb-img-job" >
+                                                                                            <img className="Job_thumb" src={!!job.Thumbnail ? job.Thumbnail : 'https://opsoestorage.blob.core.windows.net/companybackground-stg/default_thumbnail.PNG'} />
+                                                                                            <span className="video-icon-hover" onClick={() => this.openJobVideoModal(job.VideoLink, true, job)}><i className="careerfy-icon careerfy-play-button"></i></span>
+
+                                                                                            {
+                                                                                                jobTypes != null && jobTypes.length > 0 &&
+                                                                                                <p className="job_type_p" onClick={() => this.setSelectedJobTypes(jobTypes[0])}>{jobTypes[0]}</p>
+                                                                                                // jobTypes.map((type, index) => {
+
+                                                                                                //     return ()
+                                                                                                // })
+                                                                                            }
+                                                                                            {/* <p className="job_type_p">{this.intersperse(jobTypes, ", ")}</p> */}
+                                                                                            {(!!job.WorkExperienceMin || !!job.WorkexperienceMax) &&
+                                                                                                <p className="job_type_bn">Experience {job.WorkExperienceMin}-{job.WorkexperienceMax} ans</p>
+                                                                                            }
+                                                                                        </div>
+                                                                                        <div className="content-job-item">
+                                                                                            <div className="img_title-job">
+                                                                                                <span className="logo-job-ty"><img src={job.CompanyLogoUrl} /></span>
+                                                                                                <div className="titl-des-jobb">
+                                                                                                    <h3>{title}</h3>
+                                                                                                    <p className="desp-job">
+                                                                                                        <div className="textWidget " dangerouslySetInnerHTML={{ __html: description }} />
+                                                                                                        <a href={jobDetailUrl} className="job-story-link">voir plus</a>
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <ul className="job_Cat_loc">
+                                                                                                <li onClick={() => this.setSelectedIndustries(industry)}><i className="careerfy-icon careerfy-filter-tool-black-shape"></i> {industry}</li>
+                                                                                                <li><i className="careerfy-icon careerfy-maps-and-flags"></i> <span>
+                                                                                                    {
+                                                                                                        job.Locations != null && job.Locations.length > 0 &&
+                                                                                                        job.Locations.map((loc, index) => {
+
+                                                                                                            return (<span onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
+                                                                                                        })
+                                                                                                    }</span></li>
+                                                                                            </ul>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+
+
+                                                                            </Fragment>)
+                                                                    }}
+                                                                    size={6}
+                                                                    pagination={true}
+                                                                    renderResultStats={
+                                                                        function (stats) {
+                                                                            return (
+                                                                                `${stats.numberOfResults} résultats trouvés en ${stats.time}ms`
+                                                                            )
+                                                                        }
+                                                                    }
+                                                                />
+                                                            </div>
+                                                        </Tab>
+                                                        {
+                                                            this.state.localFavJobIds.length > 0 &&
+                                                            <Tab eventKey="favJobs" title="Likes">
+
+                                                                <div className="container">
+                                                                    <div className="row">
+                                                                        <div className="col-sm-12" style={{ marginTop: '50px' }} >
+                                                                            {
+                                                                                this.state.localFavJobIds.map((job, index) => {
+                                                                                    return (this.renderJob(job));
+                                                                                })
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Tab>
+                                                        }
+                                                    </Tabs>
+                                                </div>
+                                            </div>
                                         </div>
                                     </ReactiveBase>
                                 </div>
@@ -1309,4 +1531,4 @@ class JobSearch extends React.Component {
         );
     }
 }
-export default withTranslation('translation')(JobSearch);
+export default withTranslation('common')(JobSearch);
