@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from '../../../i18n';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { registerService } from './services/register.service';
@@ -7,6 +6,7 @@ import FacebookLogin from 'react-facebook-login';
 import { authenticationService } from '../../services/authentication.service';
 import { forgotPasswordUrl } from '../../config'
 import { toast } from 'react-toastify';
+import {i18n, withTranslation} from '../../../i18n';
 
 class Register extends React.Component {
     constructor(props) {
@@ -289,4 +289,4 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+export default  withTranslation('common')(Register);

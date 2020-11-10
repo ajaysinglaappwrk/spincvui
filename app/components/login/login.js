@@ -1,5 +1,5 @@
 import React from 'react';
-import i18n from '../../../i18n';
+import {i18n, withTranslation} from '../../../i18n';
 import { authenticationService } from '../../services/authentication.service';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -226,4 +226,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withTranslation('common') (Login);
