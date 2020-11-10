@@ -5,7 +5,7 @@ import {
     MultiDropdownList,
     DataSearch
 } from "@appbaseio/reactivesearch";
-import { withTranslation,i18n } from '../../../i18n';
+import { withTranslation, i18n } from '../../../i18n';
 
 class Banner extends React.Component {
     static getInitialProps = async ({ req }) => {
@@ -21,12 +21,16 @@ class Banner extends React.Component {
             selectedLocations: []
         }
 
-        // window.addEventListener('keydown', (event) => {
-        //     var search = document.getElementById("SearchSensor-downshift-input").value;
-        //     if (event.keyCode == 13)
-        //         window.location.href = '/jobs?searchterm=' + search + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
-        // });
+
     }
+    componentDidMount() {
+        window.addEventListener('keydown', (event) => {
+            var search = document.getElementById("SearchSensor-downshift-input").value;
+            if (event.keyCode == 13)
+                window.location.href = '/jobs?searchterm=' + search + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
+        });
+    }
+    
     search() {
         window.location.href = '/jobs?searchterm=' + this.state.searchTerm + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
     }
@@ -173,4 +177,4 @@ class Banner extends React.Component {
     }
 }
 
-export default  withTranslation('common')(Banner);
+export default withTranslation('common')(Banner);
