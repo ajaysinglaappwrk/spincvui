@@ -14,14 +14,12 @@ class MyApp extends App {
     const { Component, pageProps, store } = this.props
 
     return (
-      <Container>
         <Provider store={store}>
           <div 
           >
             <Component {...pageProps} />
           </div>
         </Provider>
-      </Container>
     )
   }
 }
