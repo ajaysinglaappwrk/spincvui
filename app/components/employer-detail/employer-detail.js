@@ -98,13 +98,13 @@ class EmployerDetail extends React.Component {
             nav2: this.slider2,
             isProcessing: true
         });
-        // if (window.location.hostname.substr(0, window.location.hostname.indexOf('.')).toLowerCase() == "gexel") {
-        //     document.body.classList.add('gexel-profile')
-        // }
-        // else {
-        //     document.body.classList.add('all-profile')
-        // }
-        // window.addEventListener("popstate", this.onBackButtonEvent);
+        if (window.location.hostname.substr(0, window.location.hostname.indexOf('.')).toLowerCase() == "gexel") {
+            document.body.classList.add('gexel-profile')
+        }
+        else {
+            document.body.classList.add('all-profile')
+        }
+        window.addEventListener("popstate", this.onBackButtonEvent);
     }
 
     onBackButtonEvent = (location) => {
@@ -236,6 +236,9 @@ class EmployerDetail extends React.Component {
 
     render() {
         const { EmployerReducer, i18n } = this.props;
+        if (EmployerReducer && EmployerReducer.error && EmployerReducer.error.isAxiosError)
+            this.props.router.push('/');
+            
         if (EmployerReducer && EmployerReducer.items && !Array.isArray(EmployerReducer.items)) {
             if (!EmployerReducer.items.isLiveCustomer || EmployerReducer.items.isFutureClient)
                 window.location.href = "/";
@@ -349,7 +352,7 @@ class EmployerDetail extends React.Component {
                     <div className="loader-outer"><div className="loader"></div></div>
                 }
                 {/* <HeaderG></HeaderG> */}
-                <div className="careerfy-job-subheader" style={{ backgroundImage: 'url(' + this.state.companyProfile.companyBackImgUrl + ')',backgroundPosition:'top center' }}>
+                <div className="careerfy-job-subheader" style={{ backgroundImage: 'url(' + this.state.companyProfile.companyBackImgUrl + ')', backgroundPosition: 'top center' }}>
                     <span className="careerfy-banner-transparent" style={{ backgroundImage: 'url' }}></span>
                     <div className="container-fluid">
                         <div className="row">
@@ -358,7 +361,6 @@ class EmployerDetail extends React.Component {
                         </div>
                     </div>
                 </div>
-asfadsfadsf
                 <div className="careerfy-main-content" >
                     <div className="careerfy-main-section">
                         <div className="container-fulid data-container">
@@ -910,4 +912,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps) (withTranslation('translation')(withRouter(EmployerDetail)));
+export default connect(mapStateToProps)(withTranslation('translation')(withRouter(EmployerDetail)));
