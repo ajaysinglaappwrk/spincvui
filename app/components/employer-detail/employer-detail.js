@@ -141,7 +141,7 @@ class EmployerDetail extends React.Component {
                 if (perk) {
                     this.state.perkTitle = perk.title;
                     this.state.text = perk.companyPerkSubcategories.map((subcategory, catindex) => {
-                        return (<div key={catindex} className="perksContent-text"><img src="../assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                        return (<div key={catindex} className="perksContent-text"><img src="../static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                     });
                 }
 
@@ -411,14 +411,14 @@ asfadsfadsf
                                                                                     activePerk: id,
                                                                                     perkTitle: title,
                                                                                     text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                        return (<div className="perksContent-text"><img src="../assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                        return (<div className="perksContent-text"><img src="../static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                     })
                                                                                 })
                                                                             } onMouseEnter={() => this.setState({
                                                                                 activePerk: id,
                                                                                 perkTitle: title,
                                                                                 text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                    return (<div className="perksContent-text"><img src="../assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                    return (<div className="perksContent-text"><img src="../static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                 })
                                                                             })}><p></p>{title} </li>
                                                                     </Fragment >
@@ -817,7 +817,7 @@ asfadsfadsf
                                     </div>
 
                                     <div className="img_magnifier">
-                                        <div className="hoverr_magnifier playhover_btn"><img src="../assets/images/vide_play.png" /></div>
+                                        <div className="hoverr_magnifier playhover_btn"><img src="../static/assets/images/vide_play.png" /></div>
                                     </div>
                                 </div>
                             </div>
@@ -877,7 +877,7 @@ asfadsfadsf
                                         style={{ width: '100%' }} />
                                     <div className="overlay-text"><h6 >{this.getImageLabel(id)}</h6></div>
                                     <div className="img_magnifier">
-                                        <div className="hoverr_magnifier playhover_btn"><img src="../assets/images/vide_play.png" /></div>
+                                        <div className="hoverr_magnifier playhover_btn"><img src="../static/assets/images/vide_play.png" /></div>
                                     </div>
                                 </div>
                             </div>
