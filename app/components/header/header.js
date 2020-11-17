@@ -31,6 +31,7 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
+    i18n.changeLanguage("fr");
     var isLogout = this.getParameterByName('logout');
     if (isLogout) {
       this.logoutUser();
