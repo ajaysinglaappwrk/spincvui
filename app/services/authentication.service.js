@@ -9,6 +9,7 @@ export const authenticationService = {
     login,
     logout,
     resetPassword,
+    setUserSubject,
     currentUser: currentUserSubject.asObservable(),
     get currentUserName() { return currentUserSubject.value != null && currentUserSubject.value.user ? currentUserSubject.value.user.firstName : '' },
     get currentUserId() { return currentUserSubject.value != null && currentUserSubject.value.user ? currentUserSubject.value.user.id : '' },
@@ -25,7 +26,12 @@ export const authenticationService = {
     get currentUserLastName() { return currentUserSubject.value != null && currentUserSubject.value.user ? currentUserSubject.value.user.lastName : '' },
     get currentUserPhoneNumber() { return currentUserSubject.value != null && currentUserSubject.value.user ? currentUserSubject.value.user.phoneNumber : '' },
 
+
 };
+
+function setUserSubject(user) {
+    currentUserSubject.next(user);
+}
 
 function login(data) {
     let axiosConfig = {

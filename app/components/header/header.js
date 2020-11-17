@@ -2,7 +2,7 @@ import React from 'react';
 import Login from '../login/login';
 import Register from '../register/register';
 import ChangePassword from '../profile-management/change-password';
-import {  authenticationService } from '../../services/authentication.service';
+import { authenticationService } from '../../services/authentication.service';
 import Link from 'next/link';
 import { ToastContainer, toast } from "react-toastify";
 
@@ -46,7 +46,6 @@ class Header extends React.Component {
     if (isRegister) {
       this.setState({ registerModal: true });
     }
-
     authenticationService.currentUser.subscribe(user => {
       this.setState({
         isLoggedIn: authenticationService.isUserLoggedIn, loggedInUserName: authenticationService.currentUserName,
@@ -55,9 +54,7 @@ class Header extends React.Component {
         isSocialLogin: authenticationService.isSocialLogin
       })
     });
-
-
-
+    authenticationService.setUserSubject(JSON.parse(localStorage.getItem('currentUser') || '{}'));
   }
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -96,7 +93,7 @@ class Header extends React.Component {
             <div className="row o-mob" style={{ alignItems: 'center' }} >
               <aside className="col-lg-2 col-md-3 col-sm-4 col-xs-6 p-1">
                 <Link href="/" >
-                  <img  className="careerfy-logo" style={{ width: '170px' }} src="https://opsoestorage.blob.core.windows.net/companybackground-stg/Spincv-logo-dark.png" alt="" />
+                  <img className="careerfy-logo" style={{ width: '170px' }} src="https://opsoestorage.blob.core.windows.net/companybackground-stg/Spincv-logo-dark.png" alt="" />
                 </Link>
               </aside>
               <aside className="col-lg-4 col-md-6 col-sm-6 p-3">
@@ -162,7 +159,7 @@ class Header extends React.Component {
                         {!this.state.isLoggedIn && <li> <a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => this.login()}>{i18n.t('Menu.SignIn')}</a></li>}
                       </ul>
                       <ul className="careerfy-user-section user-loginn">
-                        {/* {this.state.isLoggedIn && <li className="username" title={this.state.loggedInUserName}><Link to={"/" + this.state.loggedInCompanyName}>Hey   {(this.state.isCandidateUser || !this.state.loggedInCompanyName) ? this.state.loggedInUserName : this.state.loggedInCompanyName}</Link></li>} */}
+                        {this.state.isLoggedIn && <li className="username" title={this.state.loggedInUserName}><a href={"/" + this.state.loggedInCompanyName}>Hey   {(this.state.isCandidateUser || !this.state.loggedInCompanyName) ? this.state.loggedInUserName : this.state.loggedInCompanyName}</a></li>}
 
                         {
                           <ul className="sub-userlist">
