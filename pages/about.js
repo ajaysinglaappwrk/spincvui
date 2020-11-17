@@ -24,7 +24,6 @@ class About extends React.Component {
 
   
   render() {
-    debugger;
     return (
       <Layout>
           About page

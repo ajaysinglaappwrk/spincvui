@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Axios from 'axios';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, i18n } from '../../../i18n';
 import "react-toastify/dist/ReactToastify.css";
 import Iframe from 'react-iframe';
 import ReactPlayer from 'react-player';
@@ -26,10 +26,9 @@ import { companyService } from '../../../app/services/company.service';
 import { authenticationService } from '../../../app/services/authentication.service';
 import Login from '../../../app/components/login/login';
 import Register from '../../../app/components/register/register';
-import { apiUrl } from '../../../app/config'
-// import i18n from '../../i18next';
-// import JobApply from '../apply-job/apply-job';
-// import Jobs from '../job-listing/jobs-list';
+import { apiUrl } from '../../../app/config';
+import JobApply from '../../../app/components/apply-job/apply-job';
+import Jobs from '../../../app/components/job-listing/jobs-list';
 import Layout from '../../../app/components/Layout';
 import initsStore from '../../../app/store';
 
@@ -135,7 +134,7 @@ class JobDetail extends React.Component {
                     activePerk: perks[0].id,
                     perkTitle: perks[0].title,
                     text: perks[0].companyPerkSubcategories.map((subcategory, catindex) => {
-                        return (<div key={catindex} className="perksContent-text"><img src="/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                        return (<div key={catindex} className="perksContent-text"><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                     })
                 })
             });
@@ -296,7 +295,9 @@ class JobDetail extends React.Component {
                                 <div className="careerfy-column-12">
                                     <div className="careerfy-typo-wrap">
                                         <figure className="careerfy-jobdetail-list">
-                                            <Link href={`/${this.state.data.companyName}`} className="careerfy-jobdetail-listthumb"><img src={this.state.data.companyLogoUrl} alt="" /></Link>
+                                            <Link href={`/${this.state.data.companyName}`}>
+                                                <a className="careerfy-jobdetail-listthumb"><img src={this.state.data.companyLogoUrl} alt={this.state.data.companyName} /></a>
+                                            </Link>
                                             <figcaption>
                                                 <h2 className="Jobtitle-jobdetail">
                                                     {this.state.jobDetail.title}
@@ -371,14 +372,14 @@ class JobDetail extends React.Component {
                                                                                     activePerk: id,
                                                                                     perkTitle: title,
                                                                                     text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                        return (<div className="perksContent-text" key={catindex}><img src="/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                        return (<div className="perksContent-text" key={catindex}><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                     })
                                                                                 })
                                                                             } onMouseEnter={() => this.setState({
                                                                                 activePerk: id,
                                                                                 perkTitle: title,
                                                                                 text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                    return (<div className="perksContent-text" key={catindex}><img src="/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                    return (<div className="perksContent-text" key={catindex}><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                 })
                                                                             })}><p></p>{title} </li>
                                                                     </Fragment >
@@ -432,16 +433,16 @@ class JobDetail extends React.Component {
 
                                         <aside className="careerfy-column-4 jobDetail_sidebar" style={{ marginTop: '-20px' }}>
                                             <div className="careerfy-typo-wrap">
-                                                {/* <JobApply jobId={this.props.match.params.id} currentProfile={this.state.companyProfile}></JobApply> */}
+                                                <JobApply jobId={this.props.router.query.id} currentProfile={this.state.companyProfile}></JobApply>
                                                 {/* <div className="widget widget_add">
                                             <img src="extra-images/jobdetail-add.jpg" alt="" />
                                         </div> */}
                                                 <div className="widget job-ui-common widget_view_jobs">
                                                     <div className="careerfy-widget-title" style={{ margin: '0' }}><h2>D’autres opportunités chez  {this.state.data ? this.state.data.companyName : ''}</h2></div>
-                                                    {/* {
+                                                    {
                                                         this.state.jobs && this.state.jobs.length > 0 &&
                                                         <Jobs jobs={this.state.jobs}></Jobs>
-                                                    } */}
+                                                    }
                                                     <a href={"/" + (this.state.data ? this.state.data.companyName : '') + "/jobs"} className="widget_view_jobs_btn">{i18n.t('EmployeeDetail.ViewAllJobs')} <i className="careerfy-icon careerfy-arrows32"></i></a>
                                                 </div>
                                             </div>

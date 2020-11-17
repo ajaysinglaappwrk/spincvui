@@ -69,7 +69,6 @@ class JobSearch extends React.Component {
         this.customQuery.bind(this);
     }
     static getDerivedStateFromError(error) {
-        debugger;
         // Update state so the next render will show the fallback UI.
         return { hasError: true };
     }
@@ -288,7 +287,6 @@ class JobSearch extends React.Component {
         this.props.history.push(url);
     }
     renderJob(job) {
-        debugger;
         const { i18n } = this.props;
         const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
