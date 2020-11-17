@@ -32,6 +32,8 @@ import {
 } from "react-share";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
+import { withRouter } from 'next/router';
+
 class EmployerDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -90,12 +92,12 @@ class EmployerDetail extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.dispatch(employerActions.getCompanyProfile(this.props.match.params.name));
-        // this.setState({
-        //     nav1: this.slider1,
-        //     nav2: this.slider2,
-        //     isProcessing: true
-        // });
+        this.props.dispatch(employerActions.getCompanyProfile(this.props.router.query.companyname));
+        this.setState({
+            nav1: this.slider1,
+            nav2: this.slider2,
+            isProcessing: true
+        });
         // if (window.location.hostname.substr(0, window.location.hostname.indexOf('.')).toLowerCase() == "gexel") {
         //     document.body.classList.add('gexel-profile')
         // }
@@ -172,7 +174,7 @@ class EmployerDetail extends React.Component {
 
     onTabChange = (tabIndex, url) => {
         this.setState({ innerPage: tabIndex, locationNumber: tabIndex == 6 ? 1 : 0 })
-        this.props.history.push(url);
+        this.props.router.push(url);
         window.scrollTo(0, 200);
     }
     getCompanyAttributeId(attribute) {
@@ -238,7 +240,7 @@ class EmployerDetail extends React.Component {
             if (!EmployerReducer.items.isLiveCustomer || EmployerReducer.items.isFutureClient)
                 window.location.href = "/";
             this.state.isProcessing = false;
-            var currentTab = this.props.match.params.tab;
+            var currentTab = this.props.router.query.tab;
             if (currentTab) {
                 if (currentTab == "team")
                     this.state.innerPage = 2;
@@ -908,4 +910,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default (withTranslation('translation'))(EmployerDetail);
+export default connect(mapStateToProps) (withTranslation('translation')(withRouter(EmployerDetail)));

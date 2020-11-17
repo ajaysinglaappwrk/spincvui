@@ -1,6 +1,6 @@
 import { employerConstants } from '../actions/employer-actions';
 
-export function EmployerReducer(state = {}, action) {
+export default function EmployerReducer(state = {}, action) {
     switch (action.type) {
         case employerConstants.GET_REQUEST:
             return {

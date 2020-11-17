@@ -1,7 +1,8 @@
 import React from 'react';
-import Layout from '../../app/components/Layout';
-import { withTranslation, i18n } from "../../i18n";
-import EmployerDetail from '../../app/components/employer-detail/employer-detail'
+import Layout from '../../../app/components/Layout';
+import { withTranslation, i18n } from "../../../i18n";
+import EmployerDetail from '../../../app/components/employer-detail/employer-detail'
+
 class EmployerDetailPage extends React.Component {
   static getInitialProps = async ({ req }) => {
     const currentLanguage = req ? req.language : i18n.language;
