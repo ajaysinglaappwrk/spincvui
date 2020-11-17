@@ -11,7 +11,7 @@ import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import Iframe from 'react-iframe'
 
 import Jobs from '../job-listing/cluster-jobs';
-import JobSearch from '../../../pages/jobs';
+import JobSearch from '../job-listing/job-search';
 import Whatwedo from './Whatwedo';
 import Meetheteam from './Meettheteam'
 import JobApply from '../apply-job/apply-job';
