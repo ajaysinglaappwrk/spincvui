@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { Link } from "react-router-dom";
 import { withTranslation, i18n }  from '../../../i18n';
 import {
     ReactiveBase,
@@ -148,7 +147,7 @@ class Jobs extends React.Component {
                             <div className="figure_logo"><a href="#"><img src={job.CompanyLogoUrl} alt="" /></a></div>
                             <div className="careerfy-joblisting-text profile-job-desc">
                                 <div className="careerfy-list-option">
-                                    <h2> <Link to={jobDetailUrl}> {title} </Link> </h2>
+                                    <h2> <a href={jobDetailUrl}> {title} </a> </h2>
                                     <ul>
                                         <li><a href="#">{job.CompanyName}</a></li>
                                         <div className="inline_li">
