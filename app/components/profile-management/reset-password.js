@@ -1,11 +1,10 @@
 import React from 'react';
-import i18n from '../../i18next';
 import { authenticationService } from '../../services/authentication.service';
-import { companyService } from '../employer-detail/services/company.service';
-import { registerService } from '../register/services/register.service';
+import { companyService } from '../../services/company.service';
+import { registerService } from '../../services/register.service';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { withTranslation } from '../../../i18n';
+import { withTranslation, i18n } from '../../../i18n';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,7 +18,7 @@ class ResetPassword extends React.Component {
         this.state = {
             loggedInUserName: '',
             loggedInCompanyName: '',
-            isCandidateUser: false,
+            isCandidateUser: true,
             isSocialLogin: false,
             selectedTabValue: 2,
             currentFile: null,
@@ -39,7 +38,7 @@ class ResetPassword extends React.Component {
             this.setState({
                 loggedInUserName: authenticationService.currentUserName,
                 loggedInCompanyName: authenticationService.currentCompanyName,
-                isCandidateUser: authenticationService.isCandidateUser,
+                // isCandidateUser: authenticationService.isCandidateUser,
                 isSocialLogin: authenticationService.isSocialLogin,
             })
         });

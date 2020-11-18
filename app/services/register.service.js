@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { handleResponse } from '../../../helpers/handle-response';
-import { apiUrl } from '.././../../config';
+import { handleResponse } from '../helpers/handle-response';
+import { apiUrl } from '../config';
 
 export const registerService = {
     register,

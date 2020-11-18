@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { registerService } from './services/register.service';
+import { registerService } from '../../services/register.service';
 import FacebookLogin from 'react-facebook-login';
 import { authenticationService } from '../../services/authentication.service';
 import { forgotPasswordUrl } from '../../config'
