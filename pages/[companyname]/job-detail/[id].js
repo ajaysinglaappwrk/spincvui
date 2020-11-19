@@ -31,7 +31,8 @@ import JobApply from '../../../app/components/apply-job/apply-job';
 import Jobs from '../../../app/components/job-listing/jobs-list';
 import Layout from '../../../app/components/Layout';
 import initsStore from '../../../app/store';
-
+import stripHtml from "string-strip-html";
+import Head from 'next/head';
 class JobDetail extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -79,6 +80,7 @@ class JobDetail extends React.Component {
         //TO-DO Need to move to service
         Axios.get(apiUrl + `api/company/GetJobDetailById/${this.props.router.query.id}`)
             .then((result) => {
+                debugger;
                 this.getCompanyPerks(result.data.companyId);
                 var industry = result.data.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
                 this.setState({
@@ -242,13 +244,72 @@ class JobDetail extends React.Component {
     viewCompanyProfile() {
         window.open("/" + this.state.currentJobCompanyName, "_blank")
     }
-    
+
+    makeJobSchema() {
+        debugger;
+        var jobLocations = [];
+        if (this.state.data && this.state.data.jobPostingLocations && this.state.data.jobPostingLocations.length > 0) {
+            json.jobPostingLocations.forEach(function (location) {
+                jobLocations.push({
+                    "@type": "Place",
+                    "address": {
+                        "streetAddress": location.address,
+                        "addressLocality": location.city,
+                        "addressRegion": location.city,
+                        "postalCode": profile.postalCode,
+                    }
+                });
+            });
+
+        }
+        var description = this.state.jobDetail.jobDescription;
+        return JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "JobPosting",
+            "title": "DevOps",
+            "description": !!description ? stripHtml(description) : '',
+            "datePosted": this.state.data.lastModifiedDate,
+            "employmentType": this.state.jobType.jobDescription,
+            "validThrough": this.state.data.publishEndDate,
+            "baseSalary": {
+                "@type": "MonetaryAmount",
+                "value": this.state.data.salaryMin,
+                "currency": this.state.data.currency
+            },
+            "jobLocation": jobLocations,
+            // "jobLocation": {
+            //     "@type": "Place",
+            //     "address": {
+            //         "name": profile.address,
+            //         "addressLocality": profile.city,
+            //         "addressRegion": profile.city,
+            //         "postalCode": profile.postalCode,
+            //         "streetAddress": profile.address
+            //     }
+            // },
+            "hiringOrganization": {
+                "@type": "Organization",
+                "name": this.state.data.companyName,
+                "logo": this.state.data.companyLogoUrl
+            }
+        });
+    }
+
     render() {
+        debugger;
         const { i18n } = this.props;
         const url = "hdf"; // TODO
+        var jobPostingSchema = this.makeJobSchema();
         return (
             <Layout>
+                <head>
 
+                    <script
+                        // key={`jobJSON-${job.id}`}
+                        type='application/ld+json'
+                        dangerouslySetInnerHTML={{ __html: jobPostingSchema }}
+                    />
+                </head>
                 <div className="job-detail-pagee">
 
                     <div className="careerfy-job-subheader" style={{ backgroundImage: 'url(' + (!this.state.data.companyBackImgUrl ? 'https://opsoestorage.blob.core.windows.net/companybackground-stg/img_size.jpg' : this.state.data.companyBackImgUrl) + ')', }}>
