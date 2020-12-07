@@ -501,517 +501,517 @@ class JobSearch extends React.Component {
     render() {
         const { i18n, companyId } = this.props;
         return (
-                <Fragment>
-                    <div className="container">
+            <Fragment>
+                <div className="container">
 
-                        <div className="row">
-                            <div className="col-sm-12 " style={{ marginTop: '50px' }}>
+                    <div className="row">
+                        <div className="col-sm-12 " style={{ marginTop: '50px' }}>
 
-                                <div className="Job-search-tabs-page">
-                                    <ReactiveBase
-                                        app="jobs"
-                                        credentials="cP0z1rykF:9bd95720-8f69-4b0f-a58c-55f17bb3b5a8"
-                                        enableAppbase
-                                        url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
-                                    >
-                                        <ReactiveComponent
-                                            className="GlobalFilter"
-                                            componentId="GlobalQuery"
-                                            value={""}
-                                            customQuery={() => this.customQuery(companyId)}
-                                        />
-                                        <ReactiveComponent
-                                            className="GlobalFilter"
-                                            componentId="JobStoriesQuery"
-                                            value={""}
-                                            customQuery={() => this.fetchJobStoriesQuery()}
-                                        />
-                                        <div className="row">
-                                            <div className="col-sm-4 fixed-filter">
-                                                <div className="desktop-filters">
-                                                    <div className="tab-facets-title">
-                                                        <h2>Filtrer par:</h2>
-                                                    </div>
-                                                    <Tabs transition={false} id="facetstab" onSelect={(k) => this.setKeyFacetsTabs(k)} activeKey={this.state.selectedTabKeyFacets}>
-                                                        <Tab eventKey="general" title={i18n.t('Facets.GeneralFacelLabel')}>
-                                                            <div className="general">
-                                                                <Accordion id="locationAccordian" defaultActiveKey="0" onSelect={e => this.handleSelect(e, "locationAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.LocationFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Locations" componentId="Locations" dataField="Locations.keyword"
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "JobTypeSensor",
-                                                                                                "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }}
-                                                                                        value={this.state.selectedLocations}
-                                                                                        showLoadMore={true} size={1000}
-                                                                                        loadMoreLabel="Plus de résultats"
-                                                                                        placeholder={i18n.t('General.SearchLabel')}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedLocations: result })
-                                                                                        }
-
-                                                                                        }
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedLocations = this.state.selectedLocations;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedLocations != null && selectedLocations.length > 0 && selectedLocations.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                <Accordion defaultActiveKey="-1" id="jobTypeAccordian" onSelect={e => this.handleSelect(e, "jobTypeAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.JobTypeFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs custm-checkbox-filters">
-                                                                                    <MultiList id="jobTypes" filterLabel="Types d’emplois" componentId="JobTypeSensor" dataField={i18n.language == "en" ? "JobTypeEN.keyword" : "JobTypeFR.keyword"}
-                                                                                        showSearch={false}
-                                                                                        value={this.state.selectedJobTypes}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedJobTypes: result })
-                                                                                        }}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }}
-
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedJobTypes = this.state.selectedJobTypes;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedJobTypes != null && selectedJobTypes.length > 0 && selectedJobTypes.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                <Accordion defaultActiveKey="-1" id="IndustriesAccordian" onSelect={e => this.handleSelect(e, "IndustriesAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.ActivityFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Industries" componentId="IndustryfacetSensor" dataField={i18n.language == "en" ? "IndustryNameEN.keyword" : "IndustryNameFR.keyword"}
-                                                                                        showSearch={true} showLoadMore={true} size={1000}
-                                                                                        loadMoreLabel="Plus de résultats"
-                                                                                        value={this.state.selectedIndustries}
-                                                                                        placeholder={i18n.t('General.SearchLabel')}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedIndustries: result })
-                                                                                        }
-                                                                                        }
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }}
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedIndustries = this.state.selectedIndustries;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedIndustries != null && selectedIndustries.length > 0 && selectedIndustries.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                                <Accordion defaultActiveKey="-1" id="SubCategoriesAccordian" onSelect={e => this.handleSelect(e, "SubCategoriesAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.SubcategoryFaceLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Sub Cateogries" componentId="SubCategoryfacetSensor" dataField={i18n.language == "en" ? "SubCategoriesEN.keyword" : "SubCategoriesFR.keyword"}
-                                                                                        showSearch={true} showLoadMore={true} size={1000}
-                                                                                        loadMoreLabel="Plus de résultats"
-                                                                                        value={this.state.selectedSubCategories}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedSubCategories: result })
-                                                                                        }
-                                                                                        }
-                                                                                        placeholder={i18n.t('General.SearchLabel')}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }}
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedSubCategories = this.state.selectedSubCategories;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedSubCategories != null && selectedSubCategories.length > 0 && selectedSubCategories.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                            </div>
-                                                        </Tab>
-                                                        <Tab eventKey="Avantages" title={i18n.t('Facets.AvantageFacelLabel')} >
-                                                            <div className="Avantages">
-                                                                <Accordion defaultActiveKey="0" id="FoodDrinkAccordian" onSelect={e => this.handleSelect(e, "FoodDrinkAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.FoodDrinkFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.FoodDrinkFacet')} componentId="FoodfacetSensor" dataField={i18n.language == "en" ? "FoodDrinkFacetEN.keyword" : "FoodDrinkFacetFR.keyword"}
-                                                                                        value={this.state.selectedFoodFacets}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedFoodFacets: result })
-                                                                                        }
-                                                                                        }
-                                                                                        showSearch={false}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "EnviromentFacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                                <Accordion defaultActiveKey="-1" id="EnviromentAccordian" onSelect={e => this.handleSelect(e, "EnviromentAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.EnviromentFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.EnviromentFacet')} componentId="EnviromentFacetSensor" dataField={i18n.language == "en" ? "EnviromentFacetEN.keyword" : "EnviromentFacetFR.keyword"}
-                                                                                        value={this.state.selectedEnvironmentFacets}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedEnvironmentFacets: result })
-                                                                                        }
-                                                                                        }
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
-                                                                                                "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                <Accordion defaultActiveKey="-1" id="AssurancesFacetAccordian" onSelect={e => this.handleSelect(e, "AssurancesFacetAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.AssurancesFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-
-                                                                                <div className="side-list-bar-jobs">
-
-                                                                                    <MultiList filterLabel={i18n.t('Facets.AssurancesFacet')} componentId="AssurancesFacetSensor" dataField={i18n.language == "en" ? "AssurancesFacetEN.keyword" : "AssurancesFacetFR.keyword"}
-                                                                                        value={this.state.selectedAssurancesFacets}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedAssurancesFacets: result })
-                                                                                        }
-                                                                                        }
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
-                                                                                                "EnviromentFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                                <Accordion defaultActiveKey="-1" id="TransportFacetAccordian" onSelect={e => this.handleSelect(e, "TransportFacetAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.TransportFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.TransportFacet')} componentId="TransportFacetSensor" dataField={i18n.language == "en" ? "TransportFacetEN.keyword" : "TransportFacetFR.keyword"}
-                                                                                        value={this.state.selectedTransportFacets}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedTransportFacets: result })
-                                                                                        }
-                                                                                        }
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
-                                                                                                "EnviromentFacetSensor", "AssurancesFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-
-                                                                <Accordion defaultActiveKey="-1" id="OpenSpaceFacetAccordian" onSelect={e => this.handleSelect(e, "OpenSpaceFacetAccordian")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.OpenSpaceFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.OpenSpaceFacet')} componentId="OpenSpaceFacetSensor" dataField={i18n.language == "en" ? "OpenSpaceEN.keyword" : "OpenSpaceFR.keyword"}
-                                                                                        value={this.state.selectedOpenSpaceFacets}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedOpenSpaceFacets: result })
-                                                                                        }
-                                                                                        }
-
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "Locations",
-                                                                                                "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
-                                                                                                "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "GlobalQuery"]
-                                                                                        }} showSearch={false}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                            </div>
-                                                        </Tab>
-                                                    </Tabs>
-
-
-
-
+                            <div className="Job-search-tabs-page">
+                                <ReactiveBase
+                                    app="jobs"
+                                    credentials="LqovKbCGD:35e56a57-a426-4b1d-827c-8cb45cd12772"
+                                    enableAppbase
+                                    url="https://arc-cluster-spincvalpha-ne22bm.searchbase.io"
+                                >
+                                    <ReactiveComponent
+                                        className="GlobalFilter"
+                                        componentId="GlobalQuery"
+                                        value={""}
+                                        customQuery={() => this.customQuery(companyId)}
+                                    />
+                                    <ReactiveComponent
+                                        className="GlobalFilter"
+                                        componentId="JobStoriesQuery"
+                                        value={""}
+                                        customQuery={() => this.fetchJobStoriesQuery()}
+                                    />
+                                    <div className="row">
+                                        <div className="col-sm-4 fixed-filter">
+                                            <div className="desktop-filters">
+                                                <div className="tab-facets-title">
+                                                    <h2>Filtrer par:</h2>
                                                 </div>
-                                                <button className="filter-mob-btn" onClick={() => this.toggleFilter()}>Filter</button>
-                                            </div>
-                                            {
-                                                this.state.isFilterOpened &&
-                                                <div className={this.state.isFilterOpened ? "mobile-filters fixed-filter mob-fil" : "mob-fil fixed-filter col-sm-4"}>
-                                                    <div className="pop-actionss">
-                                                        <h3>Filtrer par:</h3>
-                                                        <button className="close-mob-btn" onClick={() => this.toggleFilter()}><i className="fa fa-times"></i></button>
-                                                    </div>
-                                                    <Tabs transition={false} id="facetstab" onSelect={(k) => this.setKeyFacetsTabs(k)} activeKey={this.state.selectedTabKeyFacets}>
-                                                        <Tab eventKey="general" title={i18n.t('Facets.GeneralFacelLabel')}>
-                                                            <div className="general">
-                                                                <Accordion id="locationAccordianMob" defaultActiveKey="0" onSelect={e => this.handleSelect(e, "locationAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.LocationFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs  custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Locations" componentId="LocationsMob" dataField="Locations.keyword"
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "JobTypeSensorMob",
-                                                                                                "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }}
-                                                                                        size={1000}
-                                                                                        value={this.state.selectedLocations}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedLocations: result })
-                                                                                        }
-                                                                                        }
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedLocations = this.state.selectedLocations;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedLocations != null && selectedLocations.length > 0 && selectedLocations.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                <Accordion defaultActiveKey="0" id="jobTypeAccordianMob" onSelect={e => this.handleSelect(e, "jobTypeAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.JobTypeFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs  custm-checkbox-filters">
-                                                                                    <MultiList filterLabel=" Types d’emplois" componentId="JobTypeSensorMob" dataField={i18n.language == "en" ? "JobTypeEN.keyword" : "JobTypeFR.keyword"}
-                                                                                        showSearch={false}
-                                                                                        value={this.state.selectedJobTypes}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedJobTypes: result })
-                                                                                        }}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }}
-                                                                                        size={1000}
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedJobTypes = this.state.selectedJobTypes;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedJobTypes != null && selectedJobTypes.length > 0 && selectedJobTypes.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
+                                                <Tabs transition={false} id="facetstab" onSelect={(k) => this.setKeyFacetsTabs(k)} activeKey={this.state.selectedTabKeyFacets}>
+                                                    <Tab eventKey="general" title={i18n.t('Facets.GeneralFacelLabel')}>
+                                                        <div className="general">
+                                                            <Accordion id="locationAccordian" defaultActiveKey="0" onSelect={e => this.handleSelect(e, "locationAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.LocationFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Locations" componentId="Locations" dataField="Locations.keyword"
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "JobTypeSensor",
+                                                                                            "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }}
+                                                                                    value={this.state.selectedLocations}
+                                                                                    showLoadMore={true} size={1000}
+                                                                                    loadMoreLabel="Plus de résultats"
+                                                                                    placeholder={i18n.t('General.SearchLabel')}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedLocations: result })
+                                                                                    }
 
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                {/* <Accordion defaultActiveKey="0">
+                                                                                    }
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedLocations = this.state.selectedLocations;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedLocations != null && selectedLocations.length > 0 && selectedLocations.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="jobTypeAccordian" onSelect={e => this.handleSelect(e, "jobTypeAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.JobTypeFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs custm-checkbox-filters">
+                                                                                <MultiList id="jobTypes" filterLabel="Types d’emplois" componentId="JobTypeSensor" dataField={i18n.language == "en" ? "JobTypeEN.keyword" : "JobTypeFR.keyword"}
+                                                                                    showSearch={false}
+                                                                                    value={this.state.selectedJobTypes}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedJobTypes: result })
+                                                                                    }}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }}
+
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedJobTypes = this.state.selectedJobTypes;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedJobTypes != null && selectedJobTypes.length > 0 && selectedJobTypes.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="IndustriesAccordian" onSelect={e => this.handleSelect(e, "IndustriesAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.ActivityFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Industries" componentId="IndustryfacetSensor" dataField={i18n.language == "en" ? "IndustryNameEN.keyword" : "IndustryNameFR.keyword"}
+                                                                                    showSearch={true} showLoadMore={true} size={1000}
+                                                                                    loadMoreLabel="Plus de résultats"
+                                                                                    value={this.state.selectedIndustries}
+                                                                                    placeholder={i18n.t('General.SearchLabel')}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedIndustries: result })
+                                                                                    }
+                                                                                    }
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "SubCategoryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }}
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedIndustries = this.state.selectedIndustries;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedIndustries != null && selectedIndustries.length > 0 && selectedIndustries.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                            <Accordion defaultActiveKey="-1" id="SubCategoriesAccordian" onSelect={e => this.handleSelect(e, "SubCategoriesAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.SubcategoryFaceLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Sub Cateogries" componentId="SubCategoryfacetSensor" dataField={i18n.language == "en" ? "SubCategoriesEN.keyword" : "SubCategoriesFR.keyword"}
+                                                                                    showSearch={true} showLoadMore={true} size={1000}
+                                                                                    loadMoreLabel="Plus de résultats"
+                                                                                    value={this.state.selectedSubCategories}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedSubCategories: result })
+                                                                                    }
+                                                                                    }
+                                                                                    placeholder={i18n.t('General.SearchLabel')}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "FoodfacetSensor", "EnviromentFacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }}
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedSubCategories = this.state.selectedSubCategories;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedSubCategories != null && selectedSubCategories.length > 0 && selectedSubCategories.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                        </div>
+                                                    </Tab>
+                                                    <Tab eventKey="Avantages" title={i18n.t('Facets.AvantageFacelLabel')} >
+                                                        <div className="Avantages">
+                                                            <Accordion defaultActiveKey="0" id="FoodDrinkAccordian" onSelect={e => this.handleSelect(e, "FoodDrinkAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.FoodDrinkFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.FoodDrinkFacet')} componentId="FoodfacetSensor" dataField={i18n.language == "en" ? "FoodDrinkFacetEN.keyword" : "FoodDrinkFacetFR.keyword"}
+                                                                                    value={this.state.selectedFoodFacets}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedFoodFacets: result })
+                                                                                    }
+                                                                                    }
+                                                                                    showSearch={false}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "EnviromentFacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                            <Accordion defaultActiveKey="-1" id="EnviromentAccordian" onSelect={e => this.handleSelect(e, "EnviromentAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.EnviromentFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.EnviromentFacet')} componentId="EnviromentFacetSensor" dataField={i18n.language == "en" ? "EnviromentFacetEN.keyword" : "EnviromentFacetFR.keyword"}
+                                                                                    value={this.state.selectedEnvironmentFacets}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedEnvironmentFacets: result })
+                                                                                    }
+                                                                                    }
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
+                                                                                            "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="AssurancesFacetAccordian" onSelect={e => this.handleSelect(e, "AssurancesFacetAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.AssurancesFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+
+                                                                            <div className="side-list-bar-jobs">
+
+                                                                                <MultiList filterLabel={i18n.t('Facets.AssurancesFacet')} componentId="AssurancesFacetSensor" dataField={i18n.language == "en" ? "AssurancesFacetEN.keyword" : "AssurancesFacetFR.keyword"}
+                                                                                    value={this.state.selectedAssurancesFacets}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedAssurancesFacets: result })
+                                                                                    }
+                                                                                    }
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
+                                                                                            "EnviromentFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                            <Accordion defaultActiveKey="-1" id="TransportFacetAccordian" onSelect={e => this.handleSelect(e, "TransportFacetAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.TransportFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.TransportFacet')} componentId="TransportFacetSensor" dataField={i18n.language == "en" ? "TransportFacetEN.keyword" : "TransportFacetFR.keyword"}
+                                                                                    value={this.state.selectedTransportFacets}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedTransportFacets: result })
+                                                                                    }
+                                                                                    }
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
+                                                                                            "EnviromentFacetSensor", "AssurancesFacetSensor", "OpenSpaceFacetSensor", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+
+                                                            <Accordion defaultActiveKey="-1" id="OpenSpaceFacetAccordian" onSelect={e => this.handleSelect(e, "OpenSpaceFacetAccordian")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.OpenSpaceFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.OpenSpaceFacet')} componentId="OpenSpaceFacetSensor" dataField={i18n.language == "en" ? "OpenSpaceEN.keyword" : "OpenSpaceFR.keyword"}
+                                                                                    value={this.state.selectedOpenSpaceFacets}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedOpenSpaceFacets: result })
+                                                                                    }
+                                                                                    }
+
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "Locations",
+                                                                                            "JobTypeSensor", "IndustryfacetSensor", "SubCategoryfacetSensor", "FoodfacetSensor",
+                                                                                            "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "GlobalQuery"]
+                                                                                    }} showSearch={false}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                        </div>
+                                                    </Tab>
+                                                </Tabs>
+
+
+
+
+                                            </div>
+                                            <button className="filter-mob-btn" onClick={() => this.toggleFilter()}>Filter</button>
+                                        </div>
+                                        {
+                                            this.state.isFilterOpened &&
+                                            <div className={this.state.isFilterOpened ? "mobile-filters fixed-filter mob-fil" : "mob-fil fixed-filter col-sm-4"}>
+                                                <div className="pop-actionss">
+                                                    <h3>Filtrer par:</h3>
+                                                    <button className="close-mob-btn" onClick={() => this.toggleFilter()}><i className="fa fa-times"></i></button>
+                                                </div>
+                                                <Tabs transition={false} id="facetstab" onSelect={(k) => this.setKeyFacetsTabs(k)} activeKey={this.state.selectedTabKeyFacets}>
+                                                    <Tab eventKey="general" title={i18n.t('Facets.GeneralFacelLabel')}>
+                                                        <div className="general">
+                                                            <Accordion id="locationAccordianMob" defaultActiveKey="0" onSelect={e => this.handleSelect(e, "locationAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.LocationFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs  custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Locations" componentId="LocationsMob" dataField="Locations.keyword"
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "JobTypeSensorMob",
+                                                                                            "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }}
+                                                                                    size={1000}
+                                                                                    value={this.state.selectedLocations}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedLocations: result })
+                                                                                    }
+                                                                                    }
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedLocations = this.state.selectedLocations;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedLocations != null && selectedLocations.length > 0 && selectedLocations.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            <Accordion defaultActiveKey="0" id="jobTypeAccordianMob" onSelect={e => this.handleSelect(e, "jobTypeAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle className="active" as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.JobTypeFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs  custm-checkbox-filters">
+                                                                                <MultiList filterLabel=" Types d’emplois" componentId="JobTypeSensorMob" dataField={i18n.language == "en" ? "JobTypeEN.keyword" : "JobTypeFR.keyword"}
+                                                                                    showSearch={false}
+                                                                                    value={this.state.selectedJobTypes}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedJobTypes: result })
+                                                                                    }}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }}
+                                                                                    size={1000}
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedJobTypes = this.state.selectedJobTypes;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedJobTypes != null && selectedJobTypes.length > 0 && selectedJobTypes.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            {/* <Accordion defaultActiveKey="0">
     <Card>
         <Accordion.Toggle as={Card.Header} eventKey="0">
             Salary Range
@@ -1034,493 +1034,493 @@ class JobSearch extends React.Component {
         </Accordion.Collapse>
     </Card>
 </Accordion> */}
-                                                                <Accordion defaultActiveKey="-1" id="IndustriesAccordianMob" onSelect={e => this.handleSelect(e, "IndustriesAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.ActivityFacetLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs  custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Industries" componentId="IndustryfacetSensorMob" dataField={i18n.language == "en" ? "IndustryNameEN.keyword" : "IndustryNameFR.keyword"}
-                                                                                        showSearch={true} showLoadMore={true} size={5}
-                                                                                        loadMoreLabel="Plus de résultats"
-                                                                                        value={this.state.selectedIndustries}
-                                                                                        onChange={(result) => {
-                                                                                            this.setState({ selectedIndustries: result })
-                                                                                        }
-                                                                                        }
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }}
-                                                                                        size={1000}
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedIndustries = this.state.selectedIndustries;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedIndustries != null && selectedIndustries.length > 0 && selectedIndustries.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="IndustriesAccordianMob" onSelect={e => this.handleSelect(e, "IndustriesAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.ActivityFacetLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs  custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Industries" componentId="IndustryfacetSensorMob" dataField={i18n.language == "en" ? "IndustryNameEN.keyword" : "IndustryNameFR.keyword"}
+                                                                                    showSearch={true} showLoadMore={true} size={5}
+                                                                                    loadMoreLabel="Plus de résultats"
+                                                                                    value={this.state.selectedIndustries}
+                                                                                    onChange={(result) => {
+                                                                                        this.setState({ selectedIndustries: result })
+                                                                                    }
+                                                                                    }
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }}
+                                                                                    size={1000}
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedIndustries = this.state.selectedIndustries;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedIndustries != null && selectedIndustries.length > 0 && selectedIndustries.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
 
-                                                                <Accordion defaultActiveKey="-1" id="SubCategoriesAccordianMob" onSelect={e => this.handleSelect(e, "SubCategoriesAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.SubcategoryFaceLabel')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs  custm-checkbox-filters">
-                                                                                    <MultiList filterLabel="Sub-Catégories" componentId="SubCategoryfacetSensorMob" dataField={i18n.language == "en" ? "SubCategoriesEN.keyword" : "SubCategoriesFR.keyword"}
-                                                                                        showSearch={true} showLoadMore={true} size={5}
-                                                                                        loadMoreLabel="Plus de résultats"
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }}
-                                                                                        size={1000}
-                                                                                        render={({
-                                                                                            loading,
-                                                                                            error,
-                                                                                            data,
-                                                                                            handleChange,
-                                                                                        }) => {
-                                                                                            var selectedSubcategories = this.state.selectedSubCategories;
-                                                                                            return (
-                                                                                                <ul>
-                                                                                                    {
-                                                                                                        data.map(item => (
-                                                                                                            <li>
-                                                                                                                <input
-                                                                                                                    id={item.key}
-                                                                                                                    type="checkbox"
-                                                                                                                    value={item.key}
-                                                                                                                    onChange={handleChange}
-                                                                                                                    checked={selectedSubcategories != null && selectedSubcategories.length > 0 && selectedSubcategories.indexOf(item.key) > -1}
-                                                                                                                />
-                                                                                                                <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
-                                                                                                            </li>
-                                                                                                        ))
-                                                                                                    }
-                                                                                                </ul>
-                                                                                            )
-                                                                                        }}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="SubCategoriesAccordianMob" onSelect={e => this.handleSelect(e, "SubCategoriesAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.SubcategoryFaceLabel')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs  custm-checkbox-filters">
+                                                                                <MultiList filterLabel="Sub-Catégories" componentId="SubCategoryfacetSensorMob" dataField={i18n.language == "en" ? "SubCategoriesEN.keyword" : "SubCategoriesFR.keyword"}
+                                                                                    showSearch={true} showLoadMore={true} size={5}
+                                                                                    loadMoreLabel="Plus de résultats"
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "FoodfacetSensorMob", "EnviromentFacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }}
+                                                                                    size={1000}
+                                                                                    render={({
+                                                                                        loading,
+                                                                                        error,
+                                                                                        data,
+                                                                                        handleChange,
+                                                                                    }) => {
+                                                                                        var selectedSubcategories = this.state.selectedSubCategories;
+                                                                                        return (
+                                                                                            <ul>
+                                                                                                {
+                                                                                                    data.map(item => (
+                                                                                                        <li>
+                                                                                                            <input
+                                                                                                                id={item.key}
+                                                                                                                type="checkbox"
+                                                                                                                value={item.key}
+                                                                                                                onChange={handleChange}
+                                                                                                                checked={selectedSubcategories != null && selectedSubcategories.length > 0 && selectedSubcategories.indexOf(item.key) > -1}
+                                                                                                            />
+                                                                                                            <label for={item.key} className="job-checkbox-title">{item.key}<span>{item.doc_count}</span></label>
+                                                                                                        </li>
+                                                                                                    ))
+                                                                                                }
+                                                                                            </ul>
+                                                                                        )
+                                                                                    }}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                        </div>
+                                                    </Tab>
+                                                    <Tab eventKey="Avantages" title="Avantages" >
+                                                        <div className="Avantages">
+                                                            <Accordion defaultActiveKey="-1" id="FoodDrinkAccordianMob" onSelect={e => this.handleSelect(e, "FoodDrinkAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.FoodDrinkFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.FoodDrinkFacet')} componentId="FoodfacetSensorMob" dataField={i18n.language == "en" ? "FoodDrinkFacetEN.keyword" : "FoodDrinkFacetFR.keyword"}
+                                                                                    showSearch={false}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "EnviromentFacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                            <Accordion defaultActiveKey="-1" id="EnviromentAccordianMob" onSelect={e => this.handleSelect(e, "EnviromentAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.EnviromentFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.EnviromentFacet')} componentId="EnviromentFacetSensorMob" dataField={i18n.language == "en" ? "EnviromentFacetEN.keyword" : "EnviromentFacetFR.keyword"}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
+                                                                                            "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            <Accordion defaultActiveKey="-1" id="AssurancesFacetAccordianMob" onSelect={e => this.handleSelect(e, "AssurancesFacetAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.AssurancesFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+
+                                                                            <div className="side-list-bar-jobs">
+
+                                                                                <MultiList filterLabel={i18n.t('Facets.AssurancesFacet')} componentId="AssurancesFacetSensorMob" dataField={i18n.language == "en" ? "AssurancesFacetEN.keyword" : "AssurancesFacetFR.keyword"}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
+                                                                                            "EnviromentFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+                                                            <Accordion defaultActiveKey="-1" id="TransportFacetAccordianMob" onSelect={e => this.handleSelect(e, "TransportFacetAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.TransportFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.TransportFacet')} componentId="TransportFacetSensorMob" dataField={i18n.language == "en" ? "TransportFacetEN.keyword" : "TransportFacetFR.keyword"}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
+                                                                                            "EnviromentFacetSensorMob", "AssurancesFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
+                                                                                    }} showSearch={false} />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+
+
+                                                            <Accordion defaultActiveKey="-1" id="OpenSpaceFacetAccordianMob" onSelect={e => this.handleSelect(e, "OpenSpaceFacetAccordianMob")}>
+                                                                <Card>
+                                                                    <Accordion.Toggle as={Card.Header} eventKey="0">
+                                                                        {i18n.t('Facets.OpenSpaceFacet')}
+                                                                    </Accordion.Toggle>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                        <Card.Body>
+                                                                            <div className="side-list-bar-jobs">
+                                                                                <MultiList filterLabel={i18n.t('Facets.OpenSpaceFacet')} componentId="OpenSpaceFacetSensorMob" dataField={i18n.language == "en" ? "OpenSpaceEN.keyword" : "OpenSpaceFR.keyword"}
+                                                                                    react={{
+                                                                                        "and": ["SearchSensor", "LocationsMob",
+                                                                                            "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
+                                                                                            "EnviromentFacetSensorMob", "AssurancesFacetSensorMob", "TransportFacetSensorMob", "GlobalQuery"]
+                                                                                    }} showSearch={false}
+                                                                                />
+                                                                            </div>
+                                                                        </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                        </div>
+                                                    </Tab>
+                                                </Tabs>
+
+                                            </div>
+                                        }
+                                        <div className="col-sm-8 job-list-sidebr">
+                                            <SelectedFilters showClearAll={false} />
+                                            <DataSearch showVoiceSearch={true} componentId="SearchSensor" dataField={i18n.language == "en" ?
+                                                ['JobNumber', 'JobNumber.search', 'TitleEN', 'TitleEN.search', 'TitleEN.keyword',
+                                                    'CompanyName', 'CompanyName.search',
+                                                    'IndustryNameEN', 'IndustryNameEN.keyword', 'IndustryNameEN.search',
+                                                    'Locations', 'Locations.keyword', 'Locations.search',
+                                                    'JobDescriptionEN', 'JobDescriptionEN.search', 'JobDescriptionEN.keyword',
+                                                    'JobTypeEN', 'JobTypeEN.keyword', 'JobTypeEN.search', "GlobalQuery"
+                                                ] :
+                                                ['JobNumber', 'JobNumber.search', 'TitleFR', 'TitleFR.search', 'TitleFR.keyword',
+                                                    'CompanyName', 'CompanyName.search',
+                                                    'IndustryNameFR', 'IndustryNameFR.keyword', 'IndustryNameFR.search',
+                                                    'Locations', 'Locations.keyword', 'Locations.search',
+                                                    'JobDescriptionFR', 'JobDescriptionFR.search', 'JobDescriptionFR.keyword',
+                                                    'JobTypeFR', 'JobTypeFR.keyword', 'JobTypeFR.search', "GlobalQuery"
+                                                ]}
+                                                showClear={true}
+                                                placeholder={i18n.t('General.SearchLabel')}
+                                                showFilter={false}
+                                                value={this.state.searchTerm}
+                                                onChange={(value, triggerQuery, event, data) => {
+                                                    this.setState({ searchTerm: value });
+                                                    setTimeout(() => {
+                                                        triggerQuery();
+                                                    }, 3000);
+                                                }}
+                                                // // // debounce="100"
+                                                // onKeyPress={(value, triggerQuery, event) => {
+                                                //     debugger;
+                                                //     var searchText = this.state.searchTerm;
+                                                //     if (!event) {
+                                                //         this.setState({ searchTerm: searchText + value.key });
+                                                //     }
+                                                //     if (value.which == 13) {
+                                                //         triggerQuery();
+                                                //     }
+                                                // }}
+                                                parseSuggestion={(suggestion) => ({
+
+                                                    label: (
+                                                        <Fragment>
+                                                            {
+                                                                i18n.language == "en" && suggestion.source.TitleEN.includes(suggestion.value) && suggestion.source.TitleEN
+                                                            }
+                                                            {
+                                                                i18n.language != "en" && suggestion.source.TitleFR.includes(suggestion.value) &&
+                                                                suggestion.source.TitleFR
+                                                            }
+                                                            {
+                                                                i18n.language == "en" && suggestion.source.IndustryNameEN.includes(suggestion.value) && suggestion.source.IndustryNameEN
+                                                            }
+                                                            {
+                                                                i18n.language != "en" && suggestion.source.IndustryNameFR.includes(suggestion.value) &&
+                                                                suggestion.source.IndustryNameFR
+                                                            }
+                                                            {
+                                                                suggestion.source.Locations && suggestion.source.Locations.length > 0 && suggestion.source.Locations.indexOf(suggestion.value) > -1 &&
+                                                                this.intersperse(suggestion.source.Locations, ", ")
+                                                            }
+                                                            {
+                                                                i18n.language == "en" && suggestion.source.JobTypeEN && suggestion.source.JobTypeEN.length > 0 && suggestion.source.JobTypeEN.indexOf(suggestion.value) > -1 &&
+                                                                this.intersperse(suggestion.source.JobTypeEN, ", ")
+                                                            }
+                                                            {
+                                                                i18n.language != "en" && suggestion.source.JobTypeFR && suggestion.source.JobTypeFR.length > 0 && suggestion.source.JobTypeFR.indexOf(suggestion.value) > -1 &&
+                                                                this.intersperse(suggestion.source.JobTypeFR, ", ")
+                                                            }
+
+                                                            {/* {i18n.language == "en" ? this.intersperse(suggestion.source.JobTypeEN, ", ") : this.intersperse(suggestion.source.JobTypeFR, ", ")} */}
+                                                        </Fragment>
+                                                    ),
+                                                    source: suggestion.source,
+                                                    value: (i18n.language == "en" ? suggestion.source.TitleEN : suggestion.source.TitleFR)
+                                                })}
+
+
+                                            />
+                                            <div className="job-list-tabs">
+                                                <Tabs transition={false} id="noanim-tab-example" onSelect={(k) => this.setKey(k)} activeKey={this.state.selectedTabKey}>
+                                                    <Tab eventKey="alljobs" title={i18n.t('General.PositionsTabLabel')}>
+                                                        <div className="container">
+                                                            <div className="row">
+                                                                <div className="col-sm-12" style={{ marginTop: '50px' }} >
+                                                                    <ReactiveList
+                                                                        componentId="result"
+                                                                        dataField="_score"
+                                                                        scrollOnChange={false}
+                                                                        showResultStats={true}
+                                                                        renderResultStats={
+                                                                            function (stats) {
+                                                                                return (
+                                                                                    `${stats.numberOfResults} ${i18n.t('General.ResultFoundInLabel')} ${stats.time}ms`
+                                                                                )
+                                                                            }
+                                                                        }
+                                                                        react={{
+                                                                            "and": ["Locations", "SearchSensor", "FoodfacetSensor",
+                                                                                "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
+                                                                                "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery"]
+                                                                        }}
+                                                                        renderItem={(job) => {
+                                                                            return (this.renderJob(job))
+                                                                        }}
+                                                                        size={10}
+                                                                        pagination={true}
+                                                                    />
+                                                                </div>
                                                             </div>
-                                                        </Tab>
-                                                        <Tab eventKey="Avantages" title="Avantages" >
-                                                            <div className="Avantages">
-                                                                <Accordion defaultActiveKey="-1" id="FoodDrinkAccordianMob" onSelect={e => this.handleSelect(e, "FoodDrinkAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.FoodDrinkFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.FoodDrinkFacet')} componentId="FoodfacetSensorMob" dataField={i18n.language == "en" ? "FoodDrinkFacetEN.keyword" : "FoodDrinkFacetFR.keyword"}
-                                                                                        showSearch={false}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "EnviromentFacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }} />
+                                                        </div>
+                                                    </Tab>
+                                                    <Tab eventKey="jobstories" title="Job Stories" >
+                                                        <div className="Story-job-outer">
+                                                            <ReactiveList
+                                                                className="Story-job-outer-in"
+                                                                componentId="resultStories"
+                                                                dataField="_score"
+                                                                scrollOnChange={false}
+                                                                react={{
+                                                                    "and": ["Locations", "SearchSensor", "FoodfacetSensor",
+                                                                        "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
+                                                                        "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery", "JobStoriesQuery"]
+                                                                }}
+
+                                                                onData={(data) => this.setData(data)
+                                                                }
+                                                                renderItem={(job) => {
+                                                                    const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
+                                                                    const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
+                                                                    const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
+                                                                    const description = i18n.language == "en" ? job.JobDescriptionEN.substr(0, 250) : job.JobDescriptionFR.substr(0, 250);
+                                                                    const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
+                                                                    // Change to update the UI
+                                                                    return (
+                                                                        <Fragment key={job.JobPostingId}>
+                                                                            {
+                                                                                <div className="inner-story-item"  >
+                                                                                    <div className="thumb-img-job" >
+                                                                                        <img className="Job_thumb" src={!!job.Thumbnail ? job.Thumbnail : 'https://opsoestorage.blob.core.windows.net/companybackground-stg/default_thumbnail.PNG'} />
+                                                                                        <span className="video-icon-hover" onClick={() => this.openJobVideoModal(job.VideoLink, true, job)}><i className="careerfy-icon careerfy-play-button"></i></span>
+
+                                                                                        {
+                                                                                            jobTypes != null && jobTypes.length > 0 &&
+                                                                                            <p className="job_type_p" onClick={() => this.setSelectedJobTypes(jobTypes[0])}>{jobTypes[0]}</p>
+                                                                                            // jobTypes.map((type, index) => {
+
+                                                                                            //     return ()
+                                                                                            // })
+                                                                                        }
+                                                                                        {/* <p className="job_type_p">{this.intersperse(jobTypes, ", ")}</p> */}
+                                                                                        {(!!job.WorkExperienceMin || !!job.WorkexperienceMax) &&
+                                                                                            <p className="job_type_bn">Experience {job.WorkExperienceMin}-{job.WorkexperienceMax} ans</p>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div className="content-job-item">
+                                                                                        <div className="img_title-job">
+                                                                                            <span className="logo-job-ty"><img src={job.CompanyLogoUrl} /></span>
+                                                                                            <div className="titl-des-jobb">
+                                                                                                <h3>{title}</h3>
+                                                                                                <p className="desp-job">
+                                                                                                    <div className="textWidget " dangerouslySetInnerHTML={{ __html: description }} />
+                                                                                                    <a href={jobDetailUrl} className="job-story-link">voir plus</a>
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <ul className="job_Cat_loc">
+                                                                                            <li onClick={() => this.setSelectedIndustries(industry)}><i className="careerfy-icon careerfy-filter-tool-black-shape"></i> {industry}</li>
+                                                                                            <li><i className="careerfy-icon careerfy-maps-and-flags"></i> <span>
+                                                                                                {
+                                                                                                    job.Locations != null && job.Locations.length > 0 &&
+                                                                                                    job.Locations.map((loc, index) => {
+
+                                                                                                        return (<span onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
+                                                                                                    })
+                                                                                                }</span></li>
+                                                                                        </ul>
+
+                                                                                    </div>
                                                                                 </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                                <Accordion defaultActiveKey="-1" id="EnviromentAccordianMob" onSelect={e => this.handleSelect(e, "EnviromentAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.EnviromentFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.EnviromentFacet')} componentId="EnviromentFacetSensorMob" dataField={i18n.language == "en" ? "EnviromentFacetEN.keyword" : "EnviromentFacetFR.keyword"}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
-                                                                                                "AssurancesFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                                <Accordion defaultActiveKey="-1" id="AssurancesFacetAccordianMob" onSelect={e => this.handleSelect(e, "AssurancesFacetAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.AssurancesFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-
-                                                                                <div className="side-list-bar-jobs">
-
-                                                                                    <MultiList filterLabel={i18n.t('Facets.AssurancesFacet')} componentId="AssurancesFacetSensorMob" dataField={i18n.language == "en" ? "AssurancesFacetEN.keyword" : "AssurancesFacetFR.keyword"}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
-                                                                                                "EnviromentFacetSensorMob", "TransportFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-
-                                                                <Accordion defaultActiveKey="-1" id="TransportFacetAccordianMob" onSelect={e => this.handleSelect(e, "TransportFacetAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.TransportFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.TransportFacet')} componentId="TransportFacetSensorMob" dataField={i18n.language == "en" ? "TransportFacetEN.keyword" : "TransportFacetFR.keyword"}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
-                                                                                                "EnviromentFacetSensorMob", "AssurancesFacetSensorMob", "OpenSpaceFacetSensorMob", "GlobalQuery"]
-                                                                                        }} showSearch={false} />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
+                                                                            }
 
 
-                                                                <Accordion defaultActiveKey="-1" id="OpenSpaceFacetAccordianMob" onSelect={e => this.handleSelect(e, "OpenSpaceFacetAccordianMob")}>
-                                                                    <Card>
-                                                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                                                            {i18n.t('Facets.OpenSpaceFacet')}
-                                                                        </Accordion.Toggle>
-                                                                        <Accordion.Collapse eventKey="0">
-                                                                            <Card.Body>
-                                                                                <div className="side-list-bar-jobs">
-                                                                                    <MultiList filterLabel={i18n.t('Facets.OpenSpaceFacet')} componentId="OpenSpaceFacetSensorMob" dataField={i18n.language == "en" ? "OpenSpaceEN.keyword" : "OpenSpaceFR.keyword"}
-                                                                                        react={{
-                                                                                            "and": ["SearchSensor", "LocationsMob",
-                                                                                                "JobTypeSensorMob", "IndustryfacetSensorMob", "SubCategoryfacetSensorMob", "FoodfacetSensorMob",
-                                                                                                "EnviromentFacetSensorMob", "AssurancesFacetSensorMob", "TransportFacetSensorMob", "GlobalQuery"]
-                                                                                        }} showSearch={false}
-                                                                                    />
-                                                                                </div>
-                                                                            </Card.Body>
-                                                                        </Accordion.Collapse>
-                                                                    </Card>
-                                                                </Accordion>
-                                                            </div>
-                                                        </Tab>
-                                                    </Tabs>
-
-                                                </div>
-                                            }
-                                            <div className="col-sm-8 job-list-sidebr">
-                                                <SelectedFilters showClearAll={false} />
-                                                <DataSearch showVoiceSearch={true} componentId="SearchSensor" dataField={i18n.language == "en" ?
-                                                    ['JobNumber', 'JobNumber.search', 'TitleEN', 'TitleEN.search', 'TitleEN.keyword',
-                                                        'CompanyName', 'CompanyName.search',
-                                                        'IndustryNameEN', 'IndustryNameEN.keyword', 'IndustryNameEN.search',
-                                                        'Locations', 'Locations.keyword', 'Locations.search',
-                                                        'JobDescriptionEN', 'JobDescriptionEN.search', 'JobDescriptionEN.keyword',
-                                                        'JobTypeEN', 'JobTypeEN.keyword', 'JobTypeEN.search', "GlobalQuery"
-                                                    ] :
-                                                    ['JobNumber', 'JobNumber.search', 'TitleFR', 'TitleFR.search', 'TitleFR.keyword',
-                                                        'CompanyName', 'CompanyName.search',
-                                                        'IndustryNameFR', 'IndustryNameFR.keyword', 'IndustryNameFR.search',
-                                                        'Locations', 'Locations.keyword', 'Locations.search',
-                                                        'JobDescriptionFR', 'JobDescriptionFR.search', 'JobDescriptionFR.keyword',
-                                                        'JobTypeFR', 'JobTypeFR.keyword', 'JobTypeFR.search', "GlobalQuery"
-                                                    ]}
-                                                    showClear={true}
-                                                    placeholder={i18n.t('General.SearchLabel')}
-                                                    showFilter={false}
-                                                    value={this.state.searchTerm}
-                                                    onChange={(value, triggerQuery, event, data) => {
-                                                        this.setState({ searchTerm: value });
-                                                        setTimeout(() => {
-                                                            triggerQuery();
-                                                        }, 3000);
-                                                    }}
-                                                    // // // debounce="100"
-                                                    // onKeyPress={(value, triggerQuery, event) => {
-                                                    //     debugger;
-                                                    //     var searchText = this.state.searchTerm;
-                                                    //     if (!event) {
-                                                    //         this.setState({ searchTerm: searchText + value.key });
-                                                    //     }
-                                                    //     if (value.which == 13) {
-                                                    //         triggerQuery();
-                                                    //     }
-                                                    // }}
-                                                    parseSuggestion={(suggestion) => ({
-
-                                                        label: (
-                                                            <Fragment>
-                                                                {
-                                                                    i18n.language == "en" && suggestion.source.TitleEN.includes(suggestion.value) && suggestion.source.TitleEN
+                                                                        </Fragment>)
+                                                                }}
+                                                                size={6}
+                                                                pagination={true}
+                                                                renderResultStats={
+                                                                    function (stats) {
+                                                                        return (
+                                                                            `${stats.numberOfResults} résultats trouvés en ${stats.time}ms`
+                                                                        )
+                                                                    }
                                                                 }
-                                                                {
-                                                                    i18n.language != "en" && suggestion.source.TitleFR.includes(suggestion.value) &&
-                                                                    suggestion.source.TitleFR
-                                                                }
-                                                                {
-                                                                    i18n.language == "en" && suggestion.source.IndustryNameEN.includes(suggestion.value) && suggestion.source.IndustryNameEN
-                                                                }
-                                                                {
-                                                                    i18n.language != "en" && suggestion.source.IndustryNameFR.includes(suggestion.value) &&
-                                                                    suggestion.source.IndustryNameFR
-                                                                }
-                                                                {
-                                                                    suggestion.source.Locations && suggestion.source.Locations.length > 0 && suggestion.source.Locations.indexOf(suggestion.value) > -1 &&
-                                                                    this.intersperse(suggestion.source.Locations, ", ")
-                                                                }
-                                                                {
-                                                                    i18n.language == "en" && suggestion.source.JobTypeEN && suggestion.source.JobTypeEN.length > 0 && suggestion.source.JobTypeEN.indexOf(suggestion.value) > -1 &&
-                                                                    this.intersperse(suggestion.source.JobTypeEN, ", ")
-                                                                }
-                                                                {
-                                                                    i18n.language != "en" && suggestion.source.JobTypeFR && suggestion.source.JobTypeFR.length > 0 && suggestion.source.JobTypeFR.indexOf(suggestion.value) > -1 &&
-                                                                    this.intersperse(suggestion.source.JobTypeFR, ", ")
-                                                                }
+                                                            />
+                                                        </div>
+                                                    </Tab>
+                                                    {
+                                                        this.state.localFavJobIds.length > 0 &&
+                                                        <Tab eventKey="favJobs" title="Likes">
 
-                                                                {/* {i18n.language == "en" ? this.intersperse(suggestion.source.JobTypeEN, ", ") : this.intersperse(suggestion.source.JobTypeFR, ", ")} */}
-                                                            </Fragment>
-                                                        ),
-                                                        source: suggestion.source,
-                                                        value: (i18n.language == "en" ? suggestion.source.TitleEN : suggestion.source.TitleFR)
-                                                    })}
-
-
-                                                />
-                                                <div className="job-list-tabs">
-                                                    <Tabs transition={false} id="noanim-tab-example" onSelect={(k) => this.setKey(k)} activeKey={this.state.selectedTabKey}>
-                                                        <Tab eventKey="alljobs" title={i18n.t('General.PositionsTabLabel')}>
                                                             <div className="container">
                                                                 <div className="row">
                                                                     <div className="col-sm-12" style={{ marginTop: '50px' }} >
-                                                                        <ReactiveList
-                                                                            componentId="result"
-                                                                            dataField="_score"
-                                                                            scrollOnChange={false}
-                                                                            showResultStats={true}
-                                                                            renderResultStats={
-                                                                                function (stats) {
-                                                                                    return (
-                                                                                        `${stats.numberOfResults} ${i18n.t('General.ResultFoundInLabel')} ${stats.time}ms`
-                                                                                    )
-                                                                                }
-                                                                            }
-                                                                            react={{
-                                                                                "and": ["Locations", "SearchSensor", "FoodfacetSensor",
-                                                                                    "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
-                                                                                    "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery"]
-                                                                            }}
-                                                                            renderItem={(job) => {
-                                                                                return (this.renderJob(job))
-                                                                            }}
-                                                                            size={10}
-                                                                            pagination={true}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </Tab>
-                                                        <Tab eventKey="jobstories" title="Job Stories" >
-                                                            <div className="Story-job-outer">
-                                                                <ReactiveList
-                                                                    className="Story-job-outer-in"
-                                                                    componentId="resultStories"
-                                                                    dataField="_score"
-                                                                    scrollOnChange={false}
-                                                                    react={{
-                                                                        "and": ["Locations", "SearchSensor", "FoodfacetSensor",
-                                                                            "EnviromentFacetSensor", "AssurancesFacetSensor", "TransportFacetSensor", "OpenSpaceFacetSensor", "JobTypeSensor",
-                                                                            "IndustryfacetSensor", "SubCategoryfacetSensor", "GlobalQuery", "JobStoriesQuery"]
-                                                                    }}
-
-                                                                    onData={(data) => this.setData(data)
-                                                                    }
-                                                                    renderItem={(job) => {
-                                                                        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
-                                                                        const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
-                                                                        const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
-                                                                        const description = i18n.language == "en" ? job.JobDescriptionEN.substr(0, 250) : job.JobDescriptionFR.substr(0, 250);
-                                                                        const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
-                                                                        // Change to update the UI
-                                                                        return (
-                                                                            <Fragment key={job.JobPostingId}>
-                                                                                {
-                                                                                    <div className="inner-story-item"  >
-                                                                                        <div className="thumb-img-job" >
-                                                                                            <img className="Job_thumb" src={!!job.Thumbnail ? job.Thumbnail : 'https://opsoestorage.blob.core.windows.net/companybackground-stg/default_thumbnail.PNG'} />
-                                                                                            <span className="video-icon-hover" onClick={() => this.openJobVideoModal(job.VideoLink, true, job)}><i className="careerfy-icon careerfy-play-button"></i></span>
-
-                                                                                            {
-                                                                                                jobTypes != null && jobTypes.length > 0 &&
-                                                                                                <p className="job_type_p" onClick={() => this.setSelectedJobTypes(jobTypes[0])}>{jobTypes[0]}</p>
-                                                                                                // jobTypes.map((type, index) => {
-
-                                                                                                //     return ()
-                                                                                                // })
-                                                                                            }
-                                                                                            {/* <p className="job_type_p">{this.intersperse(jobTypes, ", ")}</p> */}
-                                                                                            {(!!job.WorkExperienceMin || !!job.WorkexperienceMax) &&
-                                                                                                <p className="job_type_bn">Experience {job.WorkExperienceMin}-{job.WorkexperienceMax} ans</p>
-                                                                                            }
-                                                                                        </div>
-                                                                                        <div className="content-job-item">
-                                                                                            <div className="img_title-job">
-                                                                                                <span className="logo-job-ty"><img src={job.CompanyLogoUrl} /></span>
-                                                                                                <div className="titl-des-jobb">
-                                                                                                    <h3>{title}</h3>
-                                                                                                    <p className="desp-job">
-                                                                                                        <div className="textWidget " dangerouslySetInnerHTML={{ __html: description }} />
-                                                                                                        <a href={jobDetailUrl} className="job-story-link">voir plus</a>
-                                                                                                    </p>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <ul className="job_Cat_loc">
-                                                                                                <li onClick={() => this.setSelectedIndustries(industry)}><i className="careerfy-icon careerfy-filter-tool-black-shape"></i> {industry}</li>
-                                                                                                <li><i className="careerfy-icon careerfy-maps-and-flags"></i> <span>
-                                                                                                    {
-                                                                                                        job.Locations != null && job.Locations.length > 0 &&
-                                                                                                        job.Locations.map((loc, index) => {
-
-                                                                                                            return (<span onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
-                                                                                                        })
-                                                                                                    }</span></li>
-                                                                                            </ul>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                }
-
-
-                                                                            </Fragment>)
-                                                                    }}
-                                                                    size={6}
-                                                                    pagination={true}
-                                                                    renderResultStats={
-                                                                        function (stats) {
-                                                                            return (
-                                                                                `${stats.numberOfResults} résultats trouvés en ${stats.time}ms`
-                                                                            )
+                                                                        {
+                                                                            this.state.localFavJobIds.map((job, index) => {
+                                                                                return (this.renderJob(job));
+                                                                            })
                                                                         }
-                                                                    }
-                                                                />
-                                                            </div>
-                                                        </Tab>
-                                                        {
-                                                            this.state.localFavJobIds.length > 0 &&
-                                                            <Tab eventKey="favJobs" title="Likes">
-
-                                                                <div className="container">
-                                                                    <div className="row">
-                                                                        <div className="col-sm-12" style={{ marginTop: '50px' }} >
-                                                                            {
-                                                                                this.state.localFavJobIds.map((job, index) => {
-                                                                                    return (this.renderJob(job));
-                                                                                })
-                                                                            }
-                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </Tab>
-                                                        }
-                                                    </Tabs>
-                                                </div>
+                                                            </div>
+                                                        </Tab>
+                                                    }
+                                                </Tabs>
                                             </div>
                                         </div>
-                                    </ReactiveBase>
-                                </div>
+                                    </div>
+                                </ReactiveBase>
                             </div>
-                            <ToastContainer autoClose={3000} />
                         </div>
+                        <ToastContainer autoClose={3000} />
+                    </div>
 
 
-                        {this.state.openJobVideo && <div>
-                            <div className="careerfy-modal careerfy-typo-wrap fade-in" id="JobSearchModalSignup">
-                                <div className="modal-inner-area">&nbsp;</div>
-                                <div className="modal-content-area">
-                                    <div className="modal-box-area video-modal">
-                                        <div className="careerfy-modal-title-box">
-                                            <h2>Video</h2>
-                                            <span className="modal-close" onClick={() => this.openJobVideoModal(null, false)}><i className="fa fa-times"></i></span>
+                    {this.state.openJobVideo && <div>
+                        <div className="careerfy-modal careerfy-typo-wrap fade-in" id="JobSearchModalSignup">
+                            <div className="modal-inner-area">&nbsp;</div>
+                            <div className="modal-content-area">
+                                <div className="modal-box-area video-modal">
+                                    <div className="careerfy-modal-title-box">
+                                        <h2>Video</h2>
+                                        <span className="modal-close" onClick={() => this.openJobVideoModal(null, false)}><i className="fa fa-times"></i></span>
+                                    </div>
+                                    <div className="share-icon-video">
+                                        <div className="copy-video-url">
+                                            <input type="text" value={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} />  <CopyToClipboard text={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"}>
+                                                <i class="fa fa-clone" aria-hidden="true"></i>
+                                            </CopyToClipboard>
                                         </div>
-                                        <div className="share-icon-video">
-                                            <div className="copy-video-url">
-                                                <input type="text" value={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} />  <CopyToClipboard text={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"}>
-                                                    <i class="fa fa-clone" aria-hidden="true"></i>
-                                                </CopyToClipboard>
-                                            </div>
-                                            <ul className="careerfy-jobdetail-media">
-                                                <li>{i18n.t('General.ShareButtonLabel')}:</li>
-                                                <li><FacebookShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
-                                                    <FacebookIcon size={25} round={true} />
-                                                </FacebookShareButton></li>
-                                                <li><TwitterShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
-                                                    <TwitterIcon size={25} round={true} />
-                                                </TwitterShareButton></li>
-                                                <li><LinkedinShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
-                                                    <LinkedinIcon size={25} round={true} />
-                                                </LinkedinShareButton></li>
-                                                <li><EmailShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
-                                                    <EmailIcon size={25} round={true} />
-                                                </EmailShareButton></li>
-                                            </ul>
-                                        </div>
-                                        <div className="playerBox">
-                                            {this.state.url.includes("youtu") ? <ReactPlayer url={this.state.url} playing width={1083} height={609} controls style={{ maxWidth: '100%', width: '100%' }} /> : <Iframe className="iframePlayer" url={this.state.url} />}
-                                        </div>
-                                        <div className="Video-actions">
-                                            <button type="submit" className="careerfy-option-btn video-applyJobBtn" onClick={() => this.viewCompanyProfile()}>{i18n.t('General.DiscoverTheCompany')}</button>
-                                            <button type="submit" className="careerfy-option-btn  video-viewCompanyProfile" onClick={() => this.viewJobDetail()}> {i18n.t('General.ApplyJob')}</button>
-                                        </div>
+                                        <ul className="careerfy-jobdetail-media">
+                                            <li>{i18n.t('General.ShareButtonLabel')}:</li>
+                                            <li><FacebookShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                                <FacebookIcon size={25} round={true} />
+                                            </FacebookShareButton></li>
+                                            <li><TwitterShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                                <TwitterIcon size={25} round={true} />
+                                            </TwitterShareButton></li>
+                                            <li><LinkedinShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                                <LinkedinIcon size={25} round={true} />
+                                            </LinkedinShareButton></li>
+                                            <li><EmailShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                                <EmailIcon size={25} round={true} />
+                                            </EmailShareButton></li>
+                                        </ul>
+                                    </div>
+                                    <div className="playerBox">
+                                        {this.state.url.includes("youtu") ? <ReactPlayer url={this.state.url} playing width={1083} height={609} controls style={{ maxWidth: '100%', width: '100%' }} /> : <Iframe className="iframePlayer" url={this.state.url} />}
+                                    </div>
+                                    <div className="Video-actions">
+                                        <button type="submit" className="careerfy-option-btn video-applyJobBtn" onClick={() => this.viewCompanyProfile()}>{i18n.t('General.DiscoverTheCompany')}</button>
+                                        <button type="submit" className="careerfy-option-btn  video-viewCompanyProfile" onClick={() => this.viewJobDetail()}> {i18n.t('General.ApplyJob')}</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        }
                     </div>
-                </Fragment>
+                    }
+                </div>
+            </Fragment>
         );
     }
 }

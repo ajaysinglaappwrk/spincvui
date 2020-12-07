@@ -1,3 +1,3 @@
-export const apiUrl=`https://demowebapispin.azurewebsites.net/`;
-export const spinCVUrl=`https://demowebapispin.azurewebsites.net/`;
-export const forgotPasswordUrl='https://demowebapispin.azurewebsites.net/Account/ForgotPassword'
+export const apiUrl=`https://admin.spincv.com/`;
+export const spinCVUrl=`https://admin.spincv.com/`;
+export const forgotPasswordUrl='https://admin.spincv.com/Account/ForgotPassword'

@@ -19,7 +19,7 @@ import 'react-image-lightbox/style.css'; // This only needs to be imported once 
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from "react-toastify";
 
-import { withRouter } from 'next/router';
+import { withRouter, useRouter } from 'next/router';
 import Link from 'next/link';
 
 import { companyService } from '../../../app/services/company.service';
@@ -34,9 +34,11 @@ import initsStore from '../../../app/store';
 import stripHtml from "string-strip-html";
 import Head from 'next/head';
 class JobDetail extends React.Component {
-    static getInitialProps = async ({ req }) => {
-        const currentLanguage = req ? req.language : i18n.language;
-        return { currentLanguage, namespacesRequired: ["common"] };
+
+    static getInitialProps = async ({ query }) => {
+        const res = await fetch(apiUrl + 'api/company/GetJobDetailById/' + query.id);
+        const json = await res.json()
+        return { jobDetail: json, namespacesRequired: ["common"] };
     };
     constructor(props) {
         super(props);
@@ -80,7 +82,6 @@ class JobDetail extends React.Component {
         //TO-DO Need to move to service
         Axios.get(apiUrl + `api/company/GetJobDetailById/${this.props.router.query.id}`)
             .then((result) => {
-                debugger;
                 this.getCompanyPerks(result.data.companyId);
                 var industry = result.data.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
                 this.setState({
@@ -249,14 +250,14 @@ class JobDetail extends React.Component {
         debugger;
         var jobLocations = [];
         if (this.state.data && this.state.data.jobPostingLocations && this.state.data.jobPostingLocations.length > 0) {
-            json.jobPostingLocations.forEach(function (location) {
+            this.state.data.jobPostingLocations.forEach(function (location) {
                 jobLocations.push({
                     "@type": "Place",
                     "address": {
                         "streetAddress": location.address,
                         "addressLocality": location.city,
                         "addressRegion": location.city,
-                        "postalCode": profile.postalCode,
+                        "postalCode": location.postalCode,
                     }
                 });
             });
@@ -266,8 +267,8 @@ class JobDetail extends React.Component {
         return JSON.stringify({
             "@context": "https://schema.org/",
             "@type": "JobPosting",
-            "title": "DevOps",
-            "description": !!description ? stripHtml(description) : '',
+            "title": this.state.jobDetail.title,
+            "description": this.state.jobDetail.jobDescription,
             "datePosted": this.state.data.lastModifiedDate,
             "employmentType": this.state.jobType.jobDescription,
             "validThrough": this.state.data.publishEndDate,
@@ -297,7 +298,13 @@ class JobDetail extends React.Component {
 
     render() {
         debugger;
-        const { i18n } = this.props;
+        const { i18n, jobDetail } = this.props;
+        var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
+        this.state.data = jobDetail;
+        this.state.jobDetail = jobDetail.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+        this.state.industryName= industry != null ? industry.description : "",
+        this.state.jobType =jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+      
         const url = "hdf"; // TODO
         var jobPostingSchema = this.makeJobSchema();
         return (
