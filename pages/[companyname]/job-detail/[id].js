@@ -31,7 +31,6 @@ import JobApply from '../../../app/components/apply-job/apply-job';
 import Jobs from '../../../app/components/job-listing/jobs-list';
 import Layout from '../../../app/components/Layout';
 import initsStore from '../../../app/store';
-import stripHtml from "string-strip-html";
 import Head from 'next/head';
 class JobDetail extends React.Component {
 
@@ -247,7 +246,6 @@ class JobDetail extends React.Component {
     }
 
     makeJobSchema() {
-        debugger;
         var jobLocations = [];
         if (this.state.data && this.state.data.jobPostingLocations && this.state.data.jobPostingLocations.length > 0) {
             this.state.data.jobPostingLocations.forEach(function (location) {
@@ -297,26 +295,34 @@ class JobDetail extends React.Component {
     }
 
     render() {
-        debugger;
         const { i18n, jobDetail } = this.props;
         var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
         this.state.data = jobDetail;
         this.state.jobDetail = jobDetail.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
-        this.state.industryName= industry != null ? industry.description : "",
-        this.state.jobType =jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
-      
+        this.state.industryName = industry != null ? industry.description : "",
+            this.state.jobType = jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+
         const url = "hdf"; // TODO
         var jobPostingSchema = this.makeJobSchema();
+        // const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + json.locations + " | " + this.state.data.companyName;
+        const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.data.companyName;
         return (
             <Layout>
-                <head>
-
+                <Head>
+                    <meta property="og:title" content="Trouvez l’entreprise qui vous convient job detail" />
+                    <meta property="og:image" content={title} />
+                    <meta property="og:image:width" content="200" />
+                    <meta property="og:image:height" content="200" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:url" content={"/" + this.state.data.companyName + "/job-detail/" + this.state.jobDetail.jobPostingId} />
+                    <meta property="og:description"
+                        content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
                     <script
                         // key={`jobJSON-${job.id}`}
                         type='application/ld+json'
                         dangerouslySetInnerHTML={{ __html: jobPostingSchema }}
                     />
-                </head>
+                </Head>
                 <div className="job-detail-pagee">
 
                     <div className="careerfy-job-subheader" style={{ backgroundImage: 'url(' + (!this.state.data.companyBackImgUrl ? 'https://opsoestorage.blob.core.windows.net/companybackground-stg/img_size.jpg' : this.state.data.companyBackImgUrl) + ')', }}>
