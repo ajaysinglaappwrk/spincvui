@@ -67,7 +67,8 @@ class JobDetail extends React.Component {
             jobType: {},
             currentJobCompanyName: '',
             currentJobId: 0,
-            openJobVideo: false
+            openJobVideo: false,
+            jobLocations: ''
         };
     }
 
@@ -247,8 +248,10 @@ class JobDetail extends React.Component {
 
     makeJobSchema() {
         var jobLocations = [];
+        var joblocationCities = [];
         if (this.state.data && this.state.data.jobPostingLocations && this.state.data.jobPostingLocations.length > 0) {
             this.state.data.jobPostingLocations.forEach(function (location) {
+                joblocationCities.push(location.city);
                 jobLocations.push({
                     "@type": "Place",
                     "address": {
@@ -261,7 +264,7 @@ class JobDetail extends React.Component {
             });
 
         }
-        var description = this.state.jobDetail.jobDescription;
+        this.state.jobLocations = joblocationCities.join(', ');
         return JSON.stringify({
             "@context": "https://schema.org/",
             "@type": "JobPosting",
@@ -276,16 +279,6 @@ class JobDetail extends React.Component {
                 "currency": this.state.data.currency
             },
             "jobLocation": jobLocations,
-            // "jobLocation": {
-            //     "@type": "Place",
-            //     "address": {
-            //         "name": profile.address,
-            //         "addressLocality": profile.city,
-            //         "addressRegion": profile.city,
-            //         "postalCode": profile.postalCode,
-            //         "streetAddress": profile.address
-            //     }
-            // },
             "hiringOrganization": {
                 "@type": "Organization",
                 "name": this.state.data.companyName,
@@ -302,19 +295,20 @@ class JobDetail extends React.Component {
         this.state.industryName = industry != null ? industry.description : "",
             this.state.jobType = jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
 
-        const url = "hdf"; // TODO
+        const url = '';
         var jobPostingSchema = this.makeJobSchema();
-        // const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + json.locations + " | " + this.state.data.companyName;
-        const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.data.companyName;
+
+        const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.jobLocations + " | " + this.state.data.companyName;
+
         return (
             <Layout>
                 <Head>
-                    <meta property="og:title" content="Trouvez l’entreprise qui vous convient job detail" />
-                    <meta property="og:image" content={title} />
+                    <meta property="og:title" content={title} />
+                    <meta property="og:image" content={this.state.data.companyLogoUrl} />
                     <meta property="og:image:width" content="200" />
                     <meta property="og:image:height" content="200" />
                     <meta property="og:type" content="website" />
-                    <meta property="og:url" content={"/" + this.state.data.companyName + "/job-detail/" + this.state.jobDetail.jobPostingId} />
+                    <meta property="og:url" content={"https://www.spincv.com/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId} />
                     <meta property="og:description"
                         content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
                     <script
