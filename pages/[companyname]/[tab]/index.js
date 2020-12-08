@@ -2,12 +2,15 @@ import React from 'react';
 import Layout from '../../../app/components/Layout';
 import { withTranslation, i18n } from "../../../i18n";
 import EmployerDetail from '../../../app/components/employer-detail/employer-detail'
+import { apiUrl } from '../../../app/config';
+import Head from 'next/head';
 
 class EmployerDetailPage extends React.Component {
-  static getInitialProps = async ({ req }) => {
+  static getInitialProps = async ({ req, query }) => {
     const currentLanguage = req ? req.language : i18n.language;
-
-    return { currentLanguage, namespacesRequired: ["common"] };
+    const res = await fetch(apiUrl + 'api/Company/GetCompanyByName/' + query.companyname);
+    const json = await res.json()
+    return { employerDetail: json, currentTab: query.tab, currentLanguage, namespacesRequired: ["common"] };
   };
 
   constructor(props) {
@@ -18,11 +21,19 @@ class EmployerDetailPage extends React.Component {
     };
   }
 
-  
+
   render() {
+    debugger;
     return (
       <Layout>
-         <EmployerDetail></EmployerDetail>
+        <Head>
+          <meta property="og:image" content={this.props.employerDetail.companyLogoUrl} />
+          <meta property="og:image:width" content="200" />
+          <meta property="og:image:height" content="200" />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={"https://www.spincv.com/" + this.props.employerDetail.name + "/" + this.props.currentTab} />
+        </Head>
+        <EmployerDetail></EmployerDetail>
       </Layout>
     );
   }
