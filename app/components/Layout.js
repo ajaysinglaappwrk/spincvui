@@ -24,12 +24,7 @@ const Layout = ({ children }) => (
       <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/images/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="96x96" href="/static/assets/images/favicon-96x96.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/images/favicon-16x16.png" />
-      <meta property="og:title" content="Trouvez l’entreprise qui vous convient" />
-      <meta property="og:image" content="https://opsoestorage.blob.core.windows.net/companybackground-stg/spin-preview.png" />
-      <meta property="og:image:width" content="200" />
-      <meta property="og:image:height" content="200" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="https://www.spincv.com/" />
+      
       <meta property="og:description"
         content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
     </Head>

@@ -2,7 +2,7 @@ import React from 'react';
 import { i18n, withTranslation } from '../i18n';
 import Slider from "react-slick";
 import Layout from '../app/components/Layout';
-
+import Head from 'next/head';
 class JobPosting extends React.Component {
     constructor(props) {
         super(props);
@@ -55,6 +55,14 @@ class JobPosting extends React.Component {
         };
         return (
             <Layout>
+                <Head>
+                    <meta property="og:title" content="Trouvez l’entreprise qui vous convient" />
+                    <meta property="og:image" content="https://opsoestorage.blob.core.windows.net/companybackground-stg/spin-preview.png" />
+                    <meta property="og:image:width" content="200" />
+                    <meta property="og:image:height" content="200" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:url" content="https://www.spincv.com/" />
+                </Head>
                 <div className="post-a-job-page">
                     <div className="page-with-bg">
                         <div className="container">

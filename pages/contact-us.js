@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { companyService } from '../app/services/company.service';
 import { toast, ToastContainer } from 'react-toastify';
 import Layout from '../app/components/Layout';
-
+import Head from 'next/head';
 class ContactUS extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +17,14 @@ class ContactUS extends React.Component {
         const { i18n } = this.props;
         return (
             <Layout>
+                <Head>
+                    <meta property="og:title" content="Trouvez l’entreprise qui vous convient" />
+                    <meta property="og:image" content="https://opsoestorage.blob.core.windows.net/companybackground-stg/spin-preview.png" />
+                    <meta property="og:image:width" content="200" />
+                    <meta property="og:image:height" content="200" />
+                    <meta property="og:type" content="website" />
+                    <meta property="og:url" content="https://www.spincv.com/" />
+                </Head>
                 <div>
                     {
                         this.state.isProcessing &&
