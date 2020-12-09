@@ -27,6 +27,7 @@ class EmployerDetailPage extends React.Component {
     return (
       <Layout>
         <Head>
+          <meta property="og:title" content="Trouvez l’entreprise qui vous convient" />
           <meta property="og:image" content={this.props.employerDetail.companyLogoUrl} />
           <meta property="og:image:width" content="200" />
           <meta property="og:image:height" content="200" />
