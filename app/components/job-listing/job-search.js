@@ -109,12 +109,21 @@ class JobSearch extends React.Component {
                 this.state.openJobVideo = true;
             }
         }
+        //COMMENTING FOR NOW to set up staging env
+        // var currentCookie = this.getCookie("LatLon");
+        // if (!!currentCookie) {
+        //     var splitedValues = currentCookie.split('_');
+        //     this.setState({ latitude: parseFloat(splitedValues[0]), longitude: parseFloat(splitedValues[1]) });
+        // }
+        // else {
+        //     //fetching the latitude and longitudes using navigator method
+        //     navigator.geolocation.watchPosition((position) => {
+        //         this.createCookie("LatLon", (position.coords.latitude + "_" + position.coords.longitude), 5);
+        //         this.setState({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        //     });
+        // }
 
-        
-        //fetching the latitude and longitudes using navigator method
-        navigator.geolocation.watchPosition((position) => {
-            this.setState({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        });
+
 
     }
 
@@ -480,7 +489,32 @@ class JobSearch extends React.Component {
         return params;
     }
 
+    createCookie(name, value, minutes) {
+        if (minutes) {
+            var date = new Date();
+            date.setTime(date.getTime() + (minutes * 60 * 1000));
+            var expires = "; expires=" + date.toGMTString();
+        } else {
+            var expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
 
+    getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
 
     customQuery = function (companyId, props) {
         if (companyId && companyId > 0) {
@@ -493,34 +527,34 @@ class JobSearch extends React.Component {
             }
         }
 
-        if (!this.state.selectedLocations
-            && !this.state.selectedJobTypes
-            && !this.state.selectedSubCategories
-            && !this.state.selectedIndustries
-            && !this.state.selectedFoodFacets
-            && !this.state.selectedEnvironmentFacets
-            && !this.state.selectedAssurancesFacets
-            && !this.state.selectedTransportFacets
-            && !this.state.selectedOpenSpaceFacets && (this.state.latitude && this.state.longitude)) {
-            return {
-                query: {
-                    bool: {
-                        should: [
-                            {
-                                geo_distance: {
-                                    distance: "25km",
-                                    location: {
-                                        lat: 45.60,
-                                        lon: -73.50
-                                    },
-                                    "_name": "point 1"
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        }
+        // if (!this.state.selectedLocations
+        //     && !this.state.selectedJobTypes
+        //     && !this.state.selectedSubCategories
+        //     && !this.state.selectedIndustries
+        //     && !this.state.selectedFoodFacets
+        //     && !this.state.selectedEnvironmentFacets
+        //     && !this.state.selectedAssurancesFacets
+        //     && !this.state.selectedTransportFacets
+        //     && !this.state.selectedOpenSpaceFacets && (this.state.latitude && this.state.longitude)) {
+        //     return {
+        //         query: {
+        //             bool: {
+        //                 should: [
+        //                     {
+        //                         geo_distance: {
+        //                             distance: "25km",
+        //                             location: {
+        //                                 lat: this.state.latitude,
+        //                                 lon: this.state.longitude
+        //                             },
+        //                             "_name": "point 1"
+        //                         }
+        //                     }
+        //                 ]
+        //             }
+        //         }
+        //     }
+        // }
         // else {
         //     return {
         //         "sort": {
@@ -573,9 +607,9 @@ class JobSearch extends React.Component {
                                     this.state.latitude && this.state.longitude &&
                                     <ReactiveBase
                                         app="jobs"
-                                        credentials="LqovKbCGD:35e56a57-a426-4b1d-827c-8cb45cd12772"
+                                        credentials="cP0z1rykF:9bd95720-8f69-4b0f-a58c-55f17bb3b5a8"
                                         enableAppbase
-                                        url="https://arc-cluster-spincvalpha-ne22bm.searchbase.io"
+                                        url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
                                     >
                                         {
                                             <ReactiveComponent
@@ -636,7 +670,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -689,7 +723,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -742,7 +776,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -797,7 +831,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1005,7 +1039,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1057,7 +1091,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1135,7 +1169,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1185,7 +1219,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1493,7 +1527,7 @@ class JobSearch extends React.Component {
                                                                                                         job.Locations != null && job.Locations.length > 0 &&
                                                                                                         job.Locations.map((loc, index) => {
 
-                                                                                                            return (<span onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
+                                                                                                            return (<span key={index} onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
                                                                                                         })
                                                                                                     }</span></li>
                                                                                             </ul>
@@ -1551,9 +1585,9 @@ class JobSearch extends React.Component {
                                     !this.state.latitude && !this.state.longitude &&
                                     <ReactiveBase
                                         app="jobs"
-                                        credentials="LqovKbCGD:35e56a57-a426-4b1d-827c-8cb45cd12772"
+                                        credentials="cP0z1rykF:9bd95720-8f69-4b0f-a58c-55f17bb3b5a8"
                                         enableAppbase
-                                        url="https://arc-cluster-spincvalpha-ne22bm.searchbase.io"
+                                        url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
                                     >
                                         {
                                             <ReactiveComponent
@@ -1614,7 +1648,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1667,7 +1701,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1720,7 +1754,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1775,7 +1809,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -1983,7 +2017,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -2035,7 +2069,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -2113,7 +2147,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -2163,7 +2197,7 @@ class JobSearch extends React.Component {
                                                                                                 <ul>
                                                                                                     {
                                                                                                         data.map(item => (
-                                                                                                            <li>
+                                                                                                            <li key={item.key}>
                                                                                                                 <input
                                                                                                                     id={item.key}
                                                                                                                     type="checkbox"
@@ -2471,7 +2505,7 @@ class JobSearch extends React.Component {
                                                                                                         job.Locations != null && job.Locations.length > 0 &&
                                                                                                         job.Locations.map((loc, index) => {
 
-                                                                                                            return (<span onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
+                                                                                                            return (<span key={index} onClick={() => this.setSelectedLocations(loc)}>{loc} &nbsp;</span>)
                                                                                                         })
                                                                                                     }</span></li>
                                                                                             </ul>

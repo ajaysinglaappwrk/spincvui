@@ -201,9 +201,9 @@ class Jobs extends React.Component {
 
                             <ReactiveBase
                                 app="jobs"
-                                credentials="LqovKbCGD:35e56a57-a426-4b1d-827c-8cb45cd12772"
+                                credentials="cP0z1rykF:9bd95720-8f69-4b0f-a58c-55f17bb3b5a8"
                                 enableAppbase
-                                url="https://arc-cluster-spincvalpha-ne22bm.searchbase.io"
+                                url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
                             >
                                 {
                                     this.props.showFacet &&
