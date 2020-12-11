@@ -29,7 +29,8 @@ import {
     EmailShareButton
 } from "react-share";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import Axios from 'axios';
+import { apiUrl } from '../../../app/config';
 class JobSearch extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -110,18 +111,23 @@ class JobSearch extends React.Component {
             }
         }
         //COMMENTING FOR NOW to set up staging env
-        // var currentCookie = this.getCookie("LatLon");
-        // if (!!currentCookie) {
-        //     var splitedValues = currentCookie.split('_');
-        //     this.setState({ latitude: parseFloat(splitedValues[0]), longitude: parseFloat(splitedValues[1]) });
-        // }
-        // else {
-        //     //fetching the latitude and longitudes using navigator method
-        //     navigator.geolocation.watchPosition((position) => {
-        //         this.createCookie("LatLon", (position.coords.latitude + "_" + position.coords.longitude), 5);
-        //         this.setState({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        //     });
-        // }
+        var currentCookie = this.getCookie("LatLon");
+        if (!!currentCookie) {
+            var splitedValues = currentCookie.split('_');
+            this.setState({ latitude: parseFloat(splitedValues[0]), longitude: parseFloat(splitedValues[1]) });
+        }
+        else {
+            //fetching the latitude and longitudes using navigator method
+            Axios.get(apiUrl + `api/company/GetCenterLatLng`)
+                .then((result) => {
+                    this.createCookie("LatLon", (result.data.latitude + "_" + result.data.longitude), 5);
+                    this.setState({ latitude: result.data.latitude, longitude: result.data.longitude });
+                });
+            // navigator.geolocation.watchPosition((position) => {
+            //     this.createCookie("LatLon", (position.coords.latitude + "_" + position.coords.longitude), 5);
+            //     this.setState({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+            // });
+        }
 
 
 
@@ -527,34 +533,34 @@ class JobSearch extends React.Component {
             }
         }
 
-        // if (!this.state.selectedLocations
-        //     && !this.state.selectedJobTypes
-        //     && !this.state.selectedSubCategories
-        //     && !this.state.selectedIndustries
-        //     && !this.state.selectedFoodFacets
-        //     && !this.state.selectedEnvironmentFacets
-        //     && !this.state.selectedAssurancesFacets
-        //     && !this.state.selectedTransportFacets
-        //     && !this.state.selectedOpenSpaceFacets && (this.state.latitude && this.state.longitude)) {
-        //     return {
-        //         query: {
-        //             bool: {
-        //                 should: [
-        //                     {
-        //                         geo_distance: {
-        //                             distance: "25km",
-        //                             location: {
-        //                                 lat: this.state.latitude,
-        //                                 lon: this.state.longitude
-        //                             },
-        //                             "_name": "point 1"
-        //                         }
-        //                     }
-        //                 ]
-        //             }
-        //         }
-        //     }
-        // }
+        if (!this.state.selectedLocations
+            && !this.state.selectedJobTypes
+            && !this.state.selectedSubCategories
+            && !this.state.selectedIndustries
+            && !this.state.selectedFoodFacets
+            && !this.state.selectedEnvironmentFacets
+            && !this.state.selectedAssurancesFacets
+            && !this.state.selectedTransportFacets
+            && !this.state.selectedOpenSpaceFacets && (this.state.latitude && this.state.longitude)) {
+            return {
+                query: {
+                    bool: {
+                        should: [
+                            {
+                                geo_distance: {
+                                    distance: "25km",
+                                    location: {
+                                        lat: this.state.latitude,
+                                        lon: this.state.longitude
+                                    },
+                                    "_name": "point 1"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
         // else {
         //     return {
         //         "sort": {
@@ -611,6 +617,7 @@ class JobSearch extends React.Component {
                                         enableAppbase
                                         url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
                                     >
+
                                         {
                                             <ReactiveComponent
                                                 className="GlobalFilter"
@@ -1589,6 +1596,7 @@ class JobSearch extends React.Component {
                                         enableAppbase
                                         url="https://readonly:spincv_2020!@sandboxjobs-ythbjhr-arc.searchbase.io"
                                     >
+
                                         {
                                             <ReactiveComponent
                                                 className="GlobalFilter"
