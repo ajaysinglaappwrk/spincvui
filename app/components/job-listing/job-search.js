@@ -120,7 +120,7 @@ class JobSearch extends React.Component {
             //fetching the latitude and longitudes using navigator method
             Axios.get(apiUrl + `api/company/GetCenterLatLng`)
                 .then((result) => {
-                    this.createCookie("LatLon", (result.data.latitude + "_" + result.data.longitude), 5);
+                    this.createCookie("LatLon", (result.data.latitude + "_" + result.data.longitude), 360); // here 360 is passed to store cookie value for 6 hours
                     this.setState({ latitude: result.data.latitude, longitude: result.data.longitude });
                 });
             // navigator.geolocation.watchPosition((position) => {
