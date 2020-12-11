@@ -533,7 +533,17 @@ class JobSearch extends React.Component {
             }
         }
     }
-    customQuery = function () {
+    customQuery = function (companyId) {
+
+        if (companyId && companyId > 0) {
+            return {
+                query: {
+                    term: {
+                        "CompanyId": companyId
+                    }
+                }
+            }
+        }
         if (!this.state.selectedLocations
             && !this.state.selectedJobTypes
             && !this.state.selectedSubCategories
@@ -632,7 +642,7 @@ class JobSearch extends React.Component {
                                                 className="GlobalFilter"
                                                 componentId="GlobalQuery"
                                                 value={""}
-                                                customQuery={props => this.customQuery()}
+                                                customQuery={props => this.customQuery(companyId)}
 
                                             />
                                         }
