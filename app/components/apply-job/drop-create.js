@@ -3,6 +3,9 @@ import { i18n, withTranslation } from '../../../i18n';
 import { Formik, Field, Form, ErrorMessage, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 import { Modal, Button } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import Dropzone from 'react-dropzone';
+import { bindCallback } from 'rxjs';
 
 class DropCreate extends React.Component {
 
@@ -13,8 +16,13 @@ class DropCreate extends React.Component {
             isDropped: false,
             isCreate: false,
             resume: {},
-            candidate: { firstName: '', lastName: '', email: '', phonenumber: '', file: null }
+            candidate: { firstName: '', lastName: '', email: '', phonenumber: '', file: null },
+            imagePath: '../../../static/assets/images/favicon.ico'
         }
+
+        this.onDrop = (file) => {
+            this.uploadFile(file);
+        };
     }
 
     dropResume() {
@@ -36,6 +44,38 @@ class DropCreate extends React.Component {
         this.setState({ isCreate: !this.state.isCreate });
     }
 
+    getUploadParams = () => {
+        return { url: 'https://httpbin.org/post' }
+    }
+
+    handleChangeStatus = ({ meta, remove }, status) => {
+        if (status === 'headers_received') {
+            toast(`${meta.name} uploaded!`)
+            remove()
+        } else if (status === 'aborted') {
+            toast(`${meta.name}, upload failed...`)
+        }
+    }
+
+    uploadFile(file) {
+        if (file.length == 1) {
+            var file = file[0];
+            var pattern = /\.(pdf|doc|docx)$/i;
+            if (!file.name.match(pattern)) {
+                toast.error(i18n.t('Messages.InvalidFileError'));
+                return false;
+            } else {
+                this.setState({
+                    currentFile: file
+                });
+                this.dropResume();
+            }
+        } else {
+            toast.error(i18n.t('Messages.InvalidFileError'));
+            return false;
+        }
+    }
+
     render() {
         let validationSchema = {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
@@ -52,10 +92,27 @@ class DropCreate extends React.Component {
                                 <div className="careerfy-page-title">
                                     <div className="post-banner-overlay-text">
                                         <div className="post-text-left">
-                                            <input type="file" onChange={(event) => {
-                                                this.setState({ currentFile: event.currentTarget.files[0] });
-                                                this.dropResume();
-                                            }} className="form-control" />
+                                            {/* <label for="file">fgdsfvbfdf</label>
+                                            <input id="file" type="file" style={{width: "500px", height: "220px"}} onChange={(event) => {
+                                                this.uploadFile(event);
+                                            }} className="form-control" /> */}
+                                            <Dropzone onDrop={this.onDrop}
+                                                maxFiles={1}
+                                                multiple={false}
+                                                canCancel={false}
+                                                styles={{
+                                                    dropzone: { width: 400, height: 200 },
+                                                    dropzoneActive: { borderColor: 'green' },
+                                                  }}>
+                                                {({ getRootProps, getInputProps }) => (
+                                                    <section className="container">
+                                                        <div {...getRootProps({ className: 'dropzone' })}>
+                                                            <input {...getInputProps()} />
+                                                            <p>Drop CV</p>
+                                                        </div>
+                                                    </section>
+                                                )}
+                                            </Dropzone>
                                         </div>
                                         <div className="post-text-right">
                                             <Button variant="primary" onClick={() => this.createResume()}>
