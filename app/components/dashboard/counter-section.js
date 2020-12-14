@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { withTranslation } from '../../../i18n';
 import { companyService } from '../../services/company.service'
+import DropCreate from '../apply-job/drop-create';
 
 class CounterSection extends React.Component {
     constructor(props) {
@@ -54,6 +55,9 @@ class CounterSection extends React.Component {
         var futureClients = this.state.companies.filter(x => x.isFutureClient == true);
         return (
             <div className="row " style={{ marginBottom: '3em' }} >
+                <div>
+                    <DropCreate></DropCreate>
+                </div>
                 <div className="col-md-12" style={{ marginTop: '3em' }} >
                     <section className="careerfy-fancy-title">
                         <h2>{i18n.t('Banner.FindCompanyLabel')}</h2>
@@ -79,7 +83,7 @@ class CounterSection extends React.Component {
                                                 <figure><img src={company.companyLogoUrl} alt="" /></figure>
                                                 <div className="careerfy-blog-grid-text">
                                                     <div className="careerfy-blog-tag"> <a href={company.name}>{industry ? industry.description : ""} </a> </div>
-                                                    <h2 style={{height:"90px"}}>{company.displayName}</h2>
+                                                    <h2 style={{ height: "90px" }}>{company.displayName}</h2>
                                                     <div className="textWidget" dangerouslySetInnerHTML={{ __html: companyDesc }} />
                                                     <a className="read-more-btn" href={profileUrl}>{i18n.t('Banner.SeeMoreBtnText')} </a>
                                                     <span className="careerfy-read-more careerfy-bgcolor">{i18n.t('Banner.ViewProfilBtnText')}</span>
@@ -119,7 +123,7 @@ class CounterSection extends React.Component {
                                                         <figure><img src={company.companyLogoUrl} alt="" /></figure>
                                                         <div className="careerfy-blog-grid-text">
                                                             <div className="careerfy-blog-tag"> <a>{industry ? industry.description : ""} </a> </div>
-                                                            <h2 style={{height:"90px"}}>{company.displayName}</h2>
+                                                            <h2 style={{ height: "90px" }}>{company.displayName}</h2>
                                                             <div className="textWidget" dangerouslySetInnerHTML={{ __html: companyDesc }} />
                                                             <a className="read-more-btn">{i18n.t('Banner.SeeMoreBtnText')} </a>
                                                             <span className="careerfy-read-more careerfy-bgcolor">{i18n.t('Banner.FutureClientBtnText')}</span>
