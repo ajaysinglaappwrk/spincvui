@@ -41,7 +41,7 @@ class DropCreate extends React.Component {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
             lastName: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
             email: Yup.string().required(i18n.t('Validations.EmailValidationLabel')).email(i18n.t('Validations.InvalidEmailValidationLabel')),
-            phonenumber: Yup.string().required("Phone Number is Required."),
+            phonenumber: Yup.string()
         }
         return (
             <div>
@@ -131,7 +131,7 @@ class DropCreate extends React.Component {
                                                         <ErrorMessage name="lastName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
-                                                        <label>{i18n.t('LoginLabel.LoginLabel')}</label>
+                                                        <label>{i18n.t('Login.LoginLabel')}</label>
                                                         <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="email" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
@@ -141,7 +141,7 @@ class DropCreate extends React.Component {
                                                         <ErrorMessage name="phonenumber" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
-                                                        <input type="submit" value={i18n.t('Login.LoginButton1')} />
+                                                        <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />
                                                     </li>
                                                 </ul>
                                             </div>
