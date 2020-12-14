@@ -99,14 +99,8 @@ class DropCreate extends React.Component {
                                         formData.append("phonenumber", phonenumber);
                                         formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
-                                        console.log('formData firstName : ', formData.get("firstName"));
-                                        console.log('formData lastName : ', formData.get("lastName"));
-                                        console.log('formData email : ', formData.get("email"));
-                                        console.log('formData phonenumber : ', formData.get("phonenumber"));
-                                        console.log('formData id : ', formData.get("id"));
-                                        console.log('formData file : ', formData.get("file"));
-                                    }}
-                                    render={({ errors, status, touched, isSubmitting }) => (
+                                    }}>
+                                    {({ errors, status, touched, isSubmitting }) => (
                                         <Form>
                                             <div className="careerfy-user-form careerfy-user-form-coltwo">
                                                 {
@@ -148,7 +142,7 @@ class DropCreate extends React.Component {
 
                                         </Form>
                                     )}
-                                />
+                                </Formik>
                             </div>
                         </div>
                     </div>
