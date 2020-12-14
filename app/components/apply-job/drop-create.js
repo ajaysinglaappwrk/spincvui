@@ -38,8 +38,8 @@ class DropCreate extends React.Component {
 
     render() {
         let validationSchema = {
-            firstname: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
-            lastname: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
+            firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
+            lastName: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
             email: Yup.string().required(i18n.t('Validations.EmailValidationLabel')).email(i18n.t('Validations.InvalidEmailValidationLabel')),
             phonenumber: Yup.string().required("Phone Number is Required."),
         }
@@ -90,7 +90,7 @@ class DropCreate extends React.Component {
                                 <Formik
                                     initialValues={this.state.candidate}
                                     validationSchema={Yup.object().shape(validationSchema)}
-                                    onSubmit={({ name, email, phonenumber }, { setStatus, setSubmitting }) => {
+                                    onSubmit={({ firstName, lastName, email, phonenumber }, { setStatus, setSubmitting }) => {
                                         setStatus();
                                         const formData = new FormData();
                                         formData.append("firstName", firstName);
@@ -121,27 +121,27 @@ class DropCreate extends React.Component {
                                                 }
                                                 <ul>
                                                     <li className="company-name-field">
-                                                        <label>First Name</label>
+                                                        <label>{i18n.t('Register.RegisterLabel')}</label>
                                                         <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="firstName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li className="company-name-field">
-                                                        <label>Last Name</label>
+                                                        <label>{i18n.t('Register.RegisterLabel1')}:</label>
                                                         <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="lastName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
-                                                        <label>Email</label>
+                                                        <label>{i18n.t('LoginLabel.LoginLabel')}</label>
                                                         <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="email" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
-                                                        <label>Phone Number:</label>
+                                                        <label>{i18n.t('Register.RegisterLabel3')}</label>
                                                         <Field name="phonenumber" type="text" className={'form-control' + (errors.phonenumber && touched.phonenumber ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="phonenumber" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
-                                                        <input type="submit" value="Save" />
+                                                        <input type="submit" value={i18n.t('Login.LoginButton1')} />
                                                     </li>
                                                 </ul>
                                             </div>
