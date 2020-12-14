@@ -18,7 +18,8 @@ export const companyService = {
     contactUs,
     uploadResume,
     getResume,
-    deleteResume
+    deleteResume,
+    sendCVToCompany
 };
 
 function getCompanyProfile(name) {
@@ -168,6 +169,15 @@ function applyForJob(model, jobId, companyId) {
             return result;
         });
 }
+
+function sendCVToCompany(formData) {
+    return axios.post(encodeURI(apiUrl + "Api/Company/SendCVToCompany"), formData)
+        .then(handleResponse)
+        .then(result => {
+            return result;
+        });
+}
+
 function uploadResume(file) {
 
     let formData = new FormData();
