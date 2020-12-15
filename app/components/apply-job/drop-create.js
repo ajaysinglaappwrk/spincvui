@@ -6,6 +6,7 @@ import { Modal, Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
 import { bindCallback } from 'rxjs';
+import { companyService } from '../../services/company.service';
 
 class DropCreate extends React.Component {
 
@@ -147,15 +148,20 @@ class DropCreate extends React.Component {
                                 <Formik
                                     initialValues={this.state.candidate}
                                     validationSchema={Yup.object().shape(validationSchema)}
-                                    onSubmit={({ firstName, lastName, email, phonenumber }, { setStatus, setSubmitting }) => {
+                                    onSubmit={({ firstName, lastName, email, phonenumber }, { setStatus, resetForm }) => {
                                         setStatus();
                                         const formData = new FormData();
                                         formData.append("firstName", firstName);
                                         formData.append("lastName", lastName);
                                         formData.append("email", email);
                                         formData.append("phonenumber", phonenumber);
-                                        formData.append("id", 0);
+                                        // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
+
+                                        companyService.sendCVToCompany(formData).then((res)=>{
+                                            resetForm();
+                                        })
+
                                     }}>
                                     {({ errors, status, touched, isSubmitting }) => (
                                         <Form>
