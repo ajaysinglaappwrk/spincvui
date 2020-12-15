@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { i18n, withTranslation } from '../../../i18n';
-import { Formik, Field, Form, ErrorMessage, yupToFormErrors } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Modal, Button } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import { Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
-import { bindCallback } from 'rxjs';
 import { companyService } from '../../services/company.service';
 
 class DropCreate extends React.Component {
@@ -104,7 +103,7 @@ class DropCreate extends React.Component {
                                                 styles={{
                                                     dropzone: { width: 400, height: 200 },
                                                     dropzoneActive: { borderColor: 'green' },
-                                                  }}>
+                                                }}>
                                                 {({ getRootProps, getInputProps }) => (
                                                     <section className="container">
                                                         <div {...getRootProps({ className: 'dropzone' })}>
@@ -158,8 +157,14 @@ class DropCreate extends React.Component {
                                         // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
 
-                                        companyService.sendCVToCompany(formData).then((res)=>{
+                                        companyService.sendCVToCompany(formData).then((res) => {
                                             resetForm();
+                                            if (this.state.isDropped) {
+                                                this.closeDropSection();
+                                            }
+                                            if (this.state.isCreate) {
+                                                this.closeCreateResumeSection();
+                                            }
                                         })
 
                                     }}>

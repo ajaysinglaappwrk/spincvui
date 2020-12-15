@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { i18n, withTranslation } from '../i18n';
 import Slider from "react-slick";
 import Layout from '../app/components/Layout';
 import Head from 'next/head';
+import { companyService } from '../app/services/company.service'
+
 class JobPosting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            companies: [],
             imageData: [
                 { path: '/static/assets/images/slide-img-1.png', title: "Montrez le visage humain de votre entreprise", listItems: "<li>Interview vidéo avec vos employés qui expliquent pourquoi rejoindre votre entreprise est super</li><li> Photo de vos employés dans leur environnement de travail</li>" },
                 { path: '/static/assets/images/slide-img-2.png', title: "Faites voir votre environnement de travail", listItems: "<li>Vidéos et photos de vos bureaux, cafétériat, ….</li><li>Visite 3D (possibilité d'inclure dans google maps) </li><li> Vidéo de drône pour montrer votre building</li>" },
@@ -27,6 +30,13 @@ class JobPosting extends React.Component {
             ]
         }
     }
+
+    componentDidMount() {
+        companyService.getDashboardCompanies().then((res) => {
+            this.setState({ companies: res });
+        })
+    }
+
     render() {
         var settings = {
             dots: true,
@@ -53,6 +63,7 @@ class JobPosting extends React.Component {
                 }
             ]
         };
+        var permanentClients = this.state.companies.filter(x => x.isFutureClient != true);
         return (
             <Layout>
                 <Head>
@@ -271,16 +282,28 @@ class JobPosting extends React.Component {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="careerfy-service-slider1">
-                                    <section className="careerfy-fancy-title">
-                                        <h2>{i18n.t('PostJob.ClientsTitle')}</h2>
-                                    </section>
-                                    <div className="post-job-clients">
-
-                                        <ul className="clients-logo">
-                                            <li><a href="/OVHCloud"><img src="/static/assets/images/ovh-logo.png" alt="icon" /></a></li>
-                                            <li><a href="/Humanify360"><img src="/static/assets/images/humanify-logo.png" alt="icon" /></a></li>
-                                        </ul>
-                                    </div>
+                                    {
+                                        permanentClients && permanentClients.length > 0 &&
+                                        <Fragment>
+                                            <section className="careerfy-fancy-title">
+                                                <h2>{i18n.t('PostJob.ClientsTitle')}</h2>
+                                            </section>
+                                            <div className="post-job-clients">
+                                                <ul className="clients-logo">
+                                                    {
+                                                        permanentClients.map((company, index) => {
+                                                            return (
+                                                                <li className="blog-home-item" key={index}>
+                                                                    <a href={'/'+company.name}><img src={company.companyLogoUrl} alt="" />
+                                                                    </a>
+                                                                </li>
+                                                            )
+                                                        })
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </Fragment>
+                                    }
                                 </div>
                             </div>
                         </div>
