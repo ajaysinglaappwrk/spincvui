@@ -75,6 +75,8 @@
       "LoginButton3": "Google",
       "LoginButton4": "Sign In with Twitter -FR",
       "LoginButton5": "LinkedIn",
+      "LoginButton6": "Instagram", 
+      "LoginButton7": "Twitter",
       "InvalidLoginLabel": "Information de connexion invalide"
   },
   "Register": {

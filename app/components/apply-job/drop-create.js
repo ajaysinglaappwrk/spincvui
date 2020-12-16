@@ -6,6 +6,11 @@ import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
 import { companyService } from '../../services/company.service';
+import GooglePicker from 'react-google-picker';
+import axios from 'axios';
+const CLIENT_ID = "1019939309110-rnnui3hgvvt42ecgi70rt0dg35s2a5va.apps.googleusercontent.com";
+const DEVELOPER_KEY = "AIzaSyBecZVHk8ChZ0MLbf1CUj7tByGFiXJSyxU";
+const SCOPE = "https://www.googleapis.com/auth/drive.readonly";
 
 class DropCreate extends React.Component {
 
@@ -14,9 +19,11 @@ class DropCreate extends React.Component {
         this.state = {
             currentFile: null,
             isDropped: false,
+            fileId: "",
+            authToken: "",
             isCreate: false,
             resume: {},
-            candidate: { firstName: '', lastName: '', email: '', phonenumber: '', file: null },
+            candidate: { firstName: '', lastName: '', email: '', phonenumber: '', linkedInLink: '', facebookLink: '', instagramLink: '', twitterLink: '' },
             imagePath: '../../../static/assets/images/favicon.ico'
         }
 
@@ -24,6 +31,18 @@ class DropCreate extends React.Component {
             this.uploadFile(file);
         };
     }
+
+    // componentDidUpdate() {
+    //     console.log(this.state.fileId);
+    //     console.log(this.state.authToken);
+    //     const url = "https://www.googleapis.com/drive/v3/files/" + 
+    //       this.state.fileId + 
+    //       "?key=AIzaSyBecZVHk8ChZ0MLbf1CUj7tByGFiXJSyxU" + 
+    //       "?alt=media";
+    //     axios.get(url, {headers: {"Authorization": "Bearer " + this.state.authToken}})
+    //       .then(response => console.log(response.data))
+    //       .catch(error => console.log(error));
+    //   }
 
     dropResume() {
         this.setState({ isDropped: !this.state.isDropped });
@@ -81,7 +100,11 @@ class DropCreate extends React.Component {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
             lastName: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
             email: Yup.string().required(i18n.t('Validations.EmailValidationLabel')).email(i18n.t('Validations.InvalidEmailValidationLabel')),
-            phonenumber: Yup.string()
+            phonenumber: Yup.string(),
+            linkedInLink: Yup.string(),
+            facebookLink: Yup.string(),
+            instagramLink: Yup.string(),
+            twitterLink: Yup.string(),
         }
         return (
             <div>
@@ -108,16 +131,40 @@ class DropCreate extends React.Component {
                                                     <section className="container">
                                                         <div {...getRootProps({ className: 'dropzone' })}>
                                                             <input {...getInputProps()} />
-                                                            <p>Drop CV</p>
+                                                            <div className="drop-cv">
+                                                                <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
+                                                                <h4>Drop your CV here</h4></div>
                                                         </div>
                                                     </section>
                                                 )}
                                             </Dropzone>
+
+                                            {/* <GooglePicker clientId={CLIENT_ID}
+                                                developerKey={DEVELOPER_KEY}
+                                                scope={SCOPE}
+                                                onChange={data => {
+                                                    data.docs ? this.setState({ fileId: data.docs[0].id }) : console.log('on change:', data);
+                                                }}
+                                                onAuthenticate={token => {
+                                                    console.log('oauth token:', token);
+                                                    this.setState({ authToken: token });
+                                                }}
+                                                onAuthFailed={data => console.log('on auth failed:', data)}
+                                                multiselect={true}
+                                                navHidden={true}
+                                                authImmediate={false}
+                                                mimeTypes={['application/vnd.google-apps.spreadsheet']}
+                                                viewId={'SPREADSHEETS'}>
+                                                <button>Click</button>
+                                            </GooglePicker> */}
                                         </div>
                                         <div className="post-text-right">
-                                            <Button variant="primary" onClick={() => this.createResume()}>
-                                                Launch Create modal
+                                            <div className="create-cv">
+                                                <h3>Please create your CV if you don't have</h3>
+                                                <Button variant="primary" onClick={() => this.createResume()}>
+                                                    Create CV
                                                 </Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +173,7 @@ class DropCreate extends React.Component {
                     </div>
                 </div>
                 {
-                    (this.state.isDropped || this.state.isCreate) && <div className="careerfy-modal fade-in careerfy-typo-wrap" id="JobSearchModalRegister">
+                    (this.state.isDropped || this.state.isCreate) && <div className="careerfy-modal fade-in careerfy-typo-wrap create-cv-model" id="JobSearchModalRegister">
                         <div className="modal-inner-area">&nbsp;</div>
                         <div className="modal-content-area">
                             <div className="modal-box-area">
@@ -147,13 +194,17 @@ class DropCreate extends React.Component {
                                 <Formik
                                     initialValues={this.state.candidate}
                                     validationSchema={Yup.object().shape(validationSchema)}
-                                    onSubmit={({ firstName, lastName, email, phonenumber }, { setStatus, resetForm }) => {
+                                    onSubmit={({ firstName, lastName, email, phonenumber, linkedInLink, facebookLink, instagramLink, twitterLink }, { setStatus, resetForm }) => {
                                         setStatus();
                                         const formData = new FormData();
                                         formData.append("firstName", firstName);
                                         formData.append("lastName", lastName);
                                         formData.append("email", email);
                                         formData.append("phonenumber", phonenumber);
+                                        formData.append("linkedInLink", linkedInLink);
+                                        formData.append("facebookLink", facebookLink);
+                                        formData.append("instagramLink", instagramLink);
+                                        formData.append("twitterLink", twitterLink);
                                         // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
 
@@ -174,20 +225,25 @@ class DropCreate extends React.Component {
                                                 {
                                                     this.state.isDropped && <ul>
                                                         <li className="company-name-field">
-                                                            <strong>
+                                                            {/* <strong>
                                                                 <label>{this.state.currentFile ? 'Selected File : ' + this.state.currentFile.name : null} </label>
+                                                            </strong> */}
+                                                            <strong>
+                                                                <label>Selected File :
+                                                                    <sapn className="file_name">{this.state.currentFile ? this.state.currentFile.name : null}</sapn>
+                                                                </label>
                                                             </strong>
                                                             <div className="file-select-name"> </div>
                                                         </li>
                                                     </ul>
                                                 }
                                                 <ul>
-                                                    <li className="company-name-field">
+                                                    <li>
                                                         <label>{i18n.t('Register.RegisterLabel')}</label>
                                                         <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="firstName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
-                                                    <li className="company-name-field">
+                                                    <li>
                                                         <label>{i18n.t('Register.RegisterLabel1')}:</label>
                                                         <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="lastName" component="div" className="invalid-feedback text text-danger" />
@@ -201,6 +257,30 @@ class DropCreate extends React.Component {
                                                         <label>{i18n.t('Register.RegisterLabel3')}</label>
                                                         <Field name="phonenumber" type="text" className={'form-control' + (errors.phonenumber && touched.phonenumber ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="phonenumber" component="div" className="invalid-feedback text text-danger" />
+                                                    </li>
+                                                    <li>
+                                                        {/* <label>{i18n.t('Login.LoginButton5')}</label> */}
+                                                        <label>LinkedIn</label>
+                                                        <Field name="linkedInLink" type="text" className={'form-control' + (errors.linkedInLink && touched.linkedInLink ? ' is-invalid' : '')} />
+                                                        <ErrorMessage name="linkedInLink" component="div" className="invalid-feedback text text-danger" />
+                                                    </li>
+                                                    <li>
+                                                        {/* <label>{i18n.t('Login.LoginButton2')}</label> */}
+                                                        <label>Facebook</label>
+                                                        <Field name="facebookLink" type="text" className={'form-control' + (errors.facebookLink && touched.facebookLink ? ' is-invalid' : '')} />
+                                                        <ErrorMessage name="facebookLink" component="div" className="invalid-feedback text text-danger" />
+                                                    </li>
+                                                    <li>
+                                                        {/* <label>{i18n.t('Login.LoginButton6')}</label> */}
+                                                        <label>Instagram</label>
+                                                        <Field name="instagramLink" type="text" className={'form-control' + (errors.instagramLink && touched.instagramLink ? ' is-invalid' : '')} />
+                                                        <ErrorMessage name="instagramLink" component="div" className="invalid-feedback text text-danger" />
+                                                    </li>
+                                                    <li>
+                                                        {/* <label>{i18n.t('Login.LoginButton7')}</label> */}
+                                                        <label>LinkedIn</label>
+                                                        <Field name="twitterLink" type="text" className={'form-control' + (errors.twitterLink && touched.twitterLink ? ' is-invalid' : '')} />
+                                                        <ErrorMessage name="twitterLink" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
                                                         <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />

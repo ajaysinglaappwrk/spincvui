@@ -288,7 +288,7 @@ class JobPosting extends React.Component {
                                             <section className="careerfy-fancy-title">
                                                 <h2>{i18n.t('PostJob.ClientsTitle')}</h2>
                                             </section>
-                                            <div className="post-job-clients">
+                                            <div className="post-job-clients permanent-clients-box">
                                                 <ul className="clients-logo">
                                                     {
                                                         permanentClients.map((company, index) => {
