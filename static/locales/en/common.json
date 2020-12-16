@@ -313,4 +313,12 @@
         "EventHeaderSloganText3":"positions open at the moment. Don't miss this chance to chat live with their recruiters.",
         "ComingSoonText":"Coming soon.."
     }
+    ,
+    "DragOrDropComponent": {
+        "DropCvHeaderTitle":"Drag and Drop your CV, or click here to upload",
+        "NoCVLabelText":"You don't have a CV ? No problem click here!",
+        "EnterDetailLabelText":"Please provide your contact information"
+    }
 }
+
+
