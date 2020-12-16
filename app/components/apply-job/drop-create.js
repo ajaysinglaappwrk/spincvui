@@ -6,11 +6,6 @@ import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
 import { companyService } from '../../services/company.service';
-import GooglePicker from 'react-google-picker';
-import axios from 'axios';
-const CLIENT_ID = "1019939309110-rnnui3hgvvt42ecgi70rt0dg35s2a5va.apps.googleusercontent.com";
-const DEVELOPER_KEY = "AIzaSyBecZVHk8ChZ0MLbf1CUj7tByGFiXJSyxU";
-const SCOPE = "https://www.googleapis.com/auth/drive.readonly";
 
 class DropCreate extends React.Component {
 
