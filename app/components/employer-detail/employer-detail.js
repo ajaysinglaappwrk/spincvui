@@ -386,11 +386,16 @@ class EmployerDetail extends React.Component {
                                             <ul>
                                                 <li className={this.state.innerPage === 1 ? "tabActive" : "careerfy-simple-btn"} >
                                                     <label onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</label>
-                                                    <ul>
-                                                        <li onClick={() => this.setState({ innerPage: 7 })}>
-                                                            <label>Hopital Lachine</label>
-                                                        </li>
-                                                    </ul>
+                                                    {
+                                                        this.state.companyProfile && this.state.companyProfile.name == "CUSM" &&
+                                                        <ul>
+                                                            <li onClick={() => this.setState({ innerPage: 7 })}>
+                                                                <label>Hopital Lachine</label>
+                                                            </li>
+                                                        </ul>
+
+                                                    }
+
                                                 </li>
                                                 {/* <li className={this.state.innerPage === 6 ? "tabActive  location-tab" : "careerfy-simple-btn location-tab"} onClick={() => this.onTabChange(6, "/" + this.state.companyProfile.name + "/locations")}>locations</li> */}
                                                 <li className={this.state.innerPage === 5 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(5, "/" + this.state.companyProfile.name + "/live")}>
@@ -404,7 +409,7 @@ class EmployerDetail extends React.Component {
                                                 </li>
                                                 <li className={this.state.innerPage === 4 ? "tabActive" : "job-tab-btn"} onClick={() => this.onTabChange(4, "/" + this.state.companyProfile.name + "/jobs")}>
                                                     <label>{i18n.t('Tabs.JobsTabLabel')} </label>
-                                                    <span className="badge notification_count">{this.state.jobsCount}</span> 
+                                                    <span className="badge notification_count">{this.state.jobsCount}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -658,7 +663,7 @@ class EmployerDetail extends React.Component {
                                                             </div>
                                                             <div className="grid careerfy-column-4 db-img-sec pr-0">
                                                                 {
-                                                                   this.renderWidgets(this.state.rightSideWidgets)
+                                                                    this.renderWidgets(this.state.rightSideWidgets.slice(0, this.state.rightSideWidgets.length-5))
                                                                 }
                                                             </div>
                                                         </div>
