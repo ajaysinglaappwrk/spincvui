@@ -238,7 +238,7 @@ class EmployerDetail extends React.Component {
         const { EmployerReducer, i18n } = this.props;
         if (EmployerReducer && EmployerReducer.error && EmployerReducer.error.isAxiosError)
             this.props.router.push('/');
-            
+
         if (EmployerReducer && EmployerReducer.items && !Array.isArray(EmployerReducer.items)) {
             if (!EmployerReducer.items.isLiveCustomer || EmployerReducer.items.isFutureClient)
                 window.location.href = "/";
@@ -384,12 +384,28 @@ class EmployerDetail extends React.Component {
                                         </figcaption>
                                         <div className="spinTab">
                                             <ul>
-                                                <li className={this.state.innerPage === 1 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</li>
+                                                <li className={this.state.innerPage === 1 ? "tabActive" : "careerfy-simple-btn"} >
+                                                    <label onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</label>
+                                                    <ul>
+                                                        <li onClick={() => this.setState({ innerPage: 7 })}>
+                                                            <label>Hopital Lachine</label>
+                                                        </li>
+                                                    </ul>
+                                                </li>
                                                 {/* <li className={this.state.innerPage === 6 ? "tabActive  location-tab" : "careerfy-simple-btn location-tab"} onClick={() => this.onTabChange(6, "/" + this.state.companyProfile.name + "/locations")}>locations</li> */}
-                                                <li className={this.state.innerPage === 5 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(5, "/" + this.state.companyProfile.name + "/live")}><i className="fa fa-youtube-play" aria-hidden="true" ></i> {i18n.t('Tabs.LiveTabLabel')}</li>
-                                                <li className={this.state.innerPage === 2 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(2, "/" + this.state.companyProfile.name + "/team")}>{i18n.t('Tabs.MeetTheTeamLabel')}</li>
-                                                <li className={this.state.innerPage === 3 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(3, "/" + this.state.companyProfile.name + "/whatwedo")}>{i18n.t('Tabs.WhatWeLabel')}</li>
-                                                <li className={this.state.innerPage === 4 ? "tabActive" : "job-tab-btn"} onClick={() => this.onTabChange(4, "/" + this.state.companyProfile.name + "/jobs")}>{i18n.t('Tabs.JobsTabLabel')} <span className="badge notification_count">{this.state.jobsCount}</span> </li>
+                                                <li className={this.state.innerPage === 5 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(5, "/" + this.state.companyProfile.name + "/live")}>
+                                                    <label> <i className="fa fa-youtube-play" aria-hidden="true" ></i>  {i18n.t('Tabs.LiveTabLabel')}</label>
+                                                </li>
+                                                <li className={this.state.innerPage === 2 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(2, "/" + this.state.companyProfile.name + "/team")}>
+                                                    <label>{i18n.t('Tabs.MeetTheTeamLabel')}</label>
+                                                </li>
+                                                <li className={this.state.innerPage === 3 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(3, "/" + this.state.companyProfile.name + "/whatwedo")}>
+                                                    <label>{i18n.t('Tabs.WhatWeLabel')}</label>
+                                                </li>
+                                                <li className={this.state.innerPage === 4 ? "tabActive" : "job-tab-btn"} onClick={() => this.onTabChange(4, "/" + this.state.companyProfile.name + "/jobs")}>
+                                                    <label>{i18n.t('Tabs.JobsTabLabel')} </label>
+                                                    <span className="badge notification_count">{this.state.jobsCount}</span> 
+                                                </li>
                                             </ul>
                                         </div>
                                     </figure>
@@ -615,6 +631,44 @@ class EmployerDetail extends React.Component {
                                         </div>
                                     </div>
                                 </div> : ''}
+
+                                {
+                                    this.state.innerPage == 7 &&
+
+                                    <div className="careerfy-gallery careerfy-simple-gallery cusm-main-container">
+                                        <div className="container">
+                                            <div className="grid-item careerfy-column-12 p_0">
+                                                <div className="careerfy-row grid m_0">
+                                                    <div className="grid-item careerfy-column-12 p_0">
+
+                                                        {/* {
+                                                            this.renderTopLeftWidget()
+
+                                                        } */}
+                                                        <div className="clearfix careerfy-row grid m_0 " style={{ display: 'flex', flexWrap: 'wrap', paddingRight: '15px' }} >
+                                                            <div className="grid careerfy-column-4 db-img-sec pr-0">
+                                                                {
+                                                                    this.renderWidgets(this.state.leftSideWidgets)
+                                                                }
+                                                            </div>
+                                                            <div className="grid careerfy-column-4 db-img-sec pr-0">
+                                                                {
+                                                                    this.renderWidgets(this.state.leftSideSecondWidgets)
+                                                                }
+                                                            </div>
+                                                            <div className="grid careerfy-column-4 db-img-sec pr-0">
+                                                                {
+                                                                   this.renderWidgets(this.state.rightSideWidgets)
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/* <div className="careerfy-row grid careerfy-column-4 db-img-sec-tw pr-0 four-col-widget" ></div> */}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
