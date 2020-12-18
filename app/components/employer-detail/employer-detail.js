@@ -235,7 +235,6 @@ class EmployerDetail extends React.Component {
     }
 
     render() {
-        debugger;
         const { EmployerReducer, i18n } = this.props;
         if (EmployerReducer && EmployerReducer.error && EmployerReducer.error.isAxiosError)
             this.props.router.push('/');
@@ -245,7 +244,7 @@ class EmployerDetail extends React.Component {
                 window.location.href = "/";
             this.state.isProcessing = false;
             var currentTab = this.props.router.query.tab;
-            if (currentTab && this.state.innerPage !=7) {
+            if (currentTab && this.state.innerPage != 7) {
                 if (currentTab == "team")
                     this.state.innerPage = 2;
                 else if (currentTab == "jobs")
@@ -385,18 +384,12 @@ class EmployerDetail extends React.Component {
                                         </figcaption>
                                         <div className="spinTab">
                                             <ul>
-                                                <li className={(this.state.innerPage === 1 || this.state.innerPage === 7)? "tabActive" : "careerfy-simple-btn"} >
+                                                <li className={(this.state.innerPage === 1 || this.state.innerPage === 7) ? "tabActive" : "careerfy-simple-btn"} >
                                                     <label onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</label>
                                                     {
-                                                        this.state.companyProfile && this.state.companyProfile.name == "CUSM" &&
-                                                        <ul>
-                                                            <li onClick={() => this.setState({ innerPage: 7 })}>
-                                                                <label>Hopital Lachine</label>
-                                                            </li>
-                                                        </ul>
-
+                                                        this.state.companyProfile && this.state.companyProfile.name == "CUSM" && this.state.innerPage == 1 &&
+                                                        <button type="button" class="careerfy-option-btn cusm-btn" onClick={() => this.setState({ innerPage: 7 })}>Hopital Lachine</button>
                                                     }
-
                                                 </li>
                                                 {/* <li className={this.state.innerPage === 6 ? "tabActive  location-tab" : "careerfy-simple-btn location-tab"} onClick={() => this.onTabChange(6, "/" + this.state.companyProfile.name + "/locations")}>locations</li> */}
                                                 <li className={this.state.innerPage === 5 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(5, "/" + this.state.companyProfile.name + "/live")}>
@@ -413,6 +406,7 @@ class EmployerDetail extends React.Component {
                                                     <span className="badge notification_count">{this.state.jobsCount}</span>
                                                 </li>
                                             </ul>
+
                                         </div>
                                     </figure>
                                 </div>
@@ -664,7 +658,7 @@ class EmployerDetail extends React.Component {
                                                             </div>
                                                             <div className="grid careerfy-column-4 db-img-sec pr-0">
                                                                 {
-                                                                    this.renderWidgets(this.state.rightSideWidgets.slice(0, this.state.rightSideWidgets.length-5))
+                                                                    this.renderWidgets(this.state.rightSideWidgets.slice(0, this.state.rightSideWidgets.length - 5))
                                                                 }
                                                             </div>
                                                         </div>

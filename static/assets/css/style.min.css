@@ -416,7 +416,7 @@ address {
   text-transform: uppercase;
   font-weight: 500;
   border-radius: 2px;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
   font-size: 9pt;
 }
@@ -590,12 +590,12 @@ address {
 .tabActive:after{
     display: none;
 }
-.careerfy-simple-btn label:hover:after,
+.careerfy-simple-btn:after,
 .careerfy-static-btn:after {
   background: #fff;
   content: "";
   height: 155px;
-  left: 0;
+  left: -75px;
   opacity: .3;
   position: absolute;
   top: -50px;
@@ -612,13 +612,8 @@ address {
   -o-transform: rotate(35deg);
   transform: rotate(35deg);
 }
-.careerfy-static-btn:after{
-    left: -75px;
-}
 
-.careerfy-simple-btn label:hover:after{
-    left: 140px;  
-}
+.careerfy-simple-btn:hover:after,
 .careerfy-static-btn:hover:after {
   left: 120%;
 }
@@ -4225,7 +4220,6 @@ ul.ril-toolbar-right.ril__toolbarSide.ril__toolbarRightSide .copy-video-url {
     color: #fff;
     display: inline-block;
     position: relative;
-    overflow: hidden;
 }
 /* .spinTab ul li {
   list-style: none;
@@ -5871,5 +5865,13 @@ li.company-name-field {
 /** 18-12-2020 START **/
 .cusm-main-container .three.grid-item.hover-effect {
   width: unset;
+}
+.cusm-btn{
+  position: absolute;
+  border-radius: 2px;
+  padding: 12px;
+  top:45px;
+  left: 0;
+  min-width: 160px;
 }
 /** 18-12-2020 END **/
