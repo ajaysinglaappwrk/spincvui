@@ -88,7 +88,7 @@ class Meetheteam extends React.Component {
                                                 <div class="img_magnifier">
                                                     <div class="hoverr_magnifier playhover_btn">{
 
-                                                        member.isVedio ? <img src="/assets/images/vide_play.png" /> : <i className="careerfy-icon careerfy-search magnifire_icon"></i>}</div>
+                                                        member.isVedio ? <img src="../static/assets/images/vide_play.png" /> : <i className="careerfy-icon careerfy-search magnifire_icon"></i>}</div>
                                                 </div>
                                             </div>
                                             <div className="what_card_content">
