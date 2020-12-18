@@ -235,6 +235,7 @@ class EmployerDetail extends React.Component {
     }
 
     render() {
+        debugger;
         const { EmployerReducer, i18n } = this.props;
         if (EmployerReducer && EmployerReducer.error && EmployerReducer.error.isAxiosError)
             this.props.router.push('/');
@@ -244,7 +245,7 @@ class EmployerDetail extends React.Component {
                 window.location.href = "/";
             this.state.isProcessing = false;
             var currentTab = this.props.router.query.tab;
-            if (currentTab) {
+            if (currentTab && this.state.innerPage !=7) {
                 if (currentTab == "team")
                     this.state.innerPage = 2;
                 else if (currentTab == "jobs")
@@ -384,7 +385,7 @@ class EmployerDetail extends React.Component {
                                         </figcaption>
                                         <div className="spinTab">
                                             <ul>
-                                                <li className={this.state.innerPage === 1 ? "tabActive" : "careerfy-simple-btn"} >
+                                                <li className={(this.state.innerPage === 1 || this.state.innerPage === 7)? "tabActive" : "careerfy-simple-btn"} >
                                                     <label onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</label>
                                                     {
                                                         this.state.companyProfile && this.state.companyProfile.name == "CUSM" &&
