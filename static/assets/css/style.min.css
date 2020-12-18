@@ -5867,11 +5867,10 @@ li.company-name-field {
   width: unset;
 }
 .cusm-btn{
-  position: absolute;
   border-radius: 2px;
   padding: 12px;
-  top:45px;
-  left: 0;
+  margin: 10px 0 0 24px; 
   min-width: 160px;
+  float: unset;
 }
 /** 18-12-2020 END **/

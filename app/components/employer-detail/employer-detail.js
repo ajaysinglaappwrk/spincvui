@@ -384,12 +384,9 @@ class EmployerDetail extends React.Component {
                                         </figcaption>
                                         <div className="spinTab">
                                             <ul>
-                                                <li className={(this.state.innerPage === 1 || this.state.innerPage === 7) ? "tabActive" : "careerfy-simple-btn"} >
+                                                <li className={(this.state.innerPage === 1) ? "tabActive" : "careerfy-simple-btn"} >
                                                     <label onClick={() => this.onTabChange(1, "/" + this.state.companyProfile.name)}>{i18n.t('Tabs.ProfileTabLabel')}</label>
-                                                    {
-                                                        this.state.companyProfile && this.state.companyProfile.name == "CUSM" && this.state.innerPage == 1 &&
-                                                        <button type="button" class="careerfy-option-btn cusm-btn" onClick={() => this.setState({ innerPage: 7 })}>Hopital Lachine</button>
-                                                    }
+
                                                 </li>
                                                 {/* <li className={this.state.innerPage === 6 ? "tabActive  location-tab" : "careerfy-simple-btn location-tab"} onClick={() => this.onTabChange(6, "/" + this.state.companyProfile.name + "/locations")}>locations</li> */}
                                                 <li className={this.state.innerPage === 5 ? "tabActive" : "careerfy-simple-btn"} onClick={() => this.onTabChange(5, "/" + this.state.companyProfile.name + "/live")}>
@@ -408,6 +405,10 @@ class EmployerDetail extends React.Component {
                                             </ul>
 
                                         </div>
+                                        {
+                                            this.state.companyProfile && this.state.companyProfile.name == "CUSM" &&
+                                            <button type="button" class="careerfy-option-btn cusm-btn" onClick={() => this.setState({ innerPage: 7 })}>Hopital Lachine</button>
+                                        }
                                     </figure>
                                 </div>
 
@@ -719,6 +720,7 @@ class EmployerDetail extends React.Component {
                 }
                 {this.state.isLargeViewOpened && (
                     <Lightbox
+                        reactModalProps={{ shouldReturnFocusAfterClose: false }}
                         mainSrc={this.state.images[this.state.photoIndex]}
                         nextSrc={this.state.images[(this.state.photoIndex + 1) % this.state.images.length]}
                         prevSrc={this.state.images[(this.state.photoIndex + this.state.images.length - 1) % this.state.images.length]}

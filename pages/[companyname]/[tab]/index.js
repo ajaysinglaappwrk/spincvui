@@ -23,7 +23,6 @@ class EmployerDetailPage extends React.Component {
 
 
   render() {
-    debugger;
     return (
       <Layout>
         <Head>
