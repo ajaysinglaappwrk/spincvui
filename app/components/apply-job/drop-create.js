@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
 import { companyService } from '../../services/company.service';
 import FacebookLogin from 'react-facebook-login';
-
+import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
 class DropCreate extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -30,18 +30,20 @@ class DropCreate extends React.Component {
             this.uploadFile(file);
         };
     }
+    
+    componentDidMount() {
+        if(!!window.location.search)
+        {
+            var code = window.location.search.substr(window.location.search.indexOf('=')+1, window.location.search.indexOf('&state')-6);
+            const formData = new FormData();
+            formData.append("code", code);
+            companyService.sendCVToCompany(formData).then((res) => {
 
-    // componentDidUpdate() {
-    //     console.log(this.state.fileId);
-    //     console.log(this.state.authToken);
-    //     const url = "https://www.googleapis.com/drive/v3/files/" + 
-    //       this.state.fileId + 
-    //       "?key=AIzaSyBecZVHk8ChZ0MLbf1CUj7tByGFiXJSyxU" + 
-    //       "?alt=media";
-    //     axios.get(url, {headers: {"Authorization": "Bearer " + this.state.authToken}})
-    //       .then(response => console.log(response.data))
-    //       .catch(error => console.log(error));
-    //   }
+                window.history.pushState({}, "", "/");
+            });
+        }
+     
+    }
 
     dropResume() {
         this.setState({ isDropped: !this.state.isDropped });
@@ -100,10 +102,11 @@ class DropCreate extends React.Component {
         formData.append("lastName", splittedName[1]);
         formData.append("email", response.email);
         formData.append("phonenumber", "");
+        // formData.append("code", response.code);
         companyService.sendCVToCompany(formData).then((res) => {
             this.setState({
                 isDropped: false,
-                isCreate:false,
+                isCreate: false,
                 currentFile: '',
             });
         });
@@ -281,6 +284,19 @@ class DropCreate extends React.Component {
                                                                 fields="name,email,picture"
                                                                 callback={this.responseFacebook} />
                                                         </span>
+                                                    </li>
+                                                    <li>
+                                                        <a href={LINKEDIN_URL} >
+                                                            <div type="submit" style={{ height: "40px", width: "215px" }}>
+                                                                <img
+                                                                    style={{ height: "100%", width: "100%" }}
+                                                                    src={
+                                                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSk3pI2NNjzOZHDLDT5sdKXO1Aqc6sLdo-zZA&usqp=CAU"
+                                                                    }
+                                                                    alt={"LinkedIn authentification"}
+                                                                />
+                                                            </div>
+                                                        </a>
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
                                                         <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />
