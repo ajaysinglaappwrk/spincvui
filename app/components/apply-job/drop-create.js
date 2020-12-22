@@ -6,9 +6,13 @@ import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
 import { companyService } from '../../services/company.service';
-
+import FacebookLogin from 'react-facebook-login';
+import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
 class DropCreate extends React.Component {
-
+    static getInitialProps = async ({ req }) => {
+        const currentLanguage = req ? req.language : i18n.language;
+        return { currentLanguage, namespacesRequired: ["common"] };
+    };
     constructor(props) {
         super(props);
         this.state = {
@@ -19,25 +23,27 @@ class DropCreate extends React.Component {
             isCreate: false,
             resume: {},
             candidate: { firstName: '', lastName: '', email: '', phonenumber: '', linkedInLink: '', facebookLink: '', instagramLink: '', twitterLink: '' },
-            imagePath: '../../../static/assets/images/favicon.ico'
+            imagePath: '../../../static/assets/images/favicon.ico',
         }
 
         this.onDrop = (file) => {
             this.uploadFile(file);
         };
     }
+    
+    componentDidMount() {
+        if(!!window.location.search)
+        {
+            var code = window.location.search.substr(window.location.search.indexOf('=')+1, window.location.search.indexOf('&state')-6);
+            const formData = new FormData();
+            formData.append("code", code);
+            companyService.sendCVToCompany(formData).then((res) => {
 
-    // componentDidUpdate() {
-    //     console.log(this.state.fileId);
-    //     console.log(this.state.authToken);
-    //     const url = "https://www.googleapis.com/drive/v3/files/" + 
-    //       this.state.fileId + 
-    //       "?key=AIzaSyBecZVHk8ChZ0MLbf1CUj7tByGFiXJSyxU" + 
-    //       "?alt=media";
-    //     axios.get(url, {headers: {"Authorization": "Bearer " + this.state.authToken}})
-    //       .then(response => console.log(response.data))
-    //       .catch(error => console.log(error));
-    //   }
+                window.history.pushState({}, "", "/");
+            });
+        }
+     
+    }
 
     dropResume() {
         this.setState({ isDropped: !this.state.isDropped });
@@ -89,7 +95,23 @@ class DropCreate extends React.Component {
             return false;
         }
     }
+    responseFacebook = (response) => {
+        var splittedName = response.name.split(" ");
+        const formData = new FormData();
+        formData.append("firstName", splittedName[0]);
+        formData.append("lastName", splittedName[1]);
+        formData.append("email", response.email);
+        formData.append("phonenumber", "");
+        // formData.append("code", response.code);
+        companyService.sendCVToCompany(formData).then((res) => {
+            this.setState({
+                isDropped: false,
+                isCreate: false,
+                currentFile: '',
+            });
+        });
 
+    }
     render() {
         let validationSchema = {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
@@ -128,7 +150,7 @@ class DropCreate extends React.Component {
                                                             <input {...getInputProps()} />
                                                             <div className="drop-cv">
                                                                 <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
-                                                                <h4>Drop your CV here</h4></div>
+                                                                <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
                                                         </div>
                                                     </section>
                                                 )}
@@ -155,7 +177,7 @@ class DropCreate extends React.Component {
                                         </div>
                                         <div className="post-text-right">
                                             <div className="create-cv">
-                                                <h3>Please create your CV if you don't have</h3>
+                                                <h3>{i18n.t('DragOrDropComponent.NoCVLabelText')}</h3>
                                                 <Button variant="primary" onClick={() => this.createResume()}>
                                                     Create CV
                                                 </Button>
@@ -182,7 +204,7 @@ class DropCreate extends React.Component {
                                     }
                                     {this.state.isCreate &&
                                         <div>
-                                            <h2>Enter details</h2>
+                                            <h2>{i18n.t('DragOrDropComponent.EnterDetailLabelText')}</h2>
                                             <span className="modal-close" onClick={() => this.closeCreateResumeSection()}><i className="fa fa-times"></i></span>
                                         </div>}
                                 </div>
@@ -196,10 +218,10 @@ class DropCreate extends React.Component {
                                         formData.append("lastName", lastName);
                                         formData.append("email", email);
                                         formData.append("phonenumber", phonenumber);
-                                        formData.append("linkedInLink", linkedInLink);
-                                        formData.append("facebookLink", facebookLink);
-                                        formData.append("instagramLink", instagramLink);
-                                        formData.append("twitterLink", twitterLink);
+                                        // formData.append("linkedInLink", linkedInLink);
+                                        // formData.append("facebookLink", facebookLink);
+                                        // formData.append("instagramLink", instagramLink);
+                                        // formData.append("twitterLink", twitterLink);
                                         // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
 
@@ -235,7 +257,7 @@ class DropCreate extends React.Component {
                                                 <ul>
                                                     <li>
                                                         <label>{i18n.t('Register.RegisterLabel')}</label>
-                                                        <Field name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
+                                                        <Field value={this.state.firstName} name="firstName" type="text" className={'form-control' + (errors.firstName && touched.firstName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="firstName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
@@ -254,28 +276,27 @@ class DropCreate extends React.Component {
                                                         <ErrorMessage name="phonenumber" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
-                                                        {/* <label>{i18n.t('Login.LoginButton5')}</label> */}
-                                                        <label>LinkedIn</label>
-                                                        <Field name="linkedInLink" type="text" className={'form-control' + (errors.linkedInLink && touched.linkedInLink ? ' is-invalid' : '')} />
-                                                        <ErrorMessage name="linkedInLink" component="div" className="invalid-feedback text text-danger" />
+                                                        <span className="social-btns">
+                                                            <i className="fa fa-facebook"></i>
+                                                            <FacebookLogin
+                                                                appId="862039167562137"
+                                                                autoLoad={false}
+                                                                fields="name,email,picture"
+                                                                callback={this.responseFacebook} />
+                                                        </span>
                                                     </li>
                                                     <li>
-                                                        {/* <label>{i18n.t('Login.LoginButton2')}</label> */}
-                                                        <label>Facebook</label>
-                                                        <Field name="facebookLink" type="text" className={'form-control' + (errors.facebookLink && touched.facebookLink ? ' is-invalid' : '')} />
-                                                        <ErrorMessage name="facebookLink" component="div" className="invalid-feedback text text-danger" />
-                                                    </li>
-                                                    <li>
-                                                        {/* <label>{i18n.t('Login.LoginButton6')}</label> */}
-                                                        <label>Instagram</label>
-                                                        <Field name="instagramLink" type="text" className={'form-control' + (errors.instagramLink && touched.instagramLink ? ' is-invalid' : '')} />
-                                                        <ErrorMessage name="instagramLink" component="div" className="invalid-feedback text text-danger" />
-                                                    </li>
-                                                    <li>
-                                                        {/* <label>{i18n.t('Login.LoginButton7')}</label> */}
-                                                        <label>LinkedIn</label>
-                                                        <Field name="twitterLink" type="text" className={'form-control' + (errors.twitterLink && touched.twitterLink ? ' is-invalid' : '')} />
-                                                        <ErrorMessage name="twitterLink" component="div" className="invalid-feedback text text-danger" />
+                                                        <a href={LINKEDIN_URL} >
+                                                            <div type="submit" style={{ height: "40px", width: "215px" }}>
+                                                                <img
+                                                                    style={{ height: "100%", width: "100%" }}
+                                                                    src={
+                                                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSk3pI2NNjzOZHDLDT5sdKXO1Aqc6sLdo-zZA&usqp=CAU"
+                                                                    }
+                                                                    alt={"LinkedIn authentification"}
+                                                                />
+                                                            </div>
+                                                        </a>
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
                                                         <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />
@@ -295,4 +316,4 @@ class DropCreate extends React.Component {
     }
 }
 
-export default withTranslation('translation')(DropCreate);
+export default withTranslation('common')(DropCreate);

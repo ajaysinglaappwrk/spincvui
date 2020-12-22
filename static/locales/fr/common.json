@@ -313,5 +313,10 @@
         "EventHeaderSloganText2":"plusieurs",
         "EventHeaderSloganText3":"postes ouvert en ce moment. Ne manquez pas cette chance de discuter en direct avec leurs recruteurs.",
          "ComingSoonText":"Bientôt disponible.."
+    },
+    "DragOrDropComponent": {
+        "DropCvHeaderTitle":"Glissez et déposez votre CV, ou cliquez ici pour télécharger",
+        "NoCVLabelText":"Vous n'avez pas de CV? Aucun problème cliquez ici!",
+        "EnterDetailLabelText":"Entrez vos informations de contact"
     }
 }
