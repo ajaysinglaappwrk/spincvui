@@ -5,9 +5,13 @@ import * as Yup from 'yup';
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Dropzone from 'react-dropzone';
+import DropboxChooser from 'react-dropbox-chooser';
 import { companyService } from '../../services/company.service';
 import FacebookLogin from 'react-facebook-login';
 import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
+import InstagramLogin from 'react-instagram-login';
+import FilePicker from "react-dropbox-filepicker";
+
 class DropCreate extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -18,6 +22,8 @@ class DropCreate extends React.Component {
         this.state = {
             currentFile: null,
             isDropped: false,
+            accessToken: null,
+            filepath: null,
             fileId: "",
             authToken: "",
             isCreate: false,
@@ -30,11 +36,10 @@ class DropCreate extends React.Component {
             this.uploadFile(file);
         };
     }
-    
+
     componentDidMount() {
-        if(!!window.location.search)
-        {
-            var code = window.location.search.substr(window.location.search.indexOf('=')+1, window.location.search.indexOf('&state')-6);
+        if (!!window.location.search) {
+            var code = window.location.search.substr(window.location.search.indexOf('=') + 1, window.location.search.indexOf('&state') - 6);
             const formData = new FormData();
             formData.append("code", code);
             companyService.sendCVToCompany(formData).then((res) => {
@@ -42,7 +47,7 @@ class DropCreate extends React.Component {
                 window.history.pushState({}, "", "/");
             });
         }
-     
+
     }
 
     dropResume() {
@@ -96,23 +101,48 @@ class DropCreate extends React.Component {
         }
     }
     responseFacebook = (response) => {
-        var splittedName = response.name.split(" ");
-        const formData = new FormData();
-        formData.append("firstName", splittedName[0]);
-        formData.append("lastName", splittedName[1]);
-        formData.append("email", response.email);
-        formData.append("phonenumber", "");
-        // formData.append("code", response.code);
-        companyService.sendCVToCompany(formData).then((res) => {
-            this.setState({
-                isDropped: false,
-                isCreate: false,
-                currentFile: '',
+        if (response != null && response != undefined && response.length > 0) {
+            var splittedName = response.name.split(" ");
+            const formData = new FormData();
+            formData.append("firstName", splittedName[0]);
+            formData.append("lastName", splittedName[1]);
+            formData.append("email", response.email);
+            formData.append("phonenumber", "");
+            // formData.append("code", response.code);
+            companyService.sendCVToCompany(formData).then((res) => {
+                this.setState({
+                    isDropped: false,
+                    isCreate: false,
+                    currentFile: '',
+                });
             });
-        });
-
+        }
     }
+
+    responseInstagram = (response) => {
+        console.log('response inside responseInstagram : ', response);
+        if (response != null && response != undefined && response.length > 0) {
+
+        }
+    }
+
+    handleSuccess(files) {
+        if (files != null && files.length > 0) {
+            var file = files[0];
+            var pattern = /\.(pdf|doc|docx)$/i;
+            if (!file.name.match(pattern)) {
+                toast.error(i18n.t('Messages.InvalidFileError'));
+                return false;
+            } else {
+                console.log('File : ', file);
+
+            }
+        }
+    }
+
     render() {
+        const accessToken = this.state.accessToken;
+        const filepath = this.state.filepath;
         let validationSchema = {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
             lastName: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
@@ -132,10 +162,6 @@ class DropCreate extends React.Component {
                                 <div className="careerfy-page-title">
                                     <div className="post-banner-overlay-text">
                                         <div className="post-text-left">
-                                            {/* <label for="file">fgdsfvbfdf</label>
-                                            <input id="file" type="file" style={{width: "500px", height: "220px"}} onChange={(event) => {
-                                                this.uploadFile(event);
-                                            }} className="form-control" /> */}
                                             <Dropzone onDrop={this.onDrop}
                                                 maxFiles={1}
                                                 multiple={false}
@@ -155,6 +181,22 @@ class DropCreate extends React.Component {
                                                     </section>
                                                 )}
                                             </Dropzone>
+
+                                            {/* <FilePicker
+                                                appKey="xxkzfq6nfv1w2ku"
+                                                accessToken={accessToken}
+                                                filepath={filepath}
+                                                onLogin={token => this.setState({ accessToken: token })}
+                                                onLogout={() => this.setState({ accessToken: null, filepath: null })}
+                                                onFilePick={path => this.setState({ filepath: path })}
+                                                onError={error => console.log(error)}/> */}
+
+                                            <DropboxChooser appKey="xxkzfq6nfv1w2ku"
+                                                success={this.handleSuccess}
+                                                cancel={() => console.log('closed')}
+                                                multiselect={false}>
+                                                <button>Upload or Choose Files</button>
+                                            </DropboxChooser>
 
                                             {/* <GooglePicker clientId={CLIENT_ID}
                                                 developerKey={DEVELOPER_KEY}
@@ -297,6 +339,19 @@ class DropCreate extends React.Component {
                                                                 />
                                                             </div>
                                                         </a>
+                                                    </li>
+                                                    <li>
+                                                        <span>
+                                                            <i className="fa fa-instagram"></i>
+                                                            <InstagramLogin
+                                                                clientId="841726459950495"
+                                                                scope="user_profile,user_media"
+                                                                buttonText="Login"
+                                                                redirectUri="https://localhost:3000/"
+                                                                fields="name,email,picture"
+                                                                onSuccess={this.responseInstagram}
+                                                                onFailure={this.responseInstagram} />,
+                                                        </span>
                                                     </li>
                                                     <li className="careerfy-user-form-coltwo-full">
                                                         <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />
