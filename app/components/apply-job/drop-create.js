@@ -10,7 +10,6 @@ import { companyService } from '../../services/company.service';
 import FacebookLogin from 'react-facebook-login';
 import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
 import InstagramLogin from 'react-instagram-login';
-import FilePicker from "react-dropbox-filepicker";
 
 class DropCreate extends React.Component {
     static getInitialProps = async ({ req }) => {
@@ -33,8 +32,11 @@ class DropCreate extends React.Component {
         }
 
         this.onDrop = (file) => {
+            console.log('file using drop zone : ', file);
             this.uploadFile(file);
         };
+        // this.handleSuccess.bind(this);
+        // that=this;
     }
 
     componentDidMount() {
@@ -120,7 +122,6 @@ class DropCreate extends React.Component {
     }
 
     responseInstagram = (response) => {
-        console.log('response inside responseInstagram : ', response);
         if (response != null && response != undefined && response.length > 0) {
 
         }
@@ -128,14 +129,16 @@ class DropCreate extends React.Component {
 
     handleSuccess(files) {
         if (files != null && files.length > 0) {
-            var file = files[0];
+            var file = new File(files, files[0].name);
             var pattern = /\.(pdf|doc|docx)$/i;
             if (!file.name.match(pattern)) {
                 toast.error(i18n.t('Messages.InvalidFileError'));
                 return false;
             } else {
-                console.log('File : ', file);
-
+                this.setState({
+                    currentFile: file
+                });
+                this.dropResume();
             }
         }
     }
@@ -182,17 +185,8 @@ class DropCreate extends React.Component {
                                                 )}
                                             </Dropzone>
 
-                                            {/* <FilePicker
-                                                appKey="xxkzfq6nfv1w2ku"
-                                                accessToken={accessToken}
-                                                filepath={filepath}
-                                                onLogin={token => this.setState({ accessToken: token })}
-                                                onLogout={() => this.setState({ accessToken: null, filepath: null })}
-                                                onFilePick={path => this.setState({ filepath: path })}
-                                                onError={error => console.log(error)}/> */}
-
                                             <DropboxChooser appKey="xxkzfq6nfv1w2ku"
-                                                success={this.handleSuccess}
+                                                success={(files) => this.handleSuccess(files)}
                                                 cancel={() => console.log('closed')}
                                                 multiselect={false}>
                                                 <button>Upload or Choose Files</button>
