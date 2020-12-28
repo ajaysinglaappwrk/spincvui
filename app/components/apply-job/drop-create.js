@@ -347,7 +347,7 @@ class DropCreate extends React.Component {
                                                                 clientId="841726459950495"
                                                                 scope="user_profile,user_media"
                                                                 buttonText="Login"
-                                                                redirectUri="https://localhost:3000/"
+                                                                redirectUri="https://spincv-demo.azurewebsites.net/"
                                                                 fields="name,email,picture"
                                                                 onSuccess={this.responseInstagram}
                                                                 onFailure={this.responseInstagram} />,
