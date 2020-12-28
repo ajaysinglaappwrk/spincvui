@@ -9,7 +9,6 @@ import DropboxChooser from 'react-dropbox-chooser';
 import { companyService } from '../../services/company.service';
 import FacebookLogin from 'react-facebook-login';
 import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
-import InstagramLogin from 'react-instagram-login';
 
 class DropCreate extends React.Component {
     static getInitialProps = async ({ req }) => {
@@ -112,6 +111,7 @@ class DropCreate extends React.Component {
             formData.append("lastName", splittedName[1]);
             formData.append("email", response.email);
             formData.append("phonenumber", "");
+            
             // formData.append("code", response.code);
             companyService.sendCVToCompany(formData).then((res) => {
                 this.setState({
@@ -124,7 +124,6 @@ class DropCreate extends React.Component {
     }
 
     responseInstagram = (response) => {
-        debugger;
         if (response != null && response != undefined && response.length > 0) {
 
         }
@@ -183,9 +182,9 @@ class DropCreate extends React.Component {
                                                             <input {...getInputProps()} />
                                                             <div className="drop-cv">
                                                                 <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
-                                                               
-                                                        </div>
-                                                        <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
+
+                                                            </div>
+                                                            <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
                                                     </section>
                                                 )}
                                             </Dropzone>
@@ -303,7 +302,7 @@ class DropCreate extends React.Component {
                                                         <ErrorMessage name="firstName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
                                                     <li>
-                                                        <label>{i18n.t('Register.RegisterLabel1')}:</label>
+                                                        <label>{i18n.t('Register.RegisterLabel1')}</label>
                                                         <Field name="lastName" type="text" className={'form-control' + (errors.lastName && touched.lastName ? ' is-invalid' : '')} />
                                                         <ErrorMessage name="lastName" component="div" className="invalid-feedback text text-danger" />
                                                     </li>
@@ -340,7 +339,7 @@ class DropCreate extends React.Component {
                                                             </div>
                                                         </a>
                                                     </li>
-                                                    <li>
+                                                    {/* <li>
                                                         <span>
                                                             <i className="fa fa-instagram"></i>
                                                             <InstagramLogin
@@ -352,7 +351,7 @@ class DropCreate extends React.Component {
                                                                 onSuccess={this.responseInstagram}
                                                                 onFailure={this.responseInstagram} />,
                                                         </span>
-                                                    </li>
+                                                    </li> */}
                                                     <li className="careerfy-user-form-coltwo-full">
                                                         <input type="submit" value={i18n.t('EmployeeDetail.Submit')} />
                                                     </li>
