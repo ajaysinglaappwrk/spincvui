@@ -11,6 +11,12 @@ import FacebookLogin from 'react-facebook-login';
 import { LINKEDIN_URL } from "../../helpers/linked-in-auth";
 import InstagramLogin from 'react-instagram-login';
 
+import GooglePicker from './react-google-chooser';
+
+const CLIENT_ID = '956638031835-91fp57h7laf9plui0834crjkt6671n98.apps.googleusercontent.com';
+const DEVELOPER_KEY = 'AIzaSyBSBJUl-FPFn7EVFaKuOTsEJPO0HlLeoYg';
+const SCOPE = ['https://www.googleapis.com/auth/drive.readonly'];
+
 class DropCreate extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -183,9 +189,9 @@ class DropCreate extends React.Component {
                                                             <input {...getInputProps()} />
                                                             <div className="drop-cv">
                                                                 <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
-                                                               
-                                                        </div>
-                                                        <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
+
+                                                            </div>
+                                                            <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
                                                     </section>
                                                 )}
                                             </Dropzone>
@@ -196,6 +202,56 @@ class DropCreate extends React.Component {
                                                 multiselect={false}>
                                                 <button className="choose-dropbox">Choose From Dropbox</button>
                                             </DropboxChooser>
+
+                                            {/* <GooglePicker clientId={CLIENT_ID}
+                                                developerKey={DEVELOPER_KEY}
+                                                scope={SCOPE}
+                                                onChange={data => console.log('on change:', data)}
+                                                onAuthFailed={data => console.log('on auth failed:', data)}
+                                                multiselect={true}
+                                                navHidden={true}
+                                                authImmediate={false}
+                                                mimeTypes={['image/png', 'image/jpeg', 'image/jpg']}
+                                                viewId={'DOCS'}>
+                                                <span>Click me!</span>
+                                                <div className="google"></div>
+                                            </GooglePicker> */}
+
+
+                                            <GooglePicker clientId={CLIENT_ID}
+                                                developerKey={DEVELOPER_KEY}
+                                                scope={SCOPE}
+                                                onChange={data => console.log('on change:', data)}
+                                                onAuthFailed={(data) => {
+                                                    debugger;
+                                                    console.log('on auth failed:', data)
+                                                }}
+                                                multiselect={true}
+                                                navHidden={true}
+                                                authImmediate={false}
+                                                viewId={'FOLDERS'}
+                                                createPicker={(google, oauthToken) => {
+                                                    debugger;
+                                                    const googleViewId = google.picker.ViewId.FOLDERS;
+                                                    const docsView = new google.picker.DocsView(googleViewId)
+                                                        .setIncludeFolders(true)
+                                                        .setMimeTypes('application/vnd.google-apps.folder')
+                                                        .setSelectFolderEnabled(true);
+
+                                                    const picker = new window.google.picker.PickerBuilder()
+                                                        .addView(docsView)
+                                                        .setOAuthToken(oauthToken)
+                                                        .setDeveloperKey(DEVELOPER_KEY)
+                                                        .setCallback(() => {
+                                                            console.log('Custom picker is ready!');
+                                                        });
+
+                                                    picker.build().setVisible(true);
+                                                }}
+                                            >
+                                                <span>select from g drive</span>
+                                                <div className="google"></div>
+                                            </GooglePicker>
 
                                             {/* <GooglePicker clientId={CLIENT_ID}
                                                 developerKey={DEVELOPER_KEY}
