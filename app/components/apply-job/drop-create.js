@@ -29,6 +29,7 @@ class DropCreate extends React.Component {
             resume: {},
             candidate: { firstName: '', lastName: '', email: '', phonenumber: '', linkedInLink: '', facebookLink: '', instagramLink: '', twitterLink: '' },
             imagePath: '../../../static/assets/images/favicon.ico',
+            resumeUrl: ''
         }
 
         this.onDrop = (file) => {
@@ -60,6 +61,7 @@ class DropCreate extends React.Component {
         this.setState({
             isDropped: !this.state.isDropped,
             currentFile: '',
+            resumeUrl: ''
         });
     }
 
@@ -122,6 +124,7 @@ class DropCreate extends React.Component {
     }
 
     responseInstagram = (response) => {
+        debugger;
         if (response != null && response != undefined && response.length > 0) {
 
         }
@@ -136,7 +139,8 @@ class DropCreate extends React.Component {
                 return false;
             } else {
                 this.setState({
-                    currentFile: file
+                    currentFile: file,
+                    resumeUrl: files[0].link
                 });
                 this.dropResume();
             }
@@ -179,8 +183,9 @@ class DropCreate extends React.Component {
                                                             <input {...getInputProps()} />
                                                             <div className="drop-cv">
                                                                 <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
-                                                                <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
+                                                               
                                                         </div>
+                                                        <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
                                                     </section>
                                                 )}
                                             </Dropzone>
@@ -189,7 +194,7 @@ class DropCreate extends React.Component {
                                                 success={(files) => this.handleSuccess(files)}
                                                 cancel={() => console.log('closed')}
                                                 multiselect={false}>
-                                                <button>Upload or Choose Files</button>
+                                                <button className="choose-dropbox">Choose From Dropbox</button>
                                             </DropboxChooser>
 
                                             {/* <GooglePicker clientId={CLIENT_ID}
@@ -260,6 +265,7 @@ class DropCreate extends React.Component {
                                         // formData.append("twitterLink", twitterLink);
                                         // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
+                                        formData.append("fileUrl", this.state.resumeUrl);
 
                                         companyService.sendCVToCompany(formData).then((res) => {
                                             resetForm();

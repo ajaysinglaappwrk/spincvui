@@ -5760,19 +5760,23 @@ li.company-name-field {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height: 180px;
+  /* height: 180px; */
   align-items: center;
+  cursor: pointer;
 }
 
+.choose-dropbox:focus, 
 .dropzone:focus {
   outline: none;
 }
 
 .post-text-left {
   position: relative;
+  padding: 5px !important;
+
 }
 
-.dropzone {
+/* .dropzone { 
   height: 100%;
   position: absolute;
   top: 0;
@@ -5782,7 +5786,22 @@ li.company-name-field {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}*/
+
+.dropzone h4 {
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
 }
+.choose-dropbox {
+  background: #13b5ea;
+  padding: 7px 15px;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+.choose-dropbox:focus{outline: none;}
 
 .drop-cv span {
   width: 100%;
