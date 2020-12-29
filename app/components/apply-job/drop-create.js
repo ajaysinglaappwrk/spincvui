@@ -104,14 +104,14 @@ class DropCreate extends React.Component {
         }
     }
     responseFacebook = (response) => {
-        if (response != null && response != undefined && response.length > 0) {
+        if (response != null && response != undefined) {
             var splittedName = response.name.split(" ");
             const formData = new FormData();
             formData.append("firstName", splittedName[0]);
             formData.append("lastName", splittedName[1]);
             formData.append("email", response.email);
             formData.append("phonenumber", "");
-            
+
             // formData.append("code", response.code);
             companyService.sendCVToCompany(formData).then((res) => {
                 this.setState({
@@ -160,43 +160,42 @@ class DropCreate extends React.Component {
             twitterLink: Yup.string(),
         }
         return (
-            <div className="widget widget_contact_form">
-                <div className="page-with-bg">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="careerfy-page-title">
-                                    <div className="post-banner-overlay-text">
-                                        <div className="post-text-left">
-                                            <Dropzone onDrop={this.onDrop}
-                                                maxFiles={1}
-                                                multiple={false}
-                                                canCancel={false}
-                                                styles={{
-                                                    dropzone: { width: 400, height: 200 },
-                                                    dropzoneActive: { borderColor: 'green' },
-                                                }}>
-                                                {({ getRootProps, getInputProps }) => (
-                                                    <section className="container">
-                                                        <div {...getRootProps({ className: 'dropzone' })}>
-                                                            <input {...getInputProps()} />
-                                                            <div className="drop-cv">
-                                                                <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
+            <div>
 
-                                                            </div>
-                                                            <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
-                                                    </section>
-                                                )}
-                                            </Dropzone>
+                <div className="row">
+                    <div className="drop-col">
+                        <div className="careerfy-page-title">
+                            <div className="post-banner-overlay-text">
+                                <div className="post-text-left">
+                                    <Dropzone onDrop={this.onDrop}
+                                        maxFiles={1}
+                                        multiple={false}
+                                        canCancel={false}
+                                        styles={{
+                                            dropzone: { width: 400, height: 200 },
+                                            dropzoneActive: { borderColor: 'green' },
+                                        }}>
+                                        {({ getRootProps, getInputProps }) => (
+                                            <section className="container">
+                                                <div {...getRootProps({ className: 'dropzone' })}>
+                                                    <input {...getInputProps()} />
+                                                    <div className="drop-cv">
+                                                        <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
 
-                                            <DropboxChooser appKey="xxkzfq6nfv1w2ku"
-                                                success={(files) => this.handleSuccess(files)}
-                                                cancel={() => console.log('closed')}
-                                                multiselect={false}>
-                                                <button className="choose-dropbox">Choose From Dropbox</button>
-                                            </DropboxChooser>
+                                                    </div>
+                                                    <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>
+                                            </section>
+                                        )}
+                                    </Dropzone>
 
-                                            {/* <GooglePicker clientId={CLIENT_ID}
+                                    <DropboxChooser appKey="xxkzfq6nfv1w2ku"
+                                        success={(files) => this.handleSuccess(files)}
+                                        cancel={() => console.log('closed')}
+                                        multiselect={false}>
+                                        <button className="choose-dropbox">Choose From Dropbox</button>
+                                    </DropboxChooser>
+
+                                    {/* <GooglePicker clientId={CLIENT_ID}
                                                 developerKey={DEVELOPER_KEY}
                                                 scope={SCOPE}
                                                 onChange={data => {
@@ -214,21 +213,20 @@ class DropCreate extends React.Component {
                                                 viewId={'SPREADSHEETS'}>
                                                 <button>Click</button>
                                             </GooglePicker> */}
-                                        </div>
-                                        <div className="post-text-right">
-                                            <div className="create-cv">
-                                                <h3>{i18n.t('DragOrDropComponent.NoCVLabelText')}</h3>
-                                                <Button variant="primary" onClick={() => this.createResume()}>
-                                                    Create CV
+                                </div>
+                                <div className="post-text-right">
+                                    <div className="create-cv">
+                                        <h3>{i18n.t('DragOrDropComponent.NoCVLabelText')}</h3>
+                                        <Button variant="primary" onClick={() => this.createResume()}>
+                                            Create CV
                                                 </Button>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 {
                     (this.state.isDropped || this.state.isCreate) && <div className="careerfy-modal fade-in careerfy-typo-wrap create-cv-model" id="JobSearchModalRegister">
                         <div className="modal-inner-area">&nbsp;</div>

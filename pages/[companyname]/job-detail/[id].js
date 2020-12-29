@@ -32,6 +32,7 @@ import Jobs from '../../../app/components/job-listing/jobs-list';
 import Layout from '../../../app/components/Layout';
 import initsStore from '../../../app/store';
 import Head from 'next/head';
+import DropCreate from '../../../app/components/apply-job/drop-create';
 class JobDetail extends React.Component {
 
     static getInitialProps = async ({ query }) => {
@@ -68,7 +69,8 @@ class JobDetail extends React.Component {
             currentJobCompanyName: '',
             currentJobId: 0,
             openJobVideo: false,
-            jobLocations: ''
+            jobLocations: '',
+            showDragDrop: true
         };
     }
 
@@ -476,10 +478,16 @@ class JobDetail extends React.Component {
 
                                             <aside className="careerfy-column-4 jobDetail_sidebar" style={{ marginTop: '-20px' }}>
                                                 <div className="careerfy-typo-wrap">
-                                                    <JobApply jobId={this.props.router.query.id} currentProfile={this.state.companyProfile}></JobApply>
-                                                    {/* <div className="widget widget_add">
-                                            <img src="extra-images/jobdetail-add.jpg" alt="" />
-                                        </div> */}
+                                                    {
+                                                        this.state.showDragDrop == false &&
+                                                        <JobApply jobId={this.props.router.query.id} currentProfile={this.state.companyProfile}></JobApply>
+                                                    }
+
+                                                    {
+                                                        this.state.showDragDrop == true &&
+                                                        <DropCreate></DropCreate>
+                                                    }
+
                                                     <div className="widget job-ui-common widget_view_jobs">
                                                         <div className="careerfy-widget-title" style={{ margin: '0' }}><h2>D’autres opportunités chez  {this.state.data ? this.state.data.companyName : ''}</h2></div>
                                                         {

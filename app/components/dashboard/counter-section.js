@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { withTranslation } from '../../../i18n';
 import { companyService } from '../../services/company.service'
-import DropCreate from '../apply-job/drop-create';
+// import DropCreate from '../apply-job/drop-create';
 
 class CounterSection extends React.Component {
     constructor(props) {
@@ -55,9 +55,9 @@ class CounterSection extends React.Component {
         var futureClients = this.state.companies.filter(x => x.isFutureClient == true);
         return (
             <div className="row " style={{ marginBottom: '3em' }} >
-                <div>
+                {/* <div>
                     <DropCreate></DropCreate>
-                </div>
+                </div> */}
                 <div className="col-md-12" style={{ marginTop: '3em' }} >
                     <section className="careerfy-fancy-title">
                         <h2>{i18n.t('Banner.FindCompanyLabel')}</h2>
