@@ -40,16 +40,7 @@ class DropCreate extends React.Component {
     }
 
     componentDidMount() {
-        if (!!window.location.search) {
-            var code = window.location.search.substr(window.location.search.indexOf('=') + 1, window.location.search.indexOf('&state') - 6);
-            const formData = new FormData();
-            formData.append("code", code);
-            companyService.sendCVToCompany(formData).then((res) => {
-
-                window.history.pushState({}, "", "/");
-            });
-        }
-
+        localStorage.setItem("userPageUrl", window.location.pathname)
     }
 
     dropResume() {

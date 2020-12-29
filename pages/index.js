@@ -6,6 +6,8 @@ import Layout from '../app/components/Layout';
 import Dashboard from '../app/components/dashboard/dashboard'
 import { withTranslation, i18n } from "../i18n";
 import Head from 'next/head';
+import Router from 'next/router';
+import { companyService } from '../app/services/company.service';
 class Home extends React.Component {
   static getInitialProps = async ({ req }) => {
     const currentLanguage = req ? req.language : i18n.language;
@@ -13,6 +15,16 @@ class Home extends React.Component {
   };
 
   componentDidMount() {
+    if (!!window.location.search) {
+      var code = window.location.search.substr(window.location.search.indexOf('=') + 1, window.location.search.indexOf('&state') - 6);
+      const formData = new FormData();
+      formData.append("code", code);
+      companyService.sendCVToCompany(formData).then((res) => {
+        var url = localStorage.getItem("userPageUrl");
+        Router.push(url);
+        localStorage.removeItem("userPageUrl");
+      });
+    }
     i18n.changeLanguage("fr");
   }
 

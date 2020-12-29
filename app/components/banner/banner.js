@@ -25,12 +25,13 @@ class Banner extends React.Component {
     }
     componentDidMount() {
         window.addEventListener('keydown', (event) => {
-            var search = document.getElementById("SearchSensor-downshift-input").value;
+            var search = document.getElementById("SearchSensor-downshift-input");
+
             if (event.keyCode == 13)
-                window.location.href = '/jobs?searchterm=' + search + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
+                window.location.href = '/jobs?searchterm=' + (!!search ? search.value : '') + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
         });
     }
-    
+
     search() {
         window.location.href = '/jobs?searchterm=' + this.state.searchTerm + "&locations=" + this.state.selectedLocations + "&industries=" + this.state.selectedIndustries;
     }
