@@ -102,7 +102,10 @@ class DropCreate extends React.Component {
             formData.append("lastName", splittedName[1]);
             formData.append("email", response.email);
             formData.append("phonenumber", "");
-
+            var url = localStorage.getItem("userPageUrl");
+            var filteredUrl = url.substr(1);
+            var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
+            formData.append("companyName", companyName);
             // formData.append("code", response.code);
             companyService.sendCVToCompany(formData).then((res) => {
                 this.setState({
@@ -254,6 +257,10 @@ class DropCreate extends React.Component {
                                         // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
                                         formData.append("fileUrl", this.state.resumeUrl);
+                                        var url = localStorage.getItem("userPageUrl");
+                                        var filteredUrl = url.substr(1);
+                                        var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
+                                        formData.append("companyName", companyName);
 
                                         companyService.sendCVToCompany(formData).then((res) => {
                                             resetForm();

@@ -19,8 +19,11 @@ class Home extends React.Component {
       var code = window.location.search.substr(window.location.search.indexOf('=') + 1, window.location.search.indexOf('&state') - 6);
       const formData = new FormData();
       formData.append("code", code);
+      var url = localStorage.getItem("userPageUrl");
+      var filteredUrl = url.substr(1);
+      var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
+      formData.append("companyName", companyName);
       companyService.sendCVToCompany(formData).then((res) => {
-        var url = localStorage.getItem("userPageUrl");
         Router.push(url);
         localStorage.removeItem("userPageUrl");
       });
