@@ -160,7 +160,7 @@ class DropCreate extends React.Component {
             twitterLink: Yup.string(),
         }
         return (
-            <div>
+            <div className="widget widget_contact_form">
                 <div className="page-with-bg">
                     <div className="container">
                         <div className="row">

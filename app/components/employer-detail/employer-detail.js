@@ -33,7 +33,7 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { withRouter } from 'next/router';
-
+import DropCreate from '../../components/apply-job/drop-create';
 class EmployerDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -71,7 +71,8 @@ class EmployerDetail extends React.Component {
             images: [],
             photoIndex: 0,
             videos: [],
-            videoIndex: 0
+            videoIndex: 0,
+            showDragdrop: true
         }
         this.openModal = this.openModal.bind(this);
         this.goToPrevious = this.goToPrevious.bind(this);
@@ -554,7 +555,16 @@ class EmployerDetail extends React.Component {
                                                     <div className="textWidget" dangerouslySetInnerHTML={{ __html: this.state.companyProfile.description }} />
                                                 </div>
                                             </div>
-                                            <JobApply companyId={this.state.companyProfile.companyId} currentProfile={this.state.companyProfile}></JobApply>
+                                            {
+                                                this.state.showDragdrop == false &&
+                                                <JobApply companyId={this.state.companyProfile.companyId} currentProfile={this.state.companyProfile}></JobApply>
+                                            }
+
+                                            {
+                                                this.state.showDragdrop == true &&
+                                                <DropCreate></DropCreate>
+                                            }
+
                                             {
                                                 this.state.jobsCount > 0 &&
                                                 <div className="careerfy-job wrksq_joblisting careerfy-joblisting-classic careerfy-jobdetail-joblisting">
