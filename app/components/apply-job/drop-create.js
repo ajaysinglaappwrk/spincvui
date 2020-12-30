@@ -35,8 +35,6 @@ class DropCreate extends React.Component {
             console.log('file using drop zone : ', file);
             this.uploadFile(file);
         };
-        // this.handleSuccess.bind(this);
-        // that=this;
     }
 
     componentDidMount() {
