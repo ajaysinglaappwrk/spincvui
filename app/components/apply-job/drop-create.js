@@ -41,6 +41,10 @@ class DropCreate extends React.Component {
 
     componentDidMount() {
         localStorage.setItem("userPageUrl", window.location.pathname)
+        if (!!this.props.jobTitle) {
+            localStorage.setItem("jobDetail", JSON.stringify({ jobTitle: this.props.jobTitle, jobNumber: this.props.jobNumber }));
+
+        }
     }
 
     dropResume() {
@@ -61,19 +65,6 @@ class DropCreate extends React.Component {
 
     closeCreateResumeSection() {
         this.setState({ isCreate: !this.state.isCreate });
-    }
-
-    getUploadParams = () => {
-        return { url: 'https://httpbin.org/post' }
-    }
-
-    handleChangeStatus = ({ meta, remove }, status) => {
-        if (status === 'headers_received') {
-            toast(`${meta.name} uploaded!`)
-            remove()
-        } else if (status === 'aborted') {
-            toast(`${meta.name}, upload failed...`)
-        }
     }
 
     uploadFile(file) {
@@ -102,10 +93,16 @@ class DropCreate extends React.Component {
             formData.append("lastName", splittedName[1]);
             formData.append("email", response.email);
             formData.append("phonenumber", "");
-            var url = localStorage.getItem("userPageUrl");
-            var filteredUrl = url.substr(1);
-            var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
-            formData.append("companyName", companyName);
+
+            if (!!this.props.companyName) {
+                formData.append("companyName", this.props.companyName);
+            }
+            if (!!this.props.jobTitle) {
+                formData.append("jobTitle", this.props.jobTitle);
+            }
+            if (!!this.props.jobNumber) {
+                formData.append("jobNumber", this.props.jobNumber);
+            }
             // formData.append("code", response.code);
             companyService.sendCVToCompany(formData).then((res) => {
                 this.setState({
@@ -141,8 +138,6 @@ class DropCreate extends React.Component {
     }
 
     render() {
-        const accessToken = this.state.accessToken;
-        const filepath = this.state.filepath;
         let validationSchema = {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
             lastName: Yup.string().required(i18n.t('Validations.LastNameValidationLabel')),
@@ -250,17 +245,18 @@ class DropCreate extends React.Component {
                                         formData.append("lastName", lastName);
                                         formData.append("email", email);
                                         formData.append("phonenumber", phonenumber);
-                                        // formData.append("linkedInLink", linkedInLink);
-                                        // formData.append("facebookLink", facebookLink);
-                                        // formData.append("instagramLink", instagramLink);
-                                        // formData.append("twitterLink", twitterLink);
-                                        // formData.append("id", 0);
                                         formData.append("file", this.state.currentFile);
                                         formData.append("fileUrl", this.state.resumeUrl);
-                                        var url = localStorage.getItem("userPageUrl");
-                                        var filteredUrl = url.substr(1);
-                                        var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
-                                        formData.append("companyName", companyName);
+
+                                        if (!!this.props.companyName) {
+                                            formData.append("companyName", this.props.companyName);
+                                        }
+                                        if (!!this.props.jobTitle) {
+                                            formData.append("jobTitle", this.props.jobTitle);
+                                        }
+                                        if (!!this.props.jobNumber) {
+                                            formData.append("jobNumber", this.props.jobNumber);
+                                        }
 
                                         companyService.sendCVToCompany(formData).then((res) => {
                                             resetForm();

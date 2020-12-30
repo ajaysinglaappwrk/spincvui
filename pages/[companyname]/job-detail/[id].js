@@ -70,7 +70,6 @@ class JobDetail extends React.Component {
             currentJobId: 0,
             openJobVideo: false,
             jobLocations: '',
-            showDragDrop: true
         };
     }
 
@@ -479,13 +478,13 @@ class JobDetail extends React.Component {
                                             <aside className="careerfy-column-4 jobDetail_sidebar" style={{ marginTop: '-20px' }}>
                                                 <div className="careerfy-typo-wrap">
                                                     {
-                                                        this.state.showDragDrop == false &&
+                                                        this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() != 'metro' && 
                                                         <JobApply jobId={this.props.router.query.id} currentProfile={this.state.companyProfile}></JobApply>
                                                     }
 
                                                     {
-                                                        this.state.showDragDrop == true &&
-                                                        <DropCreate></DropCreate>
+                                                       (this.state.jobDetail && !!this.state.jobDetail.title) && (this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() == 'metro')  &&
+                                                        <DropCreate companyName={this.state.data ? this.state.data.companyName : ''} jobTitle={this.state.jobDetail ? this.state.jobDetail.title : ''} jobNumber={this.state.data ? this.state.data.jobNumber : ''}></DropCreate>
                                                     }
 
                                                     <div className="widget job-ui-common widget_view_jobs">

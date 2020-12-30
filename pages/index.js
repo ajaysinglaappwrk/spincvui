@@ -23,9 +23,17 @@ class Home extends React.Component {
       var filteredUrl = url.substr(1);
       var companyName = filteredUrl.substr(0, filteredUrl.indexOf("/") > -1 ? filteredUrl.indexOf("/") : filteredUrl.length);
       formData.append("companyName", companyName);
+      var jobdetail = localStorage.getItem("jobDetail");
+      if (!!jobdetail) {
+          var parsedJobDetail = JSON.parse(jobdetail);
+          formData.append("jobTitle", parsedJobDetail.jobTitle);
+          formData.append("jobNumber", parsedJobDetail.jobNumber);
+      }
       companyService.sendCVToCompany(formData).then((res) => {
         Router.push(url);
         localStorage.removeItem("userPageUrl");
+        localStorage.removeItem("jobDetail");
+
       });
     }
     i18n.changeLanguage("fr");

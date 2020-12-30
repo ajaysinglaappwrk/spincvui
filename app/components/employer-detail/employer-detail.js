@@ -34,6 +34,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { withRouter } from 'next/router';
 import DropCreate from '../../components/apply-job/drop-create';
+
 class EmployerDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -72,7 +73,6 @@ class EmployerDetail extends React.Component {
             photoIndex: 0,
             videos: [],
             videoIndex: 0,
-            showDragdrop: true
         }
         this.openModal = this.openModal.bind(this);
         this.goToPrevious = this.goToPrevious.bind(this);
@@ -556,13 +556,13 @@ class EmployerDetail extends React.Component {
                                                 </div>
                                             </div>
                                             {
-                                                this.state.showDragdrop == false &&
+                                                this.state.companyProfile && !!this.state.companyProfile.name && this.state.companyProfile.name.toLowerCase() != 'metro' &&
                                                 <JobApply companyId={this.state.companyProfile.companyId} currentProfile={this.state.companyProfile}></JobApply>
                                             }
 
                                             {
-                                                this.state.showDragdrop == true &&
-                                                <DropCreate></DropCreate>
+                                                this.state.companyProfile && !!this.state.companyProfile.name && this.state.companyProfile.name.toLowerCase() == 'metro' &&
+                                                <DropCreate companyName={this.state.companyProfile.name}></DropCreate>
                                             }
 
                                             {
