@@ -47,7 +47,7 @@ class Banner extends React.Component {
     render() {
         return (
             <div className="careerfy-banner">
-                <ReactPlayer url='/static/assets/video/video_1280.mp4' playing className="videobg" />
+                <ReactPlayer url='https://my-cdn.azureedge.net/cdn/video/video_1280.mp4' playing className="videobg" />
                 {/* <video loop autoPlay className="videobg">
                     <source src='assets/video/video_1280.mp4' type="video/mp4" />
                 </video> */}
