@@ -11,22 +11,14 @@ class JobPosting extends React.Component {
         this.state = {
             companies: [],
             imageData: [
-                { path: '/static/assets/images/slide-img-1.png', title: "Montrez le visage humain de votre entreprise", listItems: "<li>Interview vidéo avec vos employés qui expliquent pourquoi rejoindre votre entreprise est super</li><li> Photo de vos employés dans leur environnement de travail</li>" },
-                { path: '/static/assets/images/slide-img-2.png', title: "Faites voir votre environnement de travail", listItems: "<li>Vidéos et photos de vos bureaux, cafétériat, ….</li><li>Visite 3D (possibilité d'inclure dans google maps) </li><li> Vidéo de drône pour montrer votre building</li>" },
-                { path: '/static/assets/images/slide-img-3.png', title: "Dites-leur vos avantages (perks)", listItems: "<li> Énumérez tous les avantages incroyable que votre compagnie offre</li><li>Nous permettons aux candidats d'effectuer des recherches d'emplois par avantages</li><li>Adaptez chacunes de vos offres avec les avantages qui s'y rattachent</li>" },
-                { path: '/static/assets/images/slide-img-4.png', title: "Répondez en direct aux questions", listItems: "<li>Session en direct  sur notre site et YouTube</li><li>Répondez aux questions des candidats pour les convaincres d'envoyer leur CV </li><li>Les sessions en directes passées seront toujours disponible sur votre page</li>" },
-                { path: '/static/assets/images/slide-img-5.png', title: "Publiez de courtes vidéos pour chacune de vos offres d'emploi", listItems: "<li>Montrez directement l'environnement de  travail de la personne que vous voulez recruter</li><li>Expliquez pourquoi cette position est fantastique</li>" },
-                { path: '/static/assets/images/slide-img-6.png', title: "Publiez directement sur votre site web dans votre section carrière nos pages", listItems: "<li>Ayez accès à notre magnifique interface pour votre site web</li><li>Publiez le tout avec une seule ligne de code</li><li>Modifiez les vidéos, photos, …. autant de fois que vous le désirez</li>" },
-                { path: '/static/assets/images/slide-img-7.png', title: "Automatisez vos publications d'offres d'emploi", listItems: "<li>Nous vous offrons un connecteur qui s'intègre dans votre ATS pour actualisez vos offres</li><li>Fini le copier/coller pour publier vos offres d'emploi</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-1.png', title: "Montrez le visage humain de votre entreprise", listItems: "<li>Interview vidéo avec vos employés qui expliquent pourquoi rejoindre votre entreprise est super</li><li> Photo de vos employés dans leur environnement de travail</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-2.png', title: "Faites voir votre environnement de travail", listItems: "<li>Vidéos et photos de vos bureaux, cafétériat, ….</li><li>Visite 3D (possibilité d'inclure dans google maps) </li><li> Vidéo de drône pour montrer votre building</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-3.png', title: "Dites-leur vos avantages (perks)", listItems: "<li> Énumérez tous les avantages incroyable que votre compagnie offre</li><li>Nous permettons aux candidats d'effectuer des recherches d'emplois par avantages</li><li>Adaptez chacunes de vos offres avec les avantages qui s'y rattachent</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-4.png', title: "Répondez en direct aux questions", listItems: "<li>Session en direct  sur notre site et YouTube</li><li>Répondez aux questions des candidats pour les convaincres d'envoyer leur CV </li><li>Les sessions en directes passées seront toujours disponible sur votre page</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-5.png', title: "Publiez de courtes vidéos pour chacune de vos offres d'emploi", listItems: "<li>Montrez directement l'environnement de  travail de la personne que vous voulez recruter</li><li>Expliquez pourquoi cette position est fantastique</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-6.png', title: "Publiez directement sur votre site web dans votre section carrière nos pages", listItems: "<li>Ayez accès à notre magnifique interface pour votre site web</li><li>Publiez le tout avec une seule ligne de code</li><li>Modifiez les vidéos, photos, …. autant de fois que vous le désirez</li>" },
+                { path: 'https://my-cdn.azureedge.net/cdn/images/slide-img-7.png', title: "Automatisez vos publications d'offres d'emploi", listItems: "<li>Nous vous offrons un connecteur qui s'intègre dans votre ATS pour actualisez vos offres</li><li>Fini le copier/coller pour publier vos offres d'emploi</li>" },
 
-            ],
-            imageDataClients: [
-                { path: '/static/assets/images/client-1.png', name: 'Joel Dudley', position: 'Web Designer' },
-                { path: '/static/assets/images/client-2.png', name: 'David Stevens', position: 'Supervisor' },
-                { path: '/static/assets/images/client-3.png', name: 'James Ray', position: 'Web Designer' },
-                { path: '/static/assets/images/client-4.png', name: 'Noah Zimmerman', position: 'Web Designer' },
-                { path: '/static/assets/images/client-5.png', name: 'Matt John', position: 'Web Designer' },
-                { path: '/static/assets/images/client-6.png', name: 'Joel Dudley', position: 'Web Designer' }
             ]
         }
     }
@@ -82,7 +74,7 @@ class JobPosting extends React.Component {
                                     <div className="careerfy-page-title">
                                         <div className="post-banner-overlay-text">
                                             <div className="post-text-left">
-                                                <img src="/static/assets/images/Spincv-logo.png" alt="" />
+                                                <img src="https://my-cdn.azureedge.net/cdn/images/Spincv-logo.png" alt="" />
                                                 <h3 dangerouslySetInnerHTML={{ __html: i18n.t('PostJob.BannerTitle1') }} />
                                             </div>
                                             <div className="post-text-right">
@@ -108,7 +100,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-3 col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/operate-icon-1.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/operate-icon-1.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('PostJob.HowItWorksInnerTitle1')}</h2>
@@ -118,7 +110,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-3  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/operate-icon-2.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/operate-icon-2.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('PostJob.HowItWorksInnerTitle2')}</h2>
@@ -128,7 +120,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-3  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/operate-icon-3.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/operate-icon-3.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('PostJob.HowItWorksInnerTitle3')}</h2>
@@ -138,7 +130,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-3  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/operate-icon-4.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/operate-icon-4.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('PostJob.HowItWorksInnerTitle4')}</h2>
@@ -164,7 +156,7 @@ class JobPosting extends React.Component {
                                         <div className="row">
                                             <div className="col-md-6">
                                                 <div className="video-image-help">
-                                                    <img src="/static/assets/images/picture_1.jpg" />
+                                                    <img src="https://my-cdn.azureedge.net/cdn/images/picture_1.jpg" />
                                                 </div>
                                             </div>
                                             <div className="col-md-6">
@@ -218,7 +210,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-1.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-1.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle1')}</h2>
@@ -227,7 +219,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-2.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-2.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle2')}</h2>
@@ -236,7 +228,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-3.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-3.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle3')}</h2>
@@ -245,7 +237,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-4.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-4.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle4')}</h2>
@@ -254,7 +246,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-5.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-5.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle5')}</h2>
@@ -263,7 +255,7 @@ class JobPosting extends React.Component {
                                             <li className="col-md-4  col-sm-6">
                                                 <div className="image-icon">
                                                     <span>
-                                                        <img src="/static/assets/images/security-icon-6.png" alt="icon-1" />
+                                                        <img src="https://my-cdn.azureedge.net/cdn/images/security-icon-6.png" alt="icon-1" />
                                                     </span>
                                                 </div>
                                                 <h2>{i18n.t('Security.SecurityTitle6')}</h2>

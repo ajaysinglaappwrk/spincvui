@@ -36,7 +36,7 @@ class ContactUS extends React.Component {
                             <div className="container-fluid ">
                                 <div className="row">
 
-                                    <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("/static/assets/images/contact-ban.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
+                                    <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("https://my-cdn.azureedge.net/cdn/images/contact-ban.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
                                         <div className="careerfy-page-title contact-page-banner-title">
                                             <h3 dangerouslySetInnerHTML={{ __html: i18n.t('ContactUs.BannerTitle') }} />
                                         </div>
