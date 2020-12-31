@@ -27,7 +27,6 @@ class DropCreate extends React.Component {
             isCreate: false,
             resume: {},
             candidate: { firstName: '', lastName: '', email: '', phonenumber: '', linkedInLink: '', facebookLink: '', instagramLink: '', twitterLink: '' },
-            imagePath: '../../../static/assets/images/favicon.ico',
             resumeUrl: ''
         }
 
@@ -167,7 +166,7 @@ class DropCreate extends React.Component {
                                                 <div {...getRootProps({ className: 'dropzone' })}>
                                                     <input {...getInputProps()} />
                                                     <div className="drop-cv">
-                                                        <span><img src="../../../static/assets/images/cloud-storage-uploading-option.png"></img></span>
+                                                        <span><img src="https://my-cdn.azureedge.net/cdn/images/cloud-storage-uploading-option.png"></img></span>
 
                                                     </div>
                                                     <h4>{i18n.t('DragOrDropComponent.DropCvHeaderTitle')}</h4></div>

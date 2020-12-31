@@ -19,7 +19,7 @@ class ConfirmEmployerEmail extends React.Component {
                         <div className="container-fluid ">
                             <div className="row">
 
-                                <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("/static/assets/images/contact-ban.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
+                                <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("https://my-cdn.azureedge.net/cdn/images/contact-ban.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
                                     <div className="careerfy-page-title contact-page-banner-title">
                                         {/* <h3>Un membre de notre équipe vous contactera</h3> */}
                                         <h3>{i18n.t('EmailConfirm.RegsiterThs')}</h3>

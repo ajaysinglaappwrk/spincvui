@@ -161,13 +161,13 @@ class Whatwedo extends React.Component {
                                         <div className="review_content">
                                             <div className="title-decoration">
                                                 <div className="quote_icon q_top">
-                                                    <img src="../static/assets/images/quote-top.png" alt="icon" />
+                                                    <img src="https://my-cdn.azureedge.net/cdn/images/quote-top.png" alt="icon" />
                                                 </div>
                                                 <div className="review_title">
                                                     <div className="textWidget" dangerouslySetInnerHTML={{ __html: this.state.teamQuote }} />
                                                 </div>
                                                 <div className="quote_icon q_bottom">
-                                                    <img src="../static/assets/images/quote-bottom.png" alt="icon" />
+                                                    <img src="https://my-cdn.azureedge.net/cdn/images/quote-bottom.png" alt="icon" />
                                                 </div>
                                             </div>
                                         </div>

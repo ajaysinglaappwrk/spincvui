@@ -36,7 +36,7 @@ class EmailConfirmed extends React.Component {
                         <div className="container-fluid ">
                             <div className="row">
 
-                                <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("/static/assets/images/glen-pc.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
+                                <div className="banner-contact" style={{ position: 'relative', backgroundImage: 'url("https://my-cdn.azureedge.net/cdn/images/glen-pc.jpg")', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPositionX: 'center', backgroundPositionY: '-150px', height: '420px', width: '100%' }}>
                                     <div className="careerfy-page-title contact-page-banner-title email-confrimed-page">
                                         <div>
                                             <h2>{i18n.t('EmailConfirm.ConfirmThs')}</h2>

@@ -12,7 +12,7 @@ class Footer extends React.Component {
                             <aside className="widget col-md-4 widget_contact_info">
                                 <div className="widget_contact_wraps">
                                     <a className="careerfy-footer-logo" href="index.html">
-                                        <img src="/static/assets/images/minuscule_blanc.png" style={{maxWidth:200}} alt="" />
+                                        <img src="https://my-cdn.azureedge.net/cdn/images/minuscule_blanc.png" style={{maxWidth:200}} alt="" />
                                         </a>
                                         <p>{i18n.t('Footer.ShortDesc')}</p>
                                 </div>

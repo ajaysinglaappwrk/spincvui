@@ -113,7 +113,7 @@ class JobDetail extends React.Component {
                     activePerk: perks[0].id,
                     perkTitle: perks[0].title,
                     text: perks[0].companyPerkSubcategories.map((subcategory, catindex) => {
-                        return (<div key={catindex} className="perksContent-text"><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                        return (<div key={catindex} className="perksContent-text"><img src="https://my-cdn.azureedge.net/cdn/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                     })
                 })
             });
@@ -416,14 +416,14 @@ class JobDetail extends React.Component {
                                                                                         activePerk: id,
                                                                                         perkTitle: title,
                                                                                         text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                            return (<div className="perksContent-text" key={catindex}><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                            return (<div className="perksContent-text" key={catindex}><img src="https://my-cdn.azureedge.net/cdn/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                         })
                                                                                     })
                                                                                 } onMouseEnter={() => this.setState({
                                                                                     activePerk: id,
                                                                                     perkTitle: title,
                                                                                     text: companyPerkSubcategories.map((subcategory, catindex) => {
-                                                                                        return (<div className="perksContent-text" key={catindex}><img src="/static/assets/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
+                                                                                        return (<div className="perksContent-text" key={catindex}><img src="https://my-cdn.azureedge.net/cdn/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                                                                                     })
                                                                                 })}><p></p>{title} </li>
                                                                         </Fragment >
