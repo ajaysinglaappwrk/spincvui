@@ -28,17 +28,17 @@ export default class MyDocument extends Document {
 `}}
           />
          
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/bootstrap.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/fancybox.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/font-awesome.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/flaticon.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/plugin.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/color.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/style.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/common.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/responsive.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/slick.min.css'></link>
-          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/slick-theme.min.css'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/bootstrap.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/fancybox.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/font-awesome.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/flaticon.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/plugin.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/color.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/style.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/common.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/responsive.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/slick.min.css?v=1'></link>
+          <link rel='stylesheet' href='https://my-cdn.azureedge.net/cdn/css/slick-theme.min.css?v=1'></link>
           <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/react-toastify@5.5.0/dist/ReactToastify.css'></link>
         </Head>
         <body>
