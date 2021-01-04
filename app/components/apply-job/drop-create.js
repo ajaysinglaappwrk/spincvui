@@ -90,6 +90,8 @@ class DropCreate extends React.Component {
             formData.append("lastName", splittedName[1]);
             formData.append("email", response.email);
             formData.append("phonenumber", "");
+            formData.append("file", this.state.currentFile);
+            formData.append("fileUrl", this.state.resumeUrl);
 
             if (!!this.props.companyName) {
                 formData.append("companyName", this.props.companyName);
