@@ -31,8 +31,8 @@ class DropCreate extends React.Component {
         }
 
         this.onDrop = (file) => {
-            console.log('file using drop zone : ', file);
             this.uploadFile(file);
+            document.querySelector(".dropzone").style.border = "none";
         };
     }
 
@@ -134,6 +134,12 @@ class DropCreate extends React.Component {
         }
     }
 
+    onDragEnter() {
+        document.querySelector(".dropzone").style.border = "2px dashed #666";
+    }
+    onDragLeave() {
+      document.querySelector(".dropzone").style.border = "none";
+    }
     render() {
         let validationSchema = {
             firstName: Yup.string().required(i18n.t('Validations.FirstNameValidationLabel')),
@@ -160,7 +166,7 @@ class DropCreate extends React.Component {
                                         styles={{
                                             dropzone: { width: 400, height: 200 },
                                             dropzoneActive: { borderColor: 'green' },
-                                        }}>
+                                        }} onDragEnter={() => this.onDragEnter()} onDragLeave={()=> this.onDragLeave()}>
                                         {({ getRootProps, getInputProps }) => (
                                             <section className="container">
                                                 <div {...getRootProps({ className: 'dropzone' })}>
@@ -204,8 +210,8 @@ class DropCreate extends React.Component {
                                     <div className="create-cv">
                                         <h3>{i18n.t('DragOrDropComponent.NoCVLabelText')}</h3>
                                         <Button variant="primary" onClick={() => this.createResume()}>
-                                        {i18n.t('DragOrDropComponent.CreateCVBtnText')}
-                                                </Button>
+                                            {i18n.t('DragOrDropComponent.CreateCVBtnText')}
+                                        </Button>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +228,7 @@ class DropCreate extends React.Component {
                                     {/* <h2>{i18n.t('Register.RegisterHeader')}</h2> */}
                                     {this.state.isDropped &&
                                         <div>
-                                           <h2>{i18n.t('DragOrDropComponent.EnterDetailLabelText')}</h2>
+                                            <h2>{i18n.t('DragOrDropComponent.EnterDetailLabelText')}</h2>
                                             <span className="modal-close" onClick={() => this.closeDropSection()}><i className="fa fa-times"></i></span>
                                         </div>
                                     }
