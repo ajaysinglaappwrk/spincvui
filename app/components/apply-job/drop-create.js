@@ -178,7 +178,7 @@ class DropCreate extends React.Component {
                                         success={(files) => this.handleSuccess(files)}
                                         cancel={() => console.log('closed')}
                                         multiselect={false}>
-                                        <button className="choose-dropbox">Choose From Dropbox</button>
+                                        <button className="choose-dropbox">{i18n.t('DragOrDropComponent.DropboxChooseBtnText')}</button>
                                     </DropboxChooser>
 
                                     {/* <GooglePicker clientId={CLIENT_ID}
@@ -204,7 +204,7 @@ class DropCreate extends React.Component {
                                     <div className="create-cv">
                                         <h3>{i18n.t('DragOrDropComponent.NoCVLabelText')}</h3>
                                         <Button variant="primary" onClick={() => this.createResume()}>
-                                            Create CV
+                                        {i18n.t('DragOrDropComponent.CreateCVBtnText')}
                                                 </Button>
                                     </div>
                                 </div>
@@ -222,7 +222,7 @@ class DropCreate extends React.Component {
                                     {/* <h2>{i18n.t('Register.RegisterHeader')}</h2> */}
                                     {this.state.isDropped &&
                                         <div>
-                                            <h2>Drop CV and details</h2>
+                                           <h2>{i18n.t('DragOrDropComponent.EnterDetailLabelText')}</h2>
                                             <span className="modal-close" onClick={() => this.closeDropSection()}><i className="fa fa-times"></i></span>
                                         </div>
                                     }
@@ -276,7 +276,7 @@ class DropCreate extends React.Component {
                                                                 <label>{this.state.currentFile ? 'Selected File : ' + this.state.currentFile.name : null} </label>
                                                             </strong> */}
                                                             <strong>
-                                                                <label>Selected File :
+                                                                <label>{i18n.t('DragOrDropComponent.SelectedFileLabelText')} :
                                                                     <sapn className="file_name">{this.state.currentFile ? this.state.currentFile.name : null}</sapn>
                                                                 </label>
                                                             </strong>

@@ -316,8 +316,11 @@
     ,
     "DragOrDropComponent": {
         "DropCvHeaderTitle":"Drag and Drop your CV, or click here to upload",
-        "NoCVLabelText":"You don't have a CV ? No problem click here!",
-        "EnterDetailLabelText":"Please provide your contact information"
+        "NoCVLabelText":"You don't have a CV ? No problem!",
+        "EnterDetailLabelText":"Please provide your contact information",
+        "CreateCVBtnText":"click here!",
+        "DropboxChooseBtnText": "Choose From Dropbox",
+        "SelectedFileLabelText":"Selected File"
     }
 }
 

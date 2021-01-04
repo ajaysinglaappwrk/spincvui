@@ -316,7 +316,10 @@
     },
     "DragOrDropComponent": {
         "DropCvHeaderTitle":"Glissez et déposez votre CV, ou cliquez ici pour télécharger",
-        "NoCVLabelText":"Vous n'avez pas de CV? Aucun problème cliquez ici!",
-        "EnterDetailLabelText":"Entrez vos informations de contact"
+        "NoCVLabelText":"Vous n'avez pas de CV? Aucun problème!",
+        "EnterDetailLabelText":"Entrez vos informations de contact",
+        "CreateCVBtnText":"cliquez ici",
+        "DropboxChooseBtnText": "Choisissez dans Dropbox",
+        "SelectedFileLabelText":"Fichier sélectionné"
     }
 }
