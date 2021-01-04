@@ -72,7 +72,7 @@ class JobPosting extends React.Component {
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="careerfy-page-title">
-                                        <div className="post-banner-overlay-text">
+                                        <div className="post-banner-overlay-text overlay_bnr-wrap">
                                             <div className="post-text-left">
                                                 <img src="https://my-cdn.azureedge.net/cdn/images/Spincv-logo.png" alt="" />
                                                 <h3 dangerouslySetInnerHTML={{ __html: i18n.t('PostJob.BannerTitle1') }} />

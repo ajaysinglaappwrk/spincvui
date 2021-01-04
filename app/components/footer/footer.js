@@ -53,7 +53,7 @@ class Footer extends React.Component {
                     </div>
                 </div>
                 <div className="site-copyright">
-                    <p>© 2016-2020 - spincv<sup>{i18n.t('Footer.RightReserveShortLabel')} </sup> - {i18n.t('Footer.RightReserveLabel')} </p>
+                    <p>© 2016-{new Date().getFullYear()} - spincv<sup>{i18n.t('Footer.RightReserveShortLabel')} </sup> - {i18n.t('Footer.RightReserveLabel')} </p>
                 </div>
             </footer>
         )
