@@ -35,10 +35,10 @@ import Head from 'next/head';
 import DropCreate from '../../../../app/components/apply-job/drop-create';
 class JobDetail extends React.Component {
 
-    static getInitialProps = async ({ query }) => {
+    static getInitialProps = async ({ query, req }) => {
         const res = await fetch(apiUrl + 'api/company/GetJobDetailById/' + query.id);
         const json = await res.json()
-        return { jobDetail: json, namespacesRequired: ["common"] };
+        return { jobDetail: json, host: req.headers.host, namespacesRequired: ["common"] };
     };
     constructor(props) {
         super(props);
@@ -70,6 +70,8 @@ class JobDetail extends React.Component {
             currentJobId: 0,
             openJobVideo: false,
             jobLocations: '',
+            currentUrl: '',
+            currentHost: ''
         };
     }
 
@@ -90,8 +92,9 @@ class JobDetail extends React.Component {
                         data: result.data,
                         jobDetail: result.data.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
                         industryName: industry != null ? industry.description : "",
-                        jobType: result.data.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
-
+                        jobType: result.data.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
+                        currentUrl: window.location.href,
+                        currentHost: window.location.host
                     })
                 }
                 else {
@@ -243,14 +246,17 @@ class JobDetail extends React.Component {
             this.setState({
                 currentJobCompanyName: job.companyName,
                 currentJobId: job.jobPostingId,
+                currentJobTitle: job.title,
+                jobUrl: window.location.host + "/jobs" + "?url=" + url + "&jobpostingId=" + job.jobPostingId + "&company=" + job.companyName + "&isvideo=true&jobTitle=" + job.title
             });
         }
         this.setState({ openJobVideo: value });
     }
 
-    viewCompanyProfile() {
-        window.open("/" + this.state.currentJobCompanyName, "_blank")
-    }
+    // viewCompanyProfile() {
+    //     debugger;
+    //     window.open("/" + this.state.currentJobCompanyName, "_blank")
+    // }
 
     makeJobSchema() {
         var jobLocations = [];
@@ -295,8 +301,8 @@ class JobDetail extends React.Component {
 
     render() {
         const { i18n, jobDetail } = this.props;
-        var title =''
-        var jobPostingSchema ='';
+        var title = ''
+        var jobPostingSchema = '';
         if (!!jobDetail.industries) {
 
             var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
@@ -308,7 +314,7 @@ class JobDetail extends React.Component {
             title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.jobLocations + " | " + this.state.data.companyName;
         }
 
-        const url = '';
+        const url = this.state.currentUrl;
 
         return (
             <Layout>
@@ -320,7 +326,7 @@ class JobDetail extends React.Component {
                         <meta property="og:image:width" content="200" />
                         <meta property="og:image:height" content="200" />
                         <meta property="og:type" content="website" />
-                        <meta property="og:url" content={"https://www.spincv.com/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId} />
+                        <meta property="og:url" content={this.props.host + "/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId + "/" + this.state.jobDetail.title} />
                         <meta property="og:description"
                             content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
                         <script
@@ -537,22 +543,22 @@ class JobDetail extends React.Component {
                                     </div>
                                     <div className="share-icon-video">
                                         <div className="copy-video-url">
-                                            <input type="text" value={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} />  <CopyToClipboard text={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"}>
+                                            <input type="text" value={this.state.jobUrl} />  <CopyToClipboard text={this.state.jobUrl}>
                                                 <i class="fa fa-clone" aria-hidden="true"></i>
                                             </CopyToClipboard>
                                         </div>
                                         <ul className="careerfy-jobdetail-media">
                                             <li>{i18n.t('General.ShareButtonLabel')}:</li>
-                                            <li><FacebookShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><FacebookShareButton url={this.state.jobUrl} className="share">
                                                 <FacebookIcon size={25} round={true} />
                                             </FacebookShareButton></li>
-                                            <li><TwitterShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><TwitterShareButton url={this.state.jobUrl} className="share">
                                                 <TwitterIcon size={25} round={true} />
                                             </TwitterShareButton></li>
-                                            <li><LinkedinShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><LinkedinShareButton url={this.state.jobUrl} className="share">
                                                 <LinkedinIcon size={25} round={true} />
                                             </LinkedinShareButton></li>
-                                            <li><EmailShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><EmailShareButton url={this.state.jobUrl} className="share">
                                                 <EmailIcon size={25} round={true} />
                                             </EmailShareButton></li>
                                         </ul>
@@ -564,7 +570,7 @@ class JobDetail extends React.Component {
                                             <Iframe className="iframePlayer" url={this.state.url} />}
                                     </div>
                                     <div className="Video-actions">
-                                        <button type="submit" className="careerfy-option-btn video-applyJobBtn" onClick={() => this.viewCompanyProfile()}>{i18n.t('General.DiscoverTheCompany')}</button>
+                                        <button type="submit" className="careerfy-option-btn video-applyJobBtn" onClick={() => this.viewCompanyProfile(this.state.data.companyName)}>{i18n.t('General.DiscoverTheCompany')}</button>
                                         <button type="submit" className="careerfy-option-btn  video-viewCompanyProfile" onClick={() => this.openJobVideoModal(null, false)}> {i18n.t('General.ApplyJob')}</button>
                                     </div>
                                 </div>

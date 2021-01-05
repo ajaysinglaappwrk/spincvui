@@ -111,11 +111,12 @@ class JobSearch extends React.Component {
                 // this.state.currentJobId = params.jobpostingId;
                 // this.state.openJobVideo = true;
                 this.setState({
-                    url:params.url,
+                    url: params.url,
                     currentJobCompanyName: params.company,
-                    currentJobId:params.jobpostingId,
-                    openJobVideo:true,
-                    currentJobTitle: params.jobTitle
+                    currentJobId: params.jobpostingId,
+                    openJobVideo: true,
+                    currentJobTitle: params.jobTitle,
+                    jobUrl: window.location.host + "/jobs" + "?url=" + params.url + "&jobpostingId=" + params.jobpostingId + "&company=" + params.company + "&isvideo=true&jobTitle=" + params.jobTitle
                 });
             }
         }
@@ -1429,7 +1430,7 @@ class JobSearch extends React.Component {
                                                             triggerQuery();
                                                         }, 3000);
                                                     }}
-                                                  
+
                                                     parseSuggestion={(suggestion) => ({
 
                                                         label: (
