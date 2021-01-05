@@ -33,12 +33,13 @@ import Layout from '../../../../app/components/Layout';
 import initsStore from '../../../../app/store';
 import Head from 'next/head';
 import DropCreate from '../../../../app/components/apply-job/drop-create';
+import { appUrl } from '../../../../app/config';
 class JobDetail extends React.Component {
 
-    static getInitialProps = async ({ query, req }) => {
+    static getInitialProps = async ({ query }) => {
         const res = await fetch(apiUrl + 'api/company/GetJobDetailById/' + query.id);
         const json = await res.json()
-        return { jobDetail: json, host: req.headers.host, namespacesRequired: ["common"] };
+        return { jobDetail: json, namespacesRequired: ["common"] };
     };
     constructor(props) {
         super(props);
@@ -326,7 +327,7 @@ class JobDetail extends React.Component {
                         <meta property="og:image:width" content="200" />
                         <meta property="og:image:height" content="200" />
                         <meta property="og:type" content="website" />
-                        <meta property="og:url" content={this.props.host + "/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId + "/" + this.state.jobDetail.title} />
+                        <meta property="og:url" content={appUrl + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId + "/" + this.state.jobDetail.title} />
                         <meta property="og:description"
                             content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
                         <script
