@@ -132,8 +132,8 @@ class Jobs extends React.Component {
 
     renderJob(job) {
         const { i18n } = this.props;
-        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
+        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId + "/" + title;
         const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
         const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
 

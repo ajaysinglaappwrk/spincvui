@@ -31,6 +31,7 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Axios from 'axios';
 import { apiUrl } from '../../../app/config';
+import { withRouter } from 'next/router';
 class JobSearch extends React.Component {
     static getInitialProps = async ({ req }) => {
         const currentLanguage = req ? req.language : i18n.language;
@@ -55,6 +56,7 @@ class JobSearch extends React.Component {
             registerModal: false,
             currentJobCompanyName: '',
             currentJobId: 0,
+            currentJobTitle: '',
             isAnyFilterApplied: false,
             selectedSubCategories: '',
             selectedFoodFacets: '',
@@ -104,10 +106,17 @@ class JobSearch extends React.Component {
         var params = this.getUrlParams();
         if (params && params.isvideo) {
             if (params.isvideo == "true") {
-                this.state.url = params.url;
-                this.state.currentJobCompanyName = params.company;
-                this.state.currentJobId = params.jobpostingId;
-                this.state.openJobVideo = true;
+                // this.state.url = params.url;
+                // this.state.currentJobCompanyName = params.company;
+                // this.state.currentJobId = params.jobpostingId;
+                // this.state.openJobVideo = true;
+                this.setState({
+                    url:params.url,
+                    currentJobCompanyName: params.company,
+                    currentJobId:params.jobpostingId,
+                    openJobVideo:true,
+                    currentJobTitle: params.jobTitle
+                });
             }
         }
         //COMMENTING FOR NOW to set up staging env
@@ -176,9 +185,12 @@ class JobSearch extends React.Component {
     openJobVideoModal(url, value, job) {
         this.setState({ url: url });
         if (job) {
+            const title = (this.props.i18n.language == "en" ? job.TitleEN : job.TitleFR);
             this.setState({
                 currentJobCompanyName: job.CompanyName,
                 currentJobId: job.JobPostingId,
+                currentJobTitle: title,
+                jobUrl: window.location.host + "/jobs" + "?url=" + url + "&jobpostingId=" + job.JobPostingId + "&company=" + job.CompanyName + "&isvideo=true&jobTitle=" + title
             });
         }
         this.setState({ openJobVideo: value });
@@ -296,16 +308,16 @@ class JobSearch extends React.Component {
         window.open("/" + this.state.currentJobCompanyName, "_blank")
     }
     viewJobDetail() {
-        const url = "/" + this.state.currentJobCompanyName + "/job-detail/" + this.state.currentJobId;
-        this.props.history.push(url);
+        const url = "/" + this.state.currentJobCompanyName + "/job-detail/" + this.state.currentJobId + "/" + this.state.currentJobTitle;
+        this.props.router.push(url);
     }
     openJobDetail(url) {
-        this.props.history.push(url);
+        this.props.router.push(url);
     }
     renderJob(job) {
         const { i18n } = this.props;
-        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
+        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId + "/" + title;
         const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
         const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
         const companyProfileUrl = "/" + job.CompanyName
@@ -1417,17 +1429,7 @@ class JobSearch extends React.Component {
                                                             triggerQuery();
                                                         }, 3000);
                                                     }}
-                                                    // // // debounce="100"
-                                                    // onKeyPress={(value, triggerQuery, event) => {
-                                                    //     debugger;
-                                                    //     var searchText = this.state.searchTerm;
-                                                    //     if (!event) {
-                                                    //         this.setState({ searchTerm: searchText + value.key });
-                                                    //     }
-                                                    //     if (value.which == 13) {
-                                                    //         triggerQuery();
-                                                    //     }
-                                                    // }}
+                                                  
                                                     parseSuggestion={(suggestion) => ({
 
                                                         label: (
@@ -1632,22 +1634,23 @@ class JobSearch extends React.Component {
                                     </div>
                                     <div className="share-icon-video">
                                         <div className="copy-video-url">
-                                            <input type="text" value={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} />  <CopyToClipboard text={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"}>
+                                            <input type="text" value={this.state.jobUrl} />
+                                            <CopyToClipboard text={this.state.jobUrl}>
                                                 <i class="fa fa-clone" aria-hidden="true"></i>
                                             </CopyToClipboard>
                                         </div>
                                         <ul className="careerfy-jobdetail-media">
                                             <li>{i18n.t('General.ShareButtonLabel')}:</li>
-                                            <li><FacebookShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><FacebookShareButton url={this.state.jobUrl} className="share">
                                                 <FacebookIcon size={25} round={true} />
                                             </FacebookShareButton></li>
-                                            <li><TwitterShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><TwitterShareButton url={this.state.jobUrl} className="share">
                                                 <TwitterIcon size={25} round={true} />
                                             </TwitterShareButton></li>
-                                            <li><LinkedinShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><LinkedinShareButton url={this.state.jobUrl} className="share">
                                                 <LinkedinIcon size={25} round={true} />
                                             </LinkedinShareButton></li>
-                                            <li><EmailShareButton url={window.location.host + "/jobs" + "?url=" + this.state.url + "&jobpostingId=" + this.state.currentJobId + "&company=" + this.state.currentJobCompanyName + "&isvideo=true"} className="share">
+                                            <li><EmailShareButton url={this.state.jobUrl} className="share">
                                                 <EmailIcon size={25} round={true} />
                                             </EmailShareButton></li>
                                         </ul>
@@ -1672,4 +1675,4 @@ class JobSearch extends React.Component {
         );
     }
 }
-export default withTranslation('common')(JobSearch);
+export default (withTranslation('common')(withRouter(JobSearch)));

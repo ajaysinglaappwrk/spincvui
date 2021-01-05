@@ -978,4 +978,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(withTranslation('translation')(withRouter(EmployerDetail)));
+export default connect(mapStateToProps)(withTranslation('common')(withRouter(EmployerDetail)));

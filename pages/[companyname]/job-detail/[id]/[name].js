@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Axios from 'axios';
-import { withTranslation, i18n } from '../../../i18n';
+import { withTranslation, i18n } from '../../../../i18n';
 import "react-toastify/dist/ReactToastify.css";
 import Iframe from 'react-iframe';
 import ReactPlayer from 'react-player';
@@ -22,17 +22,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { withRouter, useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { companyService } from '../../../app/services/company.service';
-import { authenticationService } from '../../../app/services/authentication.service';
-import Login from '../../../app/components/login/login';
-import Register from '../../../app/components/register/register';
-import { apiUrl } from '../../../app/config';
-import JobApply from '../../../app/components/apply-job/apply-job';
-import Jobs from '../../../app/components/job-listing/jobs-list';
-import Layout from '../../../app/components/Layout';
-import initsStore from '../../../app/store';
+import { companyService } from '../../../../app/services/company.service';
+import { authenticationService } from '../../../../app/services/authentication.service';
+import Login from '../../../../app/components/login/login';
+import Register from '../../../../app/components/register/register';
+import { apiUrl } from '../../../../app/config';
+import JobApply from '../../../../app/components/apply-job/apply-job';
+import Jobs from '../../../../app/components/job-listing/jobs-list';
+import Layout from '../../../../app/components/Layout';
+import initsStore from '../../../../app/store';
 import Head from 'next/head';
-import DropCreate from '../../../app/components/apply-job/drop-create';
+import DropCreate from '../../../../app/components/apply-job/drop-create';
 class JobDetail extends React.Component {
 
     static getInitialProps = async ({ query }) => {

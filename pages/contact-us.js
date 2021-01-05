@@ -87,24 +87,23 @@ class ContactUS extends React.Component {
                                                 })}
                                                 onSubmit={(values, actions) => {
                                                     toast.success("Message sent sucessfully");
-                                                    // let dataToSend = {
-                                                    //     username: values.username,
-                                                    //     companyname: values.companyname,
-                                                    //     email: values.email,
-                                                    //     phone: values.phone
-                                                    // }
-                                                    // this.setState({ isProcessing: true });
-                                                    // companyService.contactUs(dataToSend).then((result) => {
-                                                    //     debugger;
-                                                    //     this.setState({ isProcessing: false });
-                                                    //     if (result) {
-                                                    //         actions.resetForm();
-                                                    //         toast.success("Message sent sucessfully");
-                                                    //     }
-                                                    //     else {
-                                                    //         toast.success("Something went wrong");
-                                                    //     }
-                                                    // })
+                                                    let dataToSend = {
+                                                        username: values.username,
+                                                        companyname: values.companyname,
+                                                        email: values.email,
+                                                        phone: values.phone
+                                                    }
+                                                    this.setState({ isProcessing: true });
+                                                    companyService.contactUs(dataToSend).then((result) => {
+                                                        this.setState({ isProcessing: false });
+                                                        if (result) {
+                                                            actions.resetForm();
+                                                            toast.success("Message sent sucessfully");
+                                                        }
+                                                        else {
+                                                            toast.success("Something went wrong");
+                                                        }
+                                                    })
 
                                                 }}
                                                 render={({ errors, status, touched, isSubmitting }) => (
