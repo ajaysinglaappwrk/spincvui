@@ -83,15 +83,20 @@ class JobDetail extends React.Component {
         //TO-DO Need to move to service
         Axios.get(apiUrl + `api/company/GetJobDetailById/${this.props.router.query.id}`)
             .then((result) => {
-                this.getCompanyPerks(result.data.companyId);
-                var industry = result.data.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
-                this.setState({
-                    data: result.data,
-                    jobDetail: result.data.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
-                    industryName: industry != null ? industry.description : "",
-                    jobType: result.data.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+                if (result.data.companyId > 0) {
+                    this.getCompanyPerks(result.data.companyId);
+                    var industry = result.data.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
+                    this.setState({
+                        data: result.data,
+                        jobDetail: result.data.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
+                        industryName: industry != null ? industry.description : "",
+                        jobType: result.data.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
 
-                })
+                    })
+                }
+                else {
+                    this.props.router.push('/');
+                }
             });
         Axios.get(apiUrl + `api/company/GetRelavantJobs/${this.props.router.query.id}`)
             .then((result) => {
@@ -290,34 +295,42 @@ class JobDetail extends React.Component {
 
     render() {
         const { i18n, jobDetail } = this.props;
-        var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
-        this.state.data = jobDetail;
-        this.state.jobDetail = jobDetail.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
-        this.state.industryName = industry != null ? industry.description : "",
+        var title =''
+        var jobPostingSchema ='';
+        if (!!jobDetail.industries) {
+
+            var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
+            this.state.data = jobDetail;
+            this.state.jobDetail = jobDetail.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+            this.state.industryName = industry != null ? industry.description : "";
             this.state.jobType = jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
+            var jobPostingSchema = this.makeJobSchema();
+            title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.jobLocations + " | " + this.state.data.companyName;
+        }
 
         const url = '';
-        var jobPostingSchema = this.makeJobSchema();
-
-        const title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.jobLocations + " | " + this.state.data.companyName;
 
         return (
             <Layout>
-                <Head>
-                    <meta property="og:title" content={title} />
-                    <meta property="og:image" content={this.state.data.companyLogoUrl} />
-                    <meta property="og:image:width" content="200" />
-                    <meta property="og:image:height" content="200" />
-                    <meta property="og:type" content="website" />
-                    <meta property="og:url" content={"https://www.spincv.com/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId} />
-                    <meta property="og:description"
-                        content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
-                    <script
-                        // key={`jobJSON-${job.id}`}
-                        type='application/ld+json'
-                        dangerouslySetInnerHTML={{ __html: jobPostingSchema }}
-                    />
-                </Head>
+                {
+                    !!jobDetail.industries &&
+                    <Head>
+                        <meta property="og:title" content={title} />
+                        <meta property="og:image" content={this.state.data.companyLogoUrl} />
+                        <meta property="og:image:width" content="200" />
+                        <meta property="og:image:height" content="200" />
+                        <meta property="og:type" content="website" />
+                        <meta property="og:url" content={"https://www.spincv.com/" + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId} />
+                        <meta property="og:description"
+                            content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
+                        <script
+                            // key={`jobJSON-${job.id}`}
+                            type='application/ld+json'
+                            dangerouslySetInnerHTML={{ __html: jobPostingSchema }}
+                        />
+                    </Head>
+                }
+
                 <div className="job-detail-pagee">
 
                     <div className="careerfy-job-subheader" style={{ backgroundImage: 'url(' + (!this.state.data.companyBackImgUrl ? 'https://opsoestorage.blob.core.windows.net/companybackground-stg/img_size.jpg' : this.state.data.companyBackImgUrl) + ')', }}>
@@ -478,12 +491,12 @@ class JobDetail extends React.Component {
                                             <aside className="careerfy-column-4 jobDetail_sidebar" style={{ marginTop: '-20px' }}>
                                                 <div className="careerfy-typo-wrap">
                                                     {
-                                                        this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() != 'metro' && 
+                                                        this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() != 'metro' &&
                                                         <JobApply jobId={this.props.router.query.id} currentProfile={this.state.companyProfile}></JobApply>
                                                     }
 
                                                     {
-                                                       (this.state.jobDetail && !!this.state.jobDetail.title) && (this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() == 'metro')  &&
+                                                        (this.state.jobDetail && !!this.state.jobDetail.title) && (this.state.data && !!this.state.data.companyName && this.state.data.companyName.toLowerCase() == 'metro') &&
                                                         <DropCreate companyName={this.state.data ? this.state.data.companyName : ''} jobTitle={this.state.jobDetail ? this.state.jobDetail.title : ''} jobNumber={this.state.data ? this.state.data.jobNumber : ''}></DropCreate>
                                                     }
 
