@@ -72,7 +72,26 @@ class JobDetail extends React.Component {
             openJobVideo: false,
             jobLocations: '',
             currentUrl: '',
-            currentHost: ''
+            currentHost: '',
+            charsToReplace: [{ actualValue: "â", replacedValue: "a" },
+            { actualValue: "ê", replacedValue: "e" },
+            { actualValue: "î", replacedValue: "i" },
+            { actualValue: "ô", replacedValue: "o" },
+            { actualValue: "û", replacedValue: "u" },
+            { actualValue: "é", replacedValue: "e" },
+            { actualValue: "à", replacedValue: "a" },
+            { actualValue: "è", replacedValue: "e" },
+            { actualValue: "ù", replacedValue: "u" },
+            { actualValue: "ç", replacedValue: "c" },
+            { actualValue: "ç", replacedValue: "c" },
+            { actualValue: "ä", replacedValue: "a" },
+            { actualValue: "ë", replacedValue: "e" },
+            { actualValue: "ï", replacedValue: "i" },
+            { actualValue: "ü", replacedValue: "u" },
+            { actualValue: "œ", replacedValue: "o" },
+            { actualValue: "'", replacedValue: "-" },
+            { actualValue: " ", replacedValue: "-" },
+            ]
         };
     }
 
@@ -97,6 +116,7 @@ class JobDetail extends React.Component {
                         currentUrl: window.location.href,
                         currentHost: window.location.host
                     })
+
                 }
                 else {
                     this.props.router.push('/');
@@ -254,11 +274,6 @@ class JobDetail extends React.Component {
         this.setState({ openJobVideo: value });
     }
 
-    // viewCompanyProfile() {
-    //     debugger;
-    //     window.open("/" + this.state.currentJobCompanyName, "_blank")
-    // }
-
     makeJobSchema() {
         var jobLocations = [];
         var joblocationCities = [];
@@ -299,11 +314,25 @@ class JobDetail extends React.Component {
             }
         });
     }
-
+    escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
+    replaceAll(str, match, replacement) {
+        return str.replace(new RegExp(this.escapeRegExp(match), 'g'), replacement);
+    }
+    getEncodedValue(data) {
+        if (!!data) {
+            this.state.charsToReplace.forEach(function (obj) {
+                data = this.replaceAll(data, obj.actualValue, obj.replacedValue);
+            }.bind(this));
+        }
+        return data;
+    }
     render() {
         const { i18n, jobDetail } = this.props;
         var title = ''
         var jobPostingSchema = '';
+        var jobDetailURL = '';
         if (!!jobDetail.industries) {
 
             var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
@@ -313,6 +342,9 @@ class JobDetail extends React.Component {
             this.state.jobType = jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2))
             var jobPostingSchema = this.makeJobSchema();
             title = "Offre d’emploi | " + this.state.jobDetail.title + " | " + this.state.jobLocations + " | " + this.state.data.companyName;
+            const encodedCompanyName = this.getEncodedValue(this.state.data.companyName);
+            const encodedTitle = this.getEncodedValue(this.state.jobDetail.title);
+            jobDetailURL = appUrl + encodedCompanyName + "/job-detail/" + this.state.data.jobPostingId + "/" + encodedTitle;
         }
 
         const url = this.state.currentUrl;
@@ -327,7 +359,7 @@ class JobDetail extends React.Component {
                         <meta property="og:image:width" content="200" />
                         <meta property="og:image:height" content="200" />
                         <meta property="og:type" content="website" />
-                        <meta property="og:url" content={appUrl + this.state.data.companyName + "/job-detail/" + this.state.data.jobPostingId + "/" + this.state.jobDetail.title} />
+                        <meta property="og:url" content={jobDetailURL} />
                         <meta property="og:description"
                             content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
                         <script
