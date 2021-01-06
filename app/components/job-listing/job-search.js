@@ -345,7 +345,9 @@ class JobSearch extends React.Component {
     renderJob(job) {
         const { i18n } = this.props;
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
-        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId + "/" + title;
+        const encodedCompanyName = this.getEncodedValue(job.CompanyName);
+        const encodedTitle = this.getEncodedValue(title);
+        const jobDetailUrl = "/" + encodedCompanyName + "/job-detail/" + job.JobPostingId + "/" + encodedTitle;
         const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
         const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
         const companyProfileUrl = "/" + job.CompanyName
@@ -1548,8 +1550,11 @@ class JobSearch extends React.Component {
                                                                     onData={(data) => this.setData(data)
                                                                     }
                                                                     renderItem={(job) => {
-                                                                        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId
                                                                         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
+                                                                        const encodedCompanyName = this.getEncodedValue(job.CompanyName);
+                                                                        const encodedTitle = this.getEncodedValue(title);
+                                                                        const jobDetailUrl = "/" + encodedCompanyName + "/job-detail/" + job.JobPostingId + "/" + encodedTitle;
+
                                                                         const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
                                                                         const description = i18n.language == "en" ? job.JobDescriptionEN.substr(0, 250) : job.JobDescriptionFR.substr(0, 250);
                                                                         const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
