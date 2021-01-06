@@ -66,7 +66,26 @@ class JobSearch extends React.Component {
             selectedOpenSpaceFacets: '',
             companyId: 0,
             latitude: null,
-            longitude: null
+            longitude: null,
+            charsToReplace: [{ actualValue: "â", replacedValue: "a" },
+            { actualValue: "ê", replacedValue: "e" },
+            { actualValue: "î", replacedValue: "i" },
+            { actualValue: "ô", replacedValue: "o" },
+            { actualValue: "û", replacedValue: "u" },
+            { actualValue: "é", replacedValue: "e" },
+            { actualValue: "à", replacedValue: "a" },
+            { actualValue: "è", replacedValue: "e" },
+            { actualValue: "ù", replacedValue: "u" },
+            { actualValue: "ç", replacedValue: "c" },
+            { actualValue: "ç", replacedValue: "c" },
+            { actualValue: "ä", replacedValue: "a" },
+            { actualValue: "ë", replacedValue: "e" },
+            { actualValue: "ï", replacedValue: "i" },
+            { actualValue: "ü", replacedValue: "u" },
+            { actualValue: "œ", replacedValue: "o" },
+            { actualValue: "'", replacedValue: "-" },
+            { actualValue: " ", replacedValue: "-" },
+            ]
         }
         this.customQuery.bind(this);
     }
@@ -309,8 +328,16 @@ class JobSearch extends React.Component {
         window.open("/" + this.state.currentJobCompanyName, "_blank")
     }
     viewJobDetail() {
-        const url = "/" + this.state.currentJobCompanyName + "/job-detail/" + this.state.currentJobId + "/" + this.state.currentJobTitle;
+        var encodedTitle = this.getEncodedValue(this.state.currentJobTitle);
+        var encodedCompanyName = this.getEncodedValue(this.state.currentJobCompanyName);
+        const url = "/" + encodedCompanyName + "/job-detail/" + this.state.currentJobId + "/" + encodedTitle;
         this.props.router.push(url);
+    }
+    getEncodedValue(value) {
+        this.state.charsToReplace.forEach(function (obj) {
+            value = value.replaceAll(obj.actualValue, obj.replacedValue);
+        });
+        return value;
     }
     openJobDetail(url) {
         this.props.router.push(url);
