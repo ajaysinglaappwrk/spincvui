@@ -34,6 +34,7 @@ import initsStore from '../../../../app/store';
 import Head from 'next/head';
 import DropCreate from '../../../../app/components/apply-job/drop-create';
 import { appUrl } from '../../../../app/config';
+import { charsToReplace } from '../../../../app/constants';
 class JobDetail extends React.Component {
 
     static getInitialProps = async ({ query }) => {
@@ -73,25 +74,6 @@ class JobDetail extends React.Component {
             jobLocations: '',
             currentUrl: '',
             currentHost: '',
-            charsToReplace: [{ actualValue: "â", replacedValue: "a" },
-            { actualValue: "ê", replacedValue: "e" },
-            { actualValue: "î", replacedValue: "i" },
-            { actualValue: "ô", replacedValue: "o" },
-            { actualValue: "û", replacedValue: "u" },
-            { actualValue: "é", replacedValue: "e" },
-            { actualValue: "à", replacedValue: "a" },
-            { actualValue: "è", replacedValue: "e" },
-            { actualValue: "ù", replacedValue: "u" },
-            { actualValue: "ç", replacedValue: "c" },
-            { actualValue: "ç", replacedValue: "c" },
-            { actualValue: "ä", replacedValue: "a" },
-            { actualValue: "ë", replacedValue: "e" },
-            { actualValue: "ï", replacedValue: "i" },
-            { actualValue: "ü", replacedValue: "u" },
-            { actualValue: "œ", replacedValue: "o" },
-            { actualValue: "'", replacedValue: "-" },
-            { actualValue: " ", replacedValue: "-" },
-            ]
         };
     }
 
@@ -322,8 +304,8 @@ class JobDetail extends React.Component {
     }
     getEncodedValue(data) {
         if (!!data) {
-            this.state.charsToReplace.forEach(function (obj) {
-                data = this.replaceAll(data, obj.actualValue, obj.replacedValue);
+            charsToReplace.forEach(function (obj) {
+                data = this.replaceAll(data.trim(), obj.actualValue, obj.replacedValue);
             }.bind(this));
         }
         return data;

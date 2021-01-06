@@ -31,6 +31,7 @@ import {
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Axios from 'axios';
 import { apiUrl } from '../../../app/config';
+import { charsToReplace } from '../../../app/constants';
 import { withRouter } from 'next/router';
 class JobSearch extends React.Component {
     static getInitialProps = async ({ req }) => {
@@ -66,26 +67,7 @@ class JobSearch extends React.Component {
             selectedOpenSpaceFacets: '',
             companyId: 0,
             latitude: null,
-            longitude: null,
-            charsToReplace: [{ actualValue: "â", replacedValue: "a" },
-            { actualValue: "ê", replacedValue: "e" },
-            { actualValue: "î", replacedValue: "i" },
-            { actualValue: "ô", replacedValue: "o" },
-            { actualValue: "û", replacedValue: "u" },
-            { actualValue: "é", replacedValue: "e" },
-            { actualValue: "à", replacedValue: "a" },
-            { actualValue: "è", replacedValue: "e" },
-            { actualValue: "ù", replacedValue: "u" },
-            { actualValue: "ç", replacedValue: "c" },
-            { actualValue: "ç", replacedValue: "c" },
-            { actualValue: "ä", replacedValue: "a" },
-            { actualValue: "ë", replacedValue: "e" },
-            { actualValue: "ï", replacedValue: "i" },
-            { actualValue: "ü", replacedValue: "u" },
-            { actualValue: "œ", replacedValue: "o" },
-            { actualValue: "'", replacedValue: "-" },
-            { actualValue: " ", replacedValue: "-" },
-            ]
+            longitude: null
         }
         this.customQuery.bind(this);
     }
@@ -334,8 +316,8 @@ class JobSearch extends React.Component {
         this.props.router.push(url);
     }
     getEncodedValue(value) {
-        this.state.charsToReplace.forEach(function (obj) {
-            value = value.replaceAll(obj.actualValue, obj.replacedValue);
+        charsToReplace.forEach(function (obj) {
+            value = value.trim().replaceAll(obj.actualValue, obj.replacedValue);
         });
         return value;
     }

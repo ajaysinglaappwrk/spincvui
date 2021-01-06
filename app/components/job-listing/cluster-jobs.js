@@ -6,6 +6,7 @@ import {
     MultiList
 } from "@appbaseio/reactivesearch";
 import { Card, Accordion } from 'react-bootstrap';
+import { charsToReplace } from '../../constants';
 
 class Jobs extends React.Component {
     constructor(props) {
@@ -128,12 +129,19 @@ class Jobs extends React.Component {
         };
 
     }
-
+    getEncodedValue(value) {
+        charsToReplace.forEach(function (obj) {
+            value = value.trim().replaceAll(obj.actualValue, obj.replacedValue);
+        });
+        return value;
+    }
 
     renderJob(job) {
         const { i18n } = this.props;
         const title = i18n.language == "en" ? job.TitleEN : job.TitleFR;
-        const jobDetailUrl = "/" + job.CompanyName + "/job-detail/" + job.JobPostingId + "/" + title;
+        var encodedTitle = this.getEncodedValue(title);
+        var encodedCompanyName = this.getEncodedValue(job.CompanyName);
+        const jobDetailUrl = "/" + encodedCompanyName + "/job-detail/" + job.JobPostingId + "/" + encodedTitle;
         const industry = i18n.language == "en" ? job.IndustryNameEN : job.IndustryNameFR;
         const jobTypes = i18n.language == "en" ? job.JobTypeEN : job.JobTypeFR;
 
