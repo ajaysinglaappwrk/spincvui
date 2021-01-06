@@ -20,9 +20,15 @@ class Jobs extends React.Component {
 
     getEncodedValue(value) {
         charsToReplace.forEach(function (obj) {
-            value = value.trim().replaceAll(obj.actualValue, obj.replacedValue);
-        });
+            value = this.replaceAll(value.trim(), obj.actualValue, obj.replacedValue);
+        }.bind(this));
         return value;
+    }
+    escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+    }
+    replaceAll(str, match, replacement) {
+        return str.replace(new RegExp(this.escapeRegExp(match), 'g'), replacement);
     }
     render() {
         return (
