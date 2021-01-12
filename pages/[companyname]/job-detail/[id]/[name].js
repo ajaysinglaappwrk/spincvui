@@ -39,8 +39,12 @@ class JobDetail extends React.Component {
 
     static getInitialProps = async ({ query }) => {
         const res = await fetch(apiUrl + 'api/company/GetJobDetailById/' + query.id);
-        const json = await res.json()
-        return { jobDetail: json, namespacesRequired: ["common"] };
+        const json = await res.json();
+
+        const perks = await fetch(apiUrl + 'api/company/GetPerksByCompanyIdAndJobId/' + json.companyId + '/' + query.id);
+        const perksJson = await perks.json();
+
+        return { jobDetail: json, jobPerks: perksJson, namespacesRequired: ["common"] };
     };
     constructor(props) {
         super(props);
@@ -78,32 +82,30 @@ class JobDetail extends React.Component {
     }
 
     componentDidMount() {
-        const { i18n } = this.props;
+        debugger;
+        const { i18n, jobDetail } = this.props;
         window.scrollTo(0, 0);
         if (window.location.hostname.substr(0, window.location.hostname.indexOf('.')).toLowerCase() == "gexel") {
             document.body.classList.add('gexel-profile-jobdetail')
         }
         document.body.classList.add('all-profile-jobdetail')
-        //TO-DO Need to move to service
-        Axios.get(apiUrl + `api/company/GetJobDetailById/${this.props.router.query.id}`)
-            .then((result) => {
-                if (result.data.companyId > 0) {
-                    this.getCompanyPerks(result.data.companyId);
-                    var industry = result.data.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
-                    this.setState({
-                        data: result.data,
-                        jobDetail: result.data.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
-                        industryName: industry != null ? industry.description : "",
-                        jobType: result.data.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
-                        currentUrl: window.location.href,
-                        currentHost: window.location.host
-                    })
+        if (jobDetail.companyId > 0) {
+            this.getCompanyPerks();
+            var industry = jobDetail.industries.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2));
+            this.setState({
+                data: jobDetail,
+                jobDetail: jobDetail.jobs.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
+                industryName: industry != null ? industry.description : "",
+                jobType: jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
+                currentUrl: window.location.href,
+                currentHost: window.location.host
+            })
 
-                }
-                else {
-                    this.props.router.push('/');
-                }
-            });
+        }
+        else {
+            this.props.router.push('/');
+        }
+        
         Axios.get(apiUrl + `api/company/GetRelavantJobs/${this.props.router.query.id}`)
             .then((result) => {
                 this.setState({
@@ -114,20 +116,20 @@ class JobDetail extends React.Component {
         this.fetchFavJobs();
     }
 
-    getCompanyPerks(companyId) {
-        const { i18n } = this.props;
-        Axios.get(apiUrl + `api/company/GetPerksByCompanyIdAndJobId/${companyId}/${this.props.router.query.id}`)
-            .then((result) => {
-                let perks = result.data.filter(x => (i18n.language == "en" ? x.languageCode == 'en' : x.languageCode == 'fr'));
-                this.setState({
-                    companyPerks: perks,
-                    activePerk: perks[0].id,
-                    perkTitle: perks[0].title,
-                    text: perks[0].companyPerkSubcategories.map((subcategory, catindex) => {
-                        return (<div key={catindex} className="perksContent-text"><img src="https://my-cdn.azureedge.net/cdn/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
-                    })
+    getCompanyPerks() {
+        const { i18n, jobPerks } = this.props;
+        if (jobPerks && jobPerks.length > 0) {
+            let perks = jobPerks.filter(x => (i18n.language == "en" ? x.languageCode == 'en' : x.languageCode == 'fr'));
+            this.setState({
+                companyPerks: perks,
+                activePerk: perks[0].id,
+                perkTitle: perks[0].title,
+                text: perks[0].companyPerkSubcategories.map((subcategory, catindex) => {
+                    return (<div key={catindex} className="perksContent-text"><img src="https://my-cdn.azureedge.net/cdn/images/perksicon.png" /> <h6 className="desc_text">{subcategory.title}</h6></div>)
                 })
             });
+        }
+
     }
 
     onTabChange = (tabIndex, url) => {
