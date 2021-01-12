@@ -44,7 +44,10 @@ class JobDetail extends React.Component {
         const perks = await fetch(apiUrl + 'api/company/GetPerksByCompanyIdAndJobId/' + json.companyId + '/' + query.id);
         const perksJson = await perks.json();
 
-        return { jobDetail: json, jobPerks: perksJson, namespacesRequired: ["common"] };
+        const relavantJobs = await fetch(apiUrl + 'api/company/GetRelavantJobs/' + query.id);
+        const relavantJobJson = await relavantJobs.json();
+
+        return { jobDetail: json, jobPerks: perksJson, relavantJobs: relavantJobJson, namespacesRequired: ["common"] };
     };
     constructor(props) {
         super(props);
@@ -82,8 +85,7 @@ class JobDetail extends React.Component {
     }
 
     componentDidMount() {
-        debugger;
-        const { i18n, jobDetail } = this.props;
+        const { i18n, jobDetail, relavantJobs } = this.props;
         window.scrollTo(0, 0);
         if (window.location.hostname.substr(0, window.location.hostname.indexOf('.')).toLowerCase() == "gexel") {
             document.body.classList.add('gexel-profile-jobdetail')
@@ -98,21 +100,14 @@ class JobDetail extends React.Component {
                 industryName: industry != null ? industry.description : "",
                 jobType: jobDetail.jobTypes.find(x => (i18n.language == "en" ? x.languageId == 1 : x.languageId == 2)),
                 currentUrl: window.location.href,
-                currentHost: window.location.host
+                currentHost: window.location.host,
+                jobs: this.props.relavantJobs
             })
 
         }
         else {
             this.props.router.push('/');
         }
-        
-        Axios.get(apiUrl + `api/company/GetRelavantJobs/${this.props.router.query.id}`)
-            .then((result) => {
-                this.setState({
-                    jobs: result.data,
-                })
-            });
-
         this.fetchFavJobs();
     }
 
