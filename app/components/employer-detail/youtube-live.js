@@ -34,41 +34,6 @@ class YoutubeLive extends React.Component {
 
     render() {
         const { profile, i18n, jobsCount } = this.props;
-        var settings = {
-            dots: false,
-            centerMode: true,
-            centerPadding: '60px',
-            navigation: true,
-            infinite: true,
-            speed: 500,
-            autoplay: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            isOpenEventModel: false,
-            isSubmitBlocked: false,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px'
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: true,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 1
-                    }
-                }
-
-            ]
-        };
         this.state.sessionDetail = profile.upcomingEvent
 
         return (
@@ -184,18 +149,6 @@ class YoutubeLive extends React.Component {
                                 </div>
                             }
                         </div>
-                        {/* <div className="our-project-sec live-page-slider">
-                            <h2 className="underline main_heading">{this.state.sessionDetail.previousSessionHeaderTitle}</h2>
-                            {
-                                this.state.previousLiveSessions && this.state.previousLiveSessions.length > 0 ? <Slider {...settings}>
-                                    {this.state.previousLiveSessions.map((x, i) => (
-                                        <div className="slide" key={i}>
-                                            <img src={x.mediaUrl} />
-                                        </div>
-                                    ))}
-                                </Slider> : <h6>{i18n.t('Messages.NoLiveSessionMessage')}  </h6>
-                            }
-                        </div> */}
                     </div>
                 }
 

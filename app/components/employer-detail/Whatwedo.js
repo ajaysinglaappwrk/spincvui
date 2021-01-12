@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
-// import Cardimg from './assets/images/whatwedo.png';
-import { Button, Card, Accordion, ProgressBar } from 'react-bootstrap';
-import { Progress } from 'reactstrap';
+import {  Card, Accordion  } from 'react-bootstrap';
 import Slider from "react-slick";
 import { withTranslation } from '../../../i18n';
 
@@ -99,31 +97,6 @@ class Whatwedo extends React.Component {
                         centerMode: true,
                         centerPadding: '40px',
                         slidesToShow: 1
-                    }
-                }
-            ]
-        };
-        var clients = {
-            dots: false,
-            navigation: true,
-            infinite: true,
-            speed: 800,
-            autoplay: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: true,
-                        slidesToShow: 3
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: true,
-                        slidesToShow: 2
                     }
                 }
             ]
@@ -288,19 +261,6 @@ class Whatwedo extends React.Component {
                     })
 
                 }
-                {/* {
-                    this.state.clients && this.state.clients.length >= 4 &&
-                    <div className="our-client">
-                        <h2 className="underline main_heading">{i18n.t('General.OurClientLabel')}</h2>
-                        <Slider {...clients}>
-                            {this.state.clients && this.state.clients.length > 0 && this.state.clients.map((x, i) => (
-                                <div className="slide" key={i}>
-                                    <img src={x.clientMediaUrl} />
-                                </div>
-                            ))}
-                        </Slider>
-                    </div>
-                } */}
 
             </div >
 
