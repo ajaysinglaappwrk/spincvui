@@ -153,7 +153,7 @@ class Header extends React.Component {
 
 
                       <ul className="careerfy-user-section careerfy-user-section-mob " >
-                        {/* <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => i18n.changeLanguage('en')}>English</a></li> */}
+                        <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => i18n.changeLanguage('en')}>English</a></li>
                         <li><a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => i18n.changeLanguage('fr')}>Français</a></li>
                         {!this.state.isLoggedIn && <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => this.register()}>{i18n.t('Menu.Register')}</a></li>}
                         {!this.state.isLoggedIn && <li> <a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => this.login()}>{i18n.t('Menu.SignIn')}</a></li>}
