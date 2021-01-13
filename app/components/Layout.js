@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer'
+import { i18n } from "../../i18n";
 
-const Layout = ({ children }) => (
-  <div>
+const Layout = ({ children }) => {
+
+  useEffect((props) => {
+    var language = localStorage.getItem("currentLang");
+    i18n.changeLanguage(!language ? "fr": language);
+
+  }, []);
+
+  return (<div>
     <Head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,7 +32,7 @@ const Layout = ({ children }) => (
       <link rel="icon" type="image/png" sizes="32x32" href="https://my-cdn.azureedge.net/cdn/images/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="96x96" href="https://my-cdn.azureedge.net/cdn/images/favicon-96x96.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="https://my-cdn.azureedge.net/cdn/images/favicon-16x16.png" />
-      
+
       <meta property="og:description"
         content="Le seul site d’emploi qui vous permet vraiment de découvrir une entreprise.  Vidéos, photos, visite 3D, drone, direct, et bien plus.  En 2020, ne vous fiez plus seulement aux offres écrites.  Totalement gratuit !" />
     </Head>
@@ -33,7 +41,10 @@ const Layout = ({ children }) => (
       {children}
     </div>
     <Footer></Footer>
-  </div>
-);
+  </div>)
+}
+
+
+
 
 export default Layout;

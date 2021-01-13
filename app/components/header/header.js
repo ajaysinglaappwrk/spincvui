@@ -31,7 +31,6 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-    i18n.changeLanguage("fr");
     var isLogout = this.getParameterByName('logout');
     if (isLogout) {
       this.logoutUser();
@@ -83,6 +82,11 @@ class Header extends React.Component {
     if (e.keyCode == 13) {
       this.goToSearch();
     }
+  }
+
+  changeUserLanguage(language) {
+    i18n.changeLanguage(language);
+    localStorage.setItem("currentLang",language);
   }
 
   render() {
@@ -153,8 +157,8 @@ class Header extends React.Component {
 
 
                       <ul className="careerfy-user-section careerfy-user-section-mob " >
-                        <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => i18n.changeLanguage('en')}>English</a></li>
-                        <li><a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => i18n.changeLanguage('fr')}>Français</a></li>
+                        <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => this.changeUserLanguage("en")}>English</a></li>
+                        <li><a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => this.changeUserLanguage("fr")}>Français</a></li>
                         {!this.state.isLoggedIn && <li><a className="careerfy-color careerfy-open-signin-tab" href="# " onClick={() => this.register()}>{i18n.t('Menu.Register')}</a></li>}
                         {!this.state.isLoggedIn && <li> <a className="careerfy-color careerfy-open-signup-tab" href="# " onClick={() => this.login()}>{i18n.t('Menu.SignIn')}</a></li>}
                       </ul>
