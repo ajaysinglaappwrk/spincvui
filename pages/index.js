@@ -36,7 +36,6 @@ class Home extends React.Component {
 
       });
     }
-    i18n.changeLanguage("fr");
   }
 
   constructor(props) {

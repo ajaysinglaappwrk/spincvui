@@ -3,13 +3,23 @@ import Head from 'next/head';
 import Header from '../components/header/header'
 import Footer from '../components/footer/footer'
 import { i18n } from "../../i18n";
-
+import detectBrowserLanguage from 'detect-browser-language'
 const Layout = ({ children }) => {
 
-  useEffect((props) => {
+  useEffect(() => {
+    debugger;
     var language = localStorage.getItem("currentLang");
+    if (!language) {
+      let browserLanguage = detectBrowserLanguage();
+      let splittedLanguages = browserLanguage.split("-");
+      if (splittedLanguages.indexOf("en") > -1) {
+        language = "en";
+      }
+      else {
+        language = "fr";
+      }
+    }
     i18n.changeLanguage(!language ? "fr" : language);
-    localStorage.setItem("currentLang", !language ? "fr" : language);
   }, []);
 
   return (<div>
