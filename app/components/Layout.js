@@ -8,8 +8,8 @@ const Layout = ({ children }) => {
 
   useEffect((props) => {
     var language = localStorage.getItem("currentLang");
-    i18n.changeLanguage(!language ? "fr": language);
-
+    i18n.changeLanguage(!language ? "fr" : language);
+    localStorage.setItem("currentLang", !language ? "fr" : language);
   }, []);
 
   return (<div>

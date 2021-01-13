@@ -87,6 +87,7 @@ class Header extends React.Component {
   changeUserLanguage(language) {
     i18n.changeLanguage(language);
     localStorage.setItem("currentLang",language);
+    location.reload();
   }
 
   render() {
