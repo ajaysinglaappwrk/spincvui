@@ -5,6 +5,7 @@ const localeSubpathVariations = {
   none: {},
   foreign: {
     fr: "fr",
+    en: "en",
   },
   all: {
     en: "en",
@@ -14,6 +15,6 @@ const localeSubpathVariations = {
 
 module.exports = new NextI18Next({
   defaultLanguage: 'fr',
-  otherLanguages: ["fr"],
+  otherLanguages: ["fr","en"],
   localeSubpaths: localeSubpathVariations[localeSubpaths],
 });
