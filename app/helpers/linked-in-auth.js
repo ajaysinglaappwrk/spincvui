@@ -13,9 +13,9 @@ export const LINKEDIN_URL = getURLWithQueryParams(
   "https://www.linkedin.com/oauth/v2/authorization",
   {
     response_type: "code",
-    client_id: '8659wwgs86azn1',
+    client_id: '78mkvngsfdnzun',
     redirect_uri: appUrl,
-    state: 'DCEeFWf45A53sdfKef424',
+    state: 'PwMEUwQy1BDC0Uzy',
     scope: ['r_emailaddress', 'r_liteprofile ']
   }
 );
