@@ -1,3 +1,6 @@
+import { appUrl } from '../config'
+
+
 export const getURLWithQueryParams = (base, params) => {
   const query = Object.entries(params)
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
@@ -11,7 +14,7 @@ export const LINKEDIN_URL = getURLWithQueryParams(
   {
     response_type: "code",
     client_id: '8659wwgs86azn1',
-    redirect_uri: 'https://spincv-demo.azurewebsites.net/',
+    redirect_uri: appUrl,
     state: 'DCEeFWf45A53sdfKef424',
     scope: ['r_emailaddress', 'r_liteprofile ']
   }
