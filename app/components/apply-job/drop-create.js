@@ -182,7 +182,7 @@ class DropCreate extends React.Component {
                                         )}
                                     </Dropzone>
 
-                                    <DropboxChooser appKey="xxkzfq6nfv1w2ku"
+                                    <DropboxChooser appKey="1m5tnf0cdip1zwk"
                                         success={(files) => this.handleSuccess(files)}
                                         cancel={() => console.log('closed')}
                                         multiselect={false}>
