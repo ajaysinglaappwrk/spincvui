@@ -18,7 +18,7 @@ jobs:
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
-        node-version: '12.13.0'
+        node-version: '14.x'
 
     - name: npm install, build, and test
       run: |
@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'spincv-demo'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d63e9da038e4466dafc0eaa88573dbce }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_605646494b754bacbd2ad51b2fbd46fc }}
         package: .
