@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'demospincv'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e4b61a99ec1f4342a262ca76332818d8 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_52ce6e356144488c871166148f6cd401 }}
         package: .
